@@ -1,0 +1,74 @@
+D:\Năm 2\Lap Trinh Truc Quan\ProjectP2PChat\PeerToPeerChat\bin\Debug\PeerToPeerChat.exe.config
+D:\Năm 2\Lap Trinh Truc Quan\ProjectP2PChat\PeerToPeerChat\bin\Debug\PeerToPeerChat.exe
+D:\Năm 2\Lap Trinh Truc Quan\ProjectP2PChat\PeerToPeerChat\bin\Debug\PeerToPeerChat.pdb
+D:\Năm 2\Lap Trinh Truc Quan\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.csprojResolveAssemblyReference.cache
+D:\Năm 2\Lap Trinh Truc Quan\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.ChatForm.resources
+D:\Năm 2\Lap Trinh Truc Quan\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.LoginForm.resources
+D:\Năm 2\Lap Trinh Truc Quan\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.Properties.Resources.resources
+D:\Năm 2\Lap Trinh Truc Quan\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.csproj.GenerateResource.Cache
+D:\Năm 2\Lap Trinh Truc Quan\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.exe
+D:\Năm 2\Lap Trinh Truc Quan\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.pdb
+\\192.168.1.22\ProjectP2PChat\PeerToPeerChat\bin\Debug\PeerToPeerChat.exe.config
+\\192.168.1.22\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.exe
+\\192.168.1.22\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.pdb
+\\192.168.1.22\ProjectP2PChat\PeerToPeerChat\bin\Debug\PeerToPeerChat.exe
+\\192.168.1.22\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.csprojResolveAssemblyReference.cache
+\\192.168.1.22\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.ChatForm.resources
+\\192.168.1.22\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.LoginForm.resources
+\\192.168.1.22\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.Properties.Resources.resources
+\\192.168.1.22\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.csproj.GenerateResource.Cache
+\\192.168.1.22\ProjectP2PChat\PeerToPeerChat\bin\Debug\PeerToPeerChat.pdb
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\PeerToPeerChat\bin\Debug\PeerToPeerChat.exe.config
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.exe
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.pdb
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\PeerToPeerChat\bin\Debug\PeerToPeerChat.exe
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\PeerToPeerChat\bin\Debug\PeerToPeerChat.pdb
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\PeerToPeerChat\bin\Debug\Package.dll
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\PeerToPeerChat\bin\Debug\Package.pdb
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.csprojResolveAssemblyReference.cache
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.ChatForm.resources
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.LoginForm.resources
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.Properties.Resources.resources
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.csproj.GenerateResource.Cache
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.PrivateChat.resources
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\PeerToPeerChat\bin\Debug\P2P.exe
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\PeerToPeerChat\bin\Debug\P2P.pdb
+C:\Users\Admin\Desktop\ProjectP2PChat\PeerToPeerChat\bin\Debug\PeerToPeerChat.exe.config
+C:\Users\Admin\Desktop\ProjectP2PChat\PeerToPeerChat\bin\Debug\PeerToPeerChat.exe
+C:\Users\Admin\Desktop\ProjectP2PChat\PeerToPeerChat\bin\Debug\PeerToPeerChat.pdb
+C:\Users\Admin\Desktop\ProjectP2PChat\PeerToPeerChat\bin\Debug\P2P.exe
+C:\Users\Admin\Desktop\ProjectP2PChat\PeerToPeerChat\bin\Debug\Package.dll
+C:\Users\Admin\Desktop\ProjectP2PChat\PeerToPeerChat\bin\Debug\P2P.pdb
+C:\Users\Admin\Desktop\ProjectP2PChat\PeerToPeerChat\bin\Debug\P2P.exe.config
+C:\Users\Admin\Desktop\ProjectP2PChat\PeerToPeerChat\bin\Debug\Package.pdb
+C:\Users\Admin\Desktop\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Desktop\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.ChatForm.resources
+C:\Users\Admin\Desktop\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.LoginForm.resources
+C:\Users\Admin\Desktop\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.PrivateChat.resources
+C:\Users\Admin\Desktop\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.Properties.Resources.resources
+C:\Users\Admin\Desktop\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.csproj.GenerateResource.cache
+C:\Users\Admin\Desktop\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.csproj.CopyComplete
+C:\Users\Admin\Desktop\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.exe
+C:\Users\Admin\Desktop\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.pdb
+C:\Users\akasu\Desktop\ProjectP2PChat\ProjectP2PChat\PeerToPeerChat\bin\Debug\PeerToPeerChat.exe.config
+C:\Users\akasu\Desktop\ProjectP2PChat\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.exe
+C:\Users\akasu\Desktop\ProjectP2PChat\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.pdb
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\PeerToPeerChat\bin\Debug\PeerToPeerChat.exe.config
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.exe
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.pdb
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\PeerToPeerChat\bin\Debug\PeerToPeerChat.exe
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\PeerToPeerChat\bin\Debug\PeerToPeerChat.pdb
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\PeerToPeerChat\bin\Debug\P2P.exe
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\PeerToPeerChat\bin\Debug\Package.dll
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\PeerToPeerChat\bin\Debug\P2P.pdb
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\PeerToPeerChat\bin\Debug\Package.pdb
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.csprojResolveAssemblyReference.cache
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.ChatForm.resources
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.LoginForm.resources
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.PrivateChat.resources
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.Properties.Resources.resources
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.csproj.GenerateResource.Cache
+C:\Users\ThinkPad\Desktop\P2P_LANCHAT\ver\ProjectP2PChat\PeerToPeerChat\bin\Debug\PeerToPeerChat.exe.config
+C:\Users\ThinkPad\Desktop\P2P_LANCHAT\ver\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.exe
+C:\Users\ThinkPad\Desktop\P2P_LANCHAT\ver\ProjectP2PChat\PeerToPeerChat\obj\Debug\PeerToPeerChat.pdb

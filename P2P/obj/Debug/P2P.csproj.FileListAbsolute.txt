@@ -1,0 +1,47 @@
+D:\Năm 2\Lap Trinh Truc Quan\ProjectP2PChat\P2P\bin\Debug\P2P.exe.config
+D:\Năm 2\Lap Trinh Truc Quan\ProjectP2PChat\P2P\bin\Debug\P2P.exe
+D:\Năm 2\Lap Trinh Truc Quan\ProjectP2PChat\P2P\bin\Debug\P2P.pdb
+D:\Năm 2\Lap Trinh Truc Quan\ProjectP2PChat\P2P\obj\Debug\P2P.csprojResolveAssemblyReference.cache
+D:\Năm 2\Lap Trinh Truc Quan\ProjectP2PChat\P2P\obj\Debug\P2P.Form1.resources
+D:\Năm 2\Lap Trinh Truc Quan\ProjectP2PChat\P2P\obj\Debug\P2P.Properties.Resources.resources
+D:\Năm 2\Lap Trinh Truc Quan\ProjectP2PChat\P2P\obj\Debug\P2P.csproj.GenerateResource.Cache
+D:\Năm 2\Lap Trinh Truc Quan\ProjectP2PChat\P2P\obj\Debug\P2P.exe
+D:\Năm 2\Lap Trinh Truc Quan\ProjectP2PChat\P2P\obj\Debug\P2P.pdb
+\\192.168.1.22\ProjectP2PChat\P2P\bin\Debug\P2P.exe.config
+\\192.168.1.22\ProjectP2PChat\P2P\obj\Debug\P2P.exe
+\\192.168.1.22\ProjectP2PChat\P2P\obj\Debug\P2P.pdb
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\P2P\bin\Debug\P2P.exe.config
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\P2P\obj\Debug\P2P.exe
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\P2P\obj\Debug\P2P.pdb
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\P2P\bin\Debug\P2P.exe
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\P2P\bin\Debug\P2P.pdb
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\P2P\obj\Debug\P2P.csprojResolveAssemblyReference.cache
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\P2P\obj\Debug\P2P.Form1.resources
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\P2P\obj\Debug\P2P.Properties.Resources.resources
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\P2P\obj\Debug\P2P.csproj.GenerateResource.Cache
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\P2P\bin\Debug\Package.dll
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\P2P\bin\Debug\Package.pdb
+C:\Users\Admin\Desktop\ProjectP2PChat\P2P\bin\Debug\P2P.exe.config
+C:\Users\Admin\Desktop\ProjectP2PChat\P2P\bin\Debug\P2P.exe
+C:\Users\Admin\Desktop\ProjectP2PChat\P2P\bin\Debug\P2P.pdb
+C:\Users\Admin\Desktop\ProjectP2PChat\P2P\bin\Debug\Package.dll
+C:\Users\Admin\Desktop\ProjectP2PChat\P2P\bin\Debug\Package.pdb
+C:\Users\Admin\Desktop\ProjectP2PChat\P2P\obj\Debug\P2P.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Desktop\ProjectP2PChat\P2P\obj\Debug\P2P.Form1.resources
+C:\Users\Admin\Desktop\ProjectP2PChat\P2P\obj\Debug\P2P.Properties.Resources.resources
+C:\Users\Admin\Desktop\ProjectP2PChat\P2P\obj\Debug\P2P.csproj.GenerateResource.cache
+C:\Users\Admin\Desktop\ProjectP2PChat\P2P\obj\Debug\P2P.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\ProjectP2PChat\P2P\obj\Debug\P2P.csproj.CopyComplete
+C:\Users\Admin\Desktop\ProjectP2PChat\P2P\obj\Debug\P2P.exe
+C:\Users\Admin\Desktop\ProjectP2PChat\P2P\obj\Debug\P2P.pdb
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\P2P\bin\Debug\P2P.exe.config
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\P2P\obj\Debug\P2P.exe
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\P2P\obj\Debug\P2P.pdb
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\P2P\bin\Debug\P2P.exe
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\P2P\bin\Debug\P2P.pdb
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\P2P\bin\Debug\Package.dll
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\P2P\bin\Debug\Package.pdb
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\P2P\obj\Debug\P2P.csprojResolveAssemblyReference.cache
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\P2P\obj\Debug\P2P.Form1.resources
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\P2P\obj\Debug\P2P.Properties.Resources.resources
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\P2P\obj\Debug\P2P.csproj.GenerateResource.Cache

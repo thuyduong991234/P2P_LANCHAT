@@ -1,0 +1,16 @@
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\Package\bin\Debug\Package.dll
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\Package\bin\Debug\Package.pdb
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\Package\obj\Debug\Package.csprojResolveAssemblyReference.cache
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\Package\obj\Debug\Package.dll
+C:\Users\akasu\Desktop\MainP2PCHAT\ProjectP2PChat\Package\obj\Debug\Package.pdb
+C:\Users\Admin\Desktop\ProjectP2PChat\Package\bin\Debug\Package.dll
+C:\Users\Admin\Desktop\ProjectP2PChat\Package\bin\Debug\Package.pdb
+C:\Users\Admin\Desktop\ProjectP2PChat\Package\obj\Debug\Package.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Desktop\ProjectP2PChat\Package\obj\Debug\Package.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\ProjectP2PChat\Package\obj\Debug\Package.dll
+C:\Users\Admin\Desktop\ProjectP2PChat\Package\obj\Debug\Package.pdb
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\Package\bin\Debug\Package.dll
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\Package\bin\Debug\Package.pdb
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\Package\obj\Debug\Package.csprojResolveAssemblyReference.cache
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\Package\obj\Debug\Package.dll
+C:\Users\akasu\Desktop\ver\ProjectP2PChat\Package\obj\Debug\Package.pdb
