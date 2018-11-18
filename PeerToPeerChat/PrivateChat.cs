@@ -78,20 +78,19 @@ namespace PeerToPeerChat
                     ReceiveData = (byte[])aResult.AsyncState;
                     Packet ReceivedPacket = DeSerialize(ReceiveData);
                     newpacket = ReceivedPacket;
-                    if(ReceivedPacket.MyType == TypePacket.LAST_SEND)
+                    if (ReceivedPacket.MyType == TypePacket.LAST_SEND && ReceivedPacket.MyMessage == secondsend.MyMessage) { }
+                    else
                     {
-                        //byte[] msg = SendPacket3(secondsend);
-                        //sck.Send(msg);
-                        //return;
+                        this.Invoke((MethodInvoker)(() =>
+                        {
+                            rtxtDisplay.AppendText("Friend: ");
+                            rtxtDisplay.SelectionFont = ReceivedPacket.MyFont;
+                            rtxtDisplay.SelectionColor = ReceivedPacket.MyColor;
+                            rtxtDisplay.AppendText(ReceivedPacket.MyMessage + "\n");
+                            rtxtDisplay.ScrollToCaret();
+                        }));
                     }
-                    this.Invoke((MethodInvoker)(() =>
-                    {
-                        rtxtDisplay.AppendText("Friend: ");
-                        rtxtDisplay.SelectionFont = ReceivedPacket.MyFont;
-                        rtxtDisplay.SelectionColor = ReceivedPacket.MyColor;
-                        rtxtDisplay.AppendText(ReceivedPacket.MyMessage + "\n");
-                        rtxtDisplay.ScrollToCaret();
-                    }));
+
                 }
                 byte[] buffer = new byte[1500];
                 sck.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref epFriend, new AsyncCallback(MessageCallBack), buffer);
@@ -99,7 +98,7 @@ namespace PeerToPeerChat
 
             catch (Exception e)
             {
-                byte[] msg = SendPacket2();
+                byte[] msg = SendPacket3(newpacket);
                 sck.Send(msg);
                 sck.Shutdown(SocketShutdown.Both);
                 sck.Close();
@@ -212,24 +211,13 @@ namespace PeerToPeerChat
             data = str.ToArray();
             return data;
         }
-        byte[] SendPacket2()
-        {
-            Packet mypacket = new Packet();
-            mypacket.MyType = TypePacket.LAST_SEND;
-            mypacket.MyMessage = secondsend.MyMessage;
-            MemoryStream str = new MemoryStream();
-            BinaryFormatter bformat = new BinaryFormatter();
-            bformat.Serialize(str, mypacket);
-            byte[] data = new byte[1024];
-            data = str.ToArray();
-            return data;
-        }
         byte[] SendPacket3(Packet pck)
         {
             Packet mypacket = new Packet();
             mypacket.MyMessage = pck.MyMessage;
             mypacket.MyFont = pck.MyFont;
             mypacket.MyColor = pck.MyColor;
+            mypacket.MyType = TypePacket.LAST_SEND;
             MemoryStream str = new MemoryStream();
             BinaryFormatter bformat = new BinaryFormatter();
             bformat.Serialize(str, mypacket);

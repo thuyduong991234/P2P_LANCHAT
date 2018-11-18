@@ -320,6 +320,7 @@ namespace PeerToPeerChat
             try
             {
                 PrivateChat PrivCchat = new PrivateChat(pck);
+                PrivCchat.RequireChat += new_requireChat;
                 PrivCchat.CloseChat += new_closeChat;
                 PrivCchat.friendName = Name;
                 PrivCchat.meIP = GetLocalIP();
