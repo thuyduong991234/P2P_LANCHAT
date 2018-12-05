@@ -1,0 +1,9 @@
+G:\P2PFileTransferDemo\bin\Release\P2PDemo.exe
+G:\P2PFileTransferDemo\bin\Release\P2PDemo.pdb
+G:\P2PFileTransferDemo\obj\Release\ResolveAssemblyReference.cache
+G:\P2PFileTransferDemo\obj\Release\P2PDemo.Form1.resources
+G:\P2PFileTransferDemo\obj\Release\P2PDemo.Form2.resources
+G:\P2PFileTransferDemo\obj\Release\P2PDemo.Properties.Resources.resources
+G:\P2PFileTransferDemo\obj\Release\P2PDemo.csproj.GenerateResource.Cache
+G:\P2PFileTransferDemo\obj\Release\P2PDemo.exe
+G:\P2PFileTransferDemo\obj\Release\P2PDemo.pdb
