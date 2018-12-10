@@ -386,5 +386,84 @@ namespace PeerToPeerChat
             }
         }
 
+        private void ptbExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+        // move form
+        protected override void OnLoad(EventArgs e)
+        {
+            if (this.FormBorderStyle == System.Windows.Forms.FormBorderStyle.None)
+            {
+                this.MouseDown += new MouseEventHandler(LoginForm_MouseDown);
+                this.MouseMove += new MouseEventHandler(LoginForm_MouseMove);
+                this.MouseUp += new MouseEventHandler(LoginForm_MouseUp);
+            }
+
+            base.OnLoad(e);
+        }
+        public Point downPoint = Point.Empty;
+        void LoginForm_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
+            downPoint = new Point(e.X, e.Y);
+        }
+
+        void LoginForm_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (downPoint == Point.Empty)
+            {
+                return;
+            }
+            Point location = new Point(
+                this.Left + e.X - downPoint.X,
+                this.Top + e.Y - downPoint.Y);
+            this.Location = location;
+        }
+
+        void LoginForm_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
+            downPoint = Point.Empty;
+        }
+
+        private void pictureSend_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtcontent.Text))
+            {
+                byte[] data = SendPacket();
+                sendingClient.Send(data, data.Length);
+                txtcontent.Text = "";
+            }
+            txtcontent.Focus();
+        }
+
+        private void ptbMinimize_Click(object sender, EventArgs e)
+        {
+            if (this.WindowState != FormWindowState.Minimized)
+                this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void ptbColor_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                txtcontent.ForeColor = colorDialog1.Color;
+            }
+        }
+
+        private void ptbFont_Click(object sender, EventArgs e)
+        {
+            if (fontDialog1.ShowDialog() == DialogResult.OK)
+            {
+                txtcontent.Font = fontDialog1.Font;
+            }
+        }
     }
 }
