@@ -29,74 +29,151 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrivateChat));
-            this.txtsend = new System.Windows.Forms.TextBox();
-            this.rtxtDisplay = new System.Windows.Forms.RichTextBox();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.ptbSend = new System.Windows.Forms.PictureBox();
+            this.txtsend = new System.Windows.Forms.RichTextBox();
+            this.btnFont = new System.Windows.Forms.Button();
+            this.btnColor = new System.Windows.Forms.Button();
+            this.btnAttach = new System.Windows.Forms.Button();
+            this.btnImage = new System.Windows.Forms.Button();
+            this.btnSend = new System.Windows.Forms.Button();
+            this.txtSPort = new System.Windows.Forms.TextBox();
+            this.txtRPort = new System.Windows.Forms.TextBox();
+            this.wbContent = new System.Windows.Forms.WebBrowser();
             this.label1 = new System.Windows.Forms.Label();
             this.ptbMinimize = new System.Windows.Forms.PictureBox();
             this.ptbExit = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.ptbFont = new System.Windows.Forms.PictureBox();
-            this.ptbColor = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbSend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbMinimize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbExit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbFont)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbColor)).BeginInit();
             this.SuspendLayout();
-            // 
-            // txtsend
-            // 
-            this.txtsend.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtsend.Location = new System.Drawing.Point(12, 326);
-            this.txtsend.Name = "txtsend";
-            this.txtsend.Size = new System.Drawing.Size(383, 22);
-            this.txtsend.TabIndex = 9;
-            this.txtsend.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtsend_KeyPress);
-            // 
-            // rtxtDisplay
-            // 
-            this.rtxtDisplay.Location = new System.Drawing.Point(0, 0);
-            this.rtxtDisplay.Name = "rtxtDisplay";
-            this.rtxtDisplay.Size = new System.Drawing.Size(467, 294);
-            this.rtxtDisplay.TabIndex = 12;
-            this.rtxtDisplay.Text = "";
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.ptbFont);
-            this.panel1.Controls.Add(this.ptbColor);
-            this.panel1.Controls.Add(this.ptbSend);
-            this.panel1.Controls.Add(this.rtxtDisplay);
             this.panel1.Controls.Add(this.txtsend);
+            this.panel1.Controls.Add(this.btnFont);
+            this.panel1.Controls.Add(this.btnColor);
+            this.panel1.Controls.Add(this.btnAttach);
+            this.panel1.Controls.Add(this.btnImage);
+            this.panel1.Controls.Add(this.btnSend);
+            this.panel1.Controls.Add(this.txtSPort);
+            this.panel1.Controls.Add(this.txtRPort);
+            this.panel1.Controls.Add(this.wbContent);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 31);
+            this.panel1.Location = new System.Drawing.Point(0, 38);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(467, 360);
+            this.panel1.Size = new System.Drawing.Size(333, 447);
             this.panel1.TabIndex = 15;
             // 
-            // ptbSend
+            // txtsend
             // 
-            this.ptbSend.Image = ((System.Drawing.Image)(resources.GetObject("ptbSend.Image")));
-            this.ptbSend.Location = new System.Drawing.Point(404, 323);
-            this.ptbSend.Name = "ptbSend";
-            this.ptbSend.Size = new System.Drawing.Size(54, 25);
-            this.ptbSend.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.ptbSend.TabIndex = 15;
-            this.ptbSend.TabStop = false;
-            this.ptbSend.Click += new System.EventHandler(this.ptbSend_Click);
+            this.txtsend.Location = new System.Drawing.Point(12, 367);
+            this.txtsend.Name = "txtsend";
+            this.txtsend.Size = new System.Drawing.Size(260, 36);
+            this.txtsend.TabIndex = 27;
+            this.txtsend.Text = "";
+            // 
+            // btnFont
+            // 
+            this.btnFont.BackColor = System.Drawing.Color.White;
+            this.btnFont.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnFont.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFont.ForeColor = System.Drawing.Color.Transparent;
+            this.btnFont.Image = ((System.Drawing.Image)(resources.GetObject("btnFont.Image")));
+            this.btnFont.Location = new System.Drawing.Point(12, 326);
+            this.btnFont.Name = "btnFont";
+            this.btnFont.Size = new System.Drawing.Size(35, 36);
+            this.btnFont.TabIndex = 26;
+            this.btnFont.UseVisualStyleBackColor = false;
+            this.btnFont.Click += new System.EventHandler(this.btnFont_Click);
+            // 
+            // btnColor
+            // 
+            this.btnColor.BackColor = System.Drawing.Color.White;
+            this.btnColor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnColor.ForeColor = System.Drawing.Color.Transparent;
+            this.btnColor.Image = ((System.Drawing.Image)(resources.GetObject("btnColor.Image")));
+            this.btnColor.Location = new System.Drawing.Point(47, 326);
+            this.btnColor.Name = "btnColor";
+            this.btnColor.Size = new System.Drawing.Size(35, 36);
+            this.btnColor.TabIndex = 25;
+            this.btnColor.UseVisualStyleBackColor = false;
+            this.btnColor.Click += new System.EventHandler(this.btnColor_Click);
+            // 
+            // btnAttach
+            // 
+            this.btnAttach.BackColor = System.Drawing.Color.White;
+            this.btnAttach.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnAttach.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAttach.ForeColor = System.Drawing.Color.Transparent;
+            this.btnAttach.Image = ((System.Drawing.Image)(resources.GetObject("btnAttach.Image")));
+            this.btnAttach.Location = new System.Drawing.Point(85, 326);
+            this.btnAttach.Name = "btnAttach";
+            this.btnAttach.Size = new System.Drawing.Size(35, 36);
+            this.btnAttach.TabIndex = 24;
+            this.btnAttach.UseVisualStyleBackColor = false;
+            this.btnAttach.Click += new System.EventHandler(this.btnAttach_Click);
+            // 
+            // btnImage
+            // 
+            this.btnImage.BackColor = System.Drawing.Color.White;
+            this.btnImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnImage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnImage.ForeColor = System.Drawing.Color.Transparent;
+            this.btnImage.Image = ((System.Drawing.Image)(resources.GetObject("btnImage.Image")));
+            this.btnImage.Location = new System.Drawing.Point(123, 326);
+            this.btnImage.Name = "btnImage";
+            this.btnImage.Size = new System.Drawing.Size(35, 36);
+            this.btnImage.TabIndex = 23;
+            this.btnImage.UseVisualStyleBackColor = false;
+            // 
+            // btnSend
+            // 
+            this.btnSend.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(191)))), ((int)(((byte)(236)))));
+            this.btnSend.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnSend.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSend.ForeColor = System.Drawing.Color.Transparent;
+            this.btnSend.Image = ((System.Drawing.Image)(resources.GetObject("btnSend.Image")));
+            this.btnSend.Location = new System.Drawing.Point(278, 366);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(43, 37);
+            this.btnSend.TabIndex = 5;
+            this.btnSend.UseVisualStyleBackColor = false;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
+            // 
+            // txtSPort
+            // 
+            this.txtSPort.Location = new System.Drawing.Point(211, 24);
+            this.txtSPort.Name = "txtSPort";
+            this.txtSPort.Size = new System.Drawing.Size(100, 20);
+            this.txtSPort.TabIndex = 22;
+            // 
+            // txtRPort
+            // 
+            this.txtRPort.Location = new System.Drawing.Point(20, 24);
+            this.txtRPort.Name = "txtRPort";
+            this.txtRPort.Size = new System.Drawing.Size(100, 20);
+            this.txtRPort.TabIndex = 21;
+            // 
+            // wbContent
+            // 
+            this.wbContent.Location = new System.Drawing.Point(0, 50);
+            this.wbContent.MinimumSize = new System.Drawing.Size(20, 20);
+            this.wbContent.Name = "wbContent";
+            this.wbContent.Size = new System.Drawing.Size(333, 270);
+            this.wbContent.TabIndex = 20;
+            this.wbContent.Url = new System.Uri("about:blank", System.UriKind.Absolute);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(43, 5);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(107, 20);
@@ -106,7 +183,7 @@
             // ptbMinimize
             // 
             this.ptbMinimize.Image = ((System.Drawing.Image)(resources.GetObject("ptbMinimize.Image")));
-            this.ptbMinimize.Location = new System.Drawing.Point(404, -2);
+            this.ptbMinimize.Location = new System.Drawing.Point(245, 4);
             this.ptbMinimize.Name = "ptbMinimize";
             this.ptbMinimize.Size = new System.Drawing.Size(35, 30);
             this.ptbMinimize.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -117,7 +194,7 @@
             // ptbExit
             // 
             this.ptbExit.Image = ((System.Drawing.Image)(resources.GetObject("ptbExit.Image")));
-            this.ptbExit.Location = new System.Drawing.Point(432, -2);
+            this.ptbExit.Location = new System.Drawing.Point(290, 4);
             this.ptbExit.Name = "ptbExit";
             this.ptbExit.Size = new System.Drawing.Size(35, 30);
             this.ptbExit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -128,42 +205,20 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(12, 5);
+            this.pictureBox1.Location = new System.Drawing.Point(3, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(25, 20);
+            this.pictureBox1.Size = new System.Drawing.Size(38, 30);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 19;
             this.pictureBox1.TabStop = false;
-            // 
-            // ptbFont
-            // 
-            this.ptbFont.Image = ((System.Drawing.Image)(resources.GetObject("ptbFont.Image")));
-            this.ptbFont.Location = new System.Drawing.Point(50, 300);
-            this.ptbFont.Name = "ptbFont";
-            this.ptbFont.Size = new System.Drawing.Size(32, 24);
-            this.ptbFont.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.ptbFont.TabIndex = 17;
-            this.ptbFont.TabStop = false;
-            this.ptbFont.Click += new System.EventHandler(this.ptbFont_Click);
-            // 
-            // ptbColor
-            // 
-            this.ptbColor.Image = ((System.Drawing.Image)(resources.GetObject("ptbColor.Image")));
-            this.ptbColor.Location = new System.Drawing.Point(12, 300);
-            this.ptbColor.Name = "ptbColor";
-            this.ptbColor.Size = new System.Drawing.Size(32, 24);
-            this.ptbColor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.ptbColor.TabIndex = 16;
-            this.ptbColor.TabStop = false;
-            this.ptbColor.Click += new System.EventHandler(this.ptbColor_Click);
             // 
             // PrivateChat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(45)))), ((int)(((byte)(61)))));
-            this.ClientSize = new System.Drawing.Size(467, 391);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(191)))), ((int)(((byte)(236)))));
+            this.ClientSize = new System.Drawing.Size(333, 485);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.ptbMinimize);
             this.Controls.Add(this.ptbExit);
@@ -176,29 +231,30 @@
             this.Load += new System.EventHandler(this.PrivateChat_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbSend)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbMinimize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbExit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbFont)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbColor)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.TextBox txtsend;
         private System.Windows.Forms.FontDialog fontDialog1;
         private System.Windows.Forms.ColorDialog colorDialog1;
-        public System.Windows.Forms.RichTextBox rtxtDisplay;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.PictureBox ptbSend;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox ptbMinimize;
         private System.Windows.Forms.PictureBox ptbExit;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox ptbFont;
-        private System.Windows.Forms.PictureBox ptbColor;
+        private System.Windows.Forms.WebBrowser wbContent;
+        private System.Windows.Forms.TextBox txtSPort;
+        private System.Windows.Forms.TextBox txtRPort;
+        private System.Windows.Forms.Button btnSend;
+        private System.Windows.Forms.Button btnAttach;
+        private System.Windows.Forms.Button btnImage;
+        private System.Windows.Forms.Button btnFont;
+        private System.Windows.Forms.Button btnColor;
+        private System.Windows.Forms.RichTextBox txtsend;
     }
 }

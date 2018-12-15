@@ -26,6 +26,7 @@ namespace PeerToPeerChat
         Socket sck;
         EndPoint epMe, epFriend;
         public string friendName, meIP, mePort, friendIP, friendPort;
+        List<Message> ChatLog;
         private event EventHandler<RequireEvent> requireChat;
         public event EventHandler<RequireEvent> RequireChat
         {
@@ -42,18 +43,16 @@ namespace PeerToPeerChat
         {
             CheckForIllegalCrossThreadCalls = false;
             InitializeComponent();
-            sck = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            sck.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             mypck = new Packet();
             secondsend = new Packet();
+            ChatLog = new List<Message>();
         }
         public PrivateChat(Packet pck)
         {
             firstsend = false;
             CheckForIllegalCrossThreadCalls = false;
             InitializeComponent();
-            sck = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            sck.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+            sck = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             Require = true;
             mypck = pck;
             secondsend = new Packet();
@@ -66,191 +65,94 @@ namespace PeerToPeerChat
             myPacket = (Packet)bformat.Deserialize(str);
             return myPacket;
         }
-        void MessageCallBack(IAsyncResult aResult)
-        {
-            Packet newpacket = new Packet();
-            try
-            {
-                int size = sck.EndReceiveFrom(aResult, ref epFriend);
-                if (size > 0)
-                {
-                    byte[] ReceiveData = new byte[1464];
-                    ReceiveData = (byte[])aResult.AsyncState;
-                    Packet ReceivedPacket = DeSerialize(ReceiveData);
-                    newpacket = ReceivedPacket;
-                    if (ReceivedPacket.MyType == TypePacket.LAST_SEND && ReceivedPacket.MyMessage == secondsend.MyMessage) { }
-                    else
-                    {
-                        this.Invoke((MethodInvoker)(() =>
-                        {
-                            rtxtDisplay.AppendText("Friend: ");
-                            rtxtDisplay.SelectionFont = ReceivedPacket.MyFont;
-                            rtxtDisplay.SelectionColor = ReceivedPacket.MyColor;
-                            rtxtDisplay.AppendText(ReceivedPacket.MyMessage + "\n");
-                            rtxtDisplay.ScrollToCaret();
-                        }));
-                    }
-
-                }
-                byte[] buffer = new byte[1500];
-                sck.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref epFriend, new AsyncCallback(MessageCallBack), buffer);
-            }
-
-            catch (Exception e)
-            {
-                byte[] msg = SendPacket3(newpacket);
-                sck.Send(msg);
-                sck.Shutdown(SocketShutdown.Both);
-                sck.Close();
-            }
-         }
         public void Start()
         {
                 try
                 {
-                    epMe = new IPEndPoint(IPAddress.Parse(meIP), Convert.ToInt32(mePort));
-                    sck.Bind(epMe);
-                    epFriend = new IPEndPoint(IPAddress.Parse(friendIP), Convert.ToInt32(friendPort));
-                    sck.Connect(epFriend);
-                    byte[] buffer = new byte[1500];
-                    sck.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref epFriend, new AsyncCallback(MessageCallBack), buffer);
-                }
+
+                Thread thread = new Thread(ThreadListen);
+                thread.Name = "ThreadListen";
+                thread.Start();
+            }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.ToString());
                 }
         }
-
-
-        private void PrivateChat_FormClosing(object sender, FormClosingEventArgs e)
+        private void ThreadListen()
         {
-            closeChat(this, new CloseEvent(friendIP, this.Text));
-        }
-
-        private void txtsend_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)Keys.Enter)
+            Socket listenSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            listenSocket.Bind(new IPEndPoint(IPAddress.Any, int.Parse(txtRPort.Text)));
+            listenSocket.Listen(4);
+            while (true)
             {
-                btnsend_Click(sender, new EventArgs());
+                Socket socket = listenSocket.Accept();
+                socket.NoDelay = true;
+                try
+                {
+                    byte[] buf = new byte[1024];
+                    socket.Receive(buf);
+                    Packet recievePack = DeSerialize(buf);
+                    Message mes = new Message(recievePack, Type.RECEIVER);
+                    ChatLog.Add(mes);
+                    this.Invoke((MethodInvoker)(() =>
+                    {
+                        string mess = recievePack.MyMessage;
+                        string start = @"<!DOCTYPE html><html><head><title>Client</title><style type='text/css'>
+	                         body{font-family:  'Segoe UI', tahoma, sans-serif;}
+	                        .message{padding: 6px;margin: 4px;text-align: left;cursor:default;word-wrap:break-word;}
+	                        .mine{margin-left: 100px;background: DarkOrange;}
+	                        .remote{margin-right: 100px;background: #999;}
+                            </style>
+                            <script language='javascript'>
+                                window.onload=toBottom;
+                                function toBottom(){ window.scrollTo(0, document.body.scrollHeight);}
+                            </script></head><body>";
+                        string end = @"</body></html>";
+                        string body = "";
+                        foreach (Message x in ChatLog)
+                        {
+                            if(x.who == Type.SENDER)
+                            {
+                                body += "<div class='message mine' title='" + "Test1" + ":" + "Test2" + " " + "Test3" + "'>" + x.pack.MyMessage + "</div>\n";
+
+                            }
+                            else
+                            {
+                                body += "<div class='message remote' title='" + "Test1" + ":" + "Test2" + " " + "Test3" + "'>" + x.pack.MyMessage + "</div>\n";
+
+                            }
+                        }
+                        wbContent.Document.Write(start + body + end);
+                        wbContent.Refresh();
+                    }));
+                }
+                catch (Exception et)
+                {
+                    MessageBox.Show(et.ToString());
+                }
+                socket.Close();
             }
         }
+        private void PrivateChat_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
 
         private void PrivateChat_Load(object sender, EventArgs e)
         {
-            this.Text = friendName;
+            txtRPort.Text = "15000";
             Start();
-            rtxtDisplay.AppendText("Các bạn đang ở chế độ Private Chat!\n");
-            if (Require)
-            {
-                rtxtDisplay.AppendText("Friend: ");
-                rtxtDisplay.SelectionColor = mypck.MyColor;
-                rtxtDisplay.SelectionFont = mypck.MyFont;
-                rtxtDisplay.AppendText(mypck.MyMessage + "\n");
-            }
+
         }
 
-        private void ptbSend_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (firstsend == true)
-                {
-                    firstsend = false;
-                    if (requireChat != null)
-                    {
-                        //
-                        secondsend.MyMessage = txtsend.Text;
-                        secondsend.MyFont = txtsend.Font;
-                        secondsend.MyColor = txtsend.ForeColor;
-                        requireChat(this, new RequireEvent(txtsend.Text, txtsend.ForeColor, txtsend.Font, friendIP));
-                    }
-                }
-                byte[] msg = SendPacket();
-                sck.Send(msg);
-                //
-                rtxtDisplay.AppendText("You: ");
-                rtxtDisplay.SelectionColor = txtsend.ForeColor;
-                rtxtDisplay.SelectionFont = txtsend.Font;
-                rtxtDisplay.AppendText(txtsend.Text + "\n");
-                rtxtDisplay.ScrollToCaret();
-                txtsend.Clear();
-                txtsend.Focus();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
 
         private void ptbExit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void ptbColor_Click(object sender, EventArgs e)
-        {
-            if (colorDialog1.ShowDialog() == DialogResult.OK)
-            {
-                txtsend.ForeColor = colorDialog1.Color;
-            }
-        }
-
-        private void ptbFont_Click(object sender, EventArgs e)
-        {
-            if (fontDialog1.ShowDialog() == DialogResult.OK)
-            {
-                txtsend.Font = fontDialog1.Font;
-            }
-        }
-
-        private void lkbFont_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            if (fontDialog1.ShowDialog() == DialogResult.OK)
-            {
-                txtsend.Font = fontDialog1.Font;
-            }
-        }
-
-        private void btnsend_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (firstsend == true)
-                {
-                    firstsend = false;
-                    if (requireChat != null)
-                    {
-                        //
-                        secondsend.MyMessage = txtsend.Text;
-                        secondsend.MyFont = txtsend.Font;
-                        secondsend.MyColor = txtsend.ForeColor;
-                        requireChat(this, new RequireEvent(txtsend.Text, txtsend.ForeColor, txtsend.Font, friendIP));
-                    }
-                }
-                    byte[] msg = SendPacket();
-                    sck.Send(msg);
-                //
-                rtxtDisplay.AppendText("You: ");
-                rtxtDisplay.SelectionColor = txtsend.ForeColor;
-                rtxtDisplay.SelectionFont = txtsend.Font;
-                rtxtDisplay.AppendText(txtsend.Text + "\n");
-                rtxtDisplay.ScrollToCaret();
-                txtsend.Clear();
-                txtsend.Focus();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
-
-        private void lkbColor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            if (colorDialog1.ShowDialog() == DialogResult.OK)
-            {
-                txtsend.ForeColor = colorDialog1.Color;
-            }
-        }
 
         byte[] SendPacket()
         {
@@ -258,6 +160,9 @@ namespace PeerToPeerChat
             mypacket.MyMessage = txtsend.Text;
             mypacket.MyFont = txtsend.Font;
             mypacket.MyColor = txtsend.ForeColor;
+            mypacket.MyType = TypePacket.MESSAGE;
+            Message mes = new Message(mypacket, Type.SENDER);
+            ChatLog.Add(mes);
             MemoryStream str = new MemoryStream();
             BinaryFormatter bformat = new BinaryFormatter();
             bformat.Serialize(str, mypacket);
@@ -284,6 +189,80 @@ namespace PeerToPeerChat
         {
             if (this.WindowState == FormWindowState.Minimized)
                 this.WindowState = FormWindowState.Minimized;
+        }
+
+
+
+
+        private void btnFont_Click(object sender, EventArgs e)
+        {
+            if (fontDialog1.ShowDialog() == DialogResult.OK)
+            {
+                txtsend.Font = fontDialog1.Font;
+            }
+        }
+
+        private void btnColor_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                txtsend.ForeColor = colorDialog1.Color;
+            }
+        }
+
+        private void btnAttach_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                
+                Socket sck = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                sck.NoDelay = true;
+
+                byte[] buf = new byte[1024];
+                buf = SendPacket();
+                sck.Connect(new IPEndPoint(IPAddress.Parse("192.168.1.22"), int.Parse(txtSPort.Text)));
+                sck.Send(buf);
+                sck.Close();
+                ///
+                string start = @"<!DOCTYPE html><html><head><title>Client</title><style type='text/css'>
+	                         body{font-family:  'Segoe UI', tahoma, sans-serif;}
+	                        .message{padding: 6px;margin: 4px;text-align: left;cursor:default;word-wrap:break-word;}
+	                        .mine{margin-left: 100px;background: DarkOrange;}
+	                        .remote{margin-right: 100px;background: #999;}
+                            </style>
+                            <script language='javascript'>
+                                window.onload=toBottom;
+                                function toBottom(){ window.scrollTo(0, document.body.scrollHeight);}
+                            </script></head><body>";
+                string end = @"</body></html>";
+                string body = "";
+                foreach (Message x in ChatLog)
+                {
+                    if (x.who == Type.SENDER)
+                    {
+                        body += "<div class='message mine' title='" + "Test1" + ":" + "Test2" + " " + "Test3" + "'>" + x.pack.MyMessage + "</div>\n";
+
+                    }
+                    else
+                    {
+                        body += "<div class='message remote' title='" + "Test1" + ":" + "Test2" + " " + "Test3" + "'>" + x.pack.MyMessage + "</div>\n";
+
+                    }
+                }
+                wbContent.Document.Write(start + body + end);
+                wbContent.Refresh();
+
+            }
+            catch (Exception ex) { };
         }
 
         // move form

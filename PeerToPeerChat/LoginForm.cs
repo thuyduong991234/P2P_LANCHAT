@@ -103,5 +103,10 @@ namespace PeerToPeerChat
         {
             Application.Exit();
         }
+
+        private void lblname_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

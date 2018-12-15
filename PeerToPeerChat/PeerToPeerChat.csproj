@@ -58,6 +58,7 @@
     <Compile Include="LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Message.cs" />
     <Compile Include="PrivateChat.cs">
       <SubType>Form</SubType>
     </Compile>

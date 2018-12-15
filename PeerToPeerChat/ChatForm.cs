@@ -167,12 +167,12 @@ namespace PeerToPeerChat
         }
         private void MessageReceived(Packet packet)
         {
-            rtxtdisplay.SelectionFont = new Font("Arial", 12, FontStyle.Bold | FontStyle.Italic);
-            rtxtdisplay.AppendText(packet.MyName + ": ");
-            rtxtdisplay.SelectionFont = packet.MyFont;
-            rtxtdisplay.SelectionColor = packet.MyColor;
-            rtxtdisplay.AppendText(packet.MyMessage + "\n");
-            rtxtdisplay.ScrollToCaret();
+            //rtxtdisplay.SelectionFont = new Font("Arial", 12, FontStyle.Bold | FontStyle.Italic);
+            //rtxtdisplay.AppendText(packet.MyName + ": ");
+            //rtxtdisplay.SelectionFont = packet.MyFont;
+            //rtxtdisplay.SelectionColor = packet.MyColor;
+            //rtxtdisplay.AppendText(packet.MyMessage + "\n");
+            //rtxtdisplay.ScrollToCaret();
         }
 
         private void InitializeSender()
@@ -184,13 +184,7 @@ namespace PeerToPeerChat
 
         private void btnsend_Click(object sender, EventArgs e)
         {
-            if(!string.IsNullOrEmpty(txtcontent.Text))
-            {
-                byte[] data = SendPacket();
-                sendingClient.Send(data, data.Length);
-                txtcontent.Text = "";
-            }
-            txtcontent.Focus();
+
         }
 
         byte[] SendPacket()
@@ -464,6 +458,11 @@ namespace PeerToPeerChat
             {
                 txtcontent.Font = fontDialog1.Font;
             }
+        }
+
+        private void ptbSendFile_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
