@@ -174,6 +174,7 @@ namespace Package
         MESSAGE,
         REQUIRE_CHAT,
         CLOSING,
+        SEND_FILE,
         LAST_SEND
     }
 }

@@ -35,6 +35,7 @@ namespace PeerToPeerChat
         Packet RequirePacket;
         List<string> lstPrivChat;
         List<PrivateChat> lstFormPrivChat;
+        List<Object> ChatLog;
         public bool isClose;
         public ChatForm()
         {
@@ -42,6 +43,7 @@ namespace PeerToPeerChat
             InitializeComponent();
             lstPrivChat = new List<string>();
             lstFormPrivChat = new List<PrivateChat>();
+            ChatLog = new List<object>();
 
         }
 
@@ -63,7 +65,8 @@ namespace PeerToPeerChat
             InitializeSender();
             InitializeReceiver();
             SendName(TypePacket.SEND_INFO_USER_1);
-            txtcontent.Focus();
+            txtsend.Focus();
+            wbContent.DocumentText = "<html><body style=\"background-color:rgb(217,215,206)\"> </body></html>";
         }
         private void InitializeRequirer(string ip, byte[] buffer)
         {
@@ -167,12 +170,24 @@ namespace PeerToPeerChat
         }
         private void MessageReceived(Packet packet)
         {
-            rtxtdisplay.SelectionFont = new Font("Arial", 12, FontStyle.Bold | FontStyle.Italic);
-            rtxtdisplay.AppendText(packet.MyName + ": ");
-            rtxtdisplay.SelectionFont = packet.MyFont;
-            rtxtdisplay.SelectionColor = packet.MyColor;
-            rtxtdisplay.AppendText(packet.MyMessage + "\n");
-            rtxtdisplay.ScrollToCaret();
+            //rtxtdisplay.SelectionFont = new Font("Arial", 12, FontStyle.Bold | FontStyle.Italic);
+            //rtxtdisplay.AppendText(packet.MyName + ": ");
+            //rtxtdisplay.SelectionFont = packet.MyFont;
+            //rtxtdisplay.SelectionColor = packet.MyColor;
+            //rtxtdisplay.AppendText(packet.MyMessage + "\n");
+            //rtxtdisplay.ScrollToCaret();
+            if (packet.MyName == userName)
+
+            {
+                Message rmess = new Message(packet, Type.SENDER);
+                ChatLog.Add(rmess);
+            }
+            else
+            {
+                Message rmess = new Message(packet, Type.RECEIVER);
+                ChatLog.Add(rmess);
+            }
+            RefreshWeb();
         }
 
         private void InitializeSender()
@@ -184,22 +199,22 @@ namespace PeerToPeerChat
 
         private void btnsend_Click(object sender, EventArgs e)
         {
-            if(!string.IsNullOrEmpty(txtcontent.Text))
+            if (!string.IsNullOrEmpty(txtsend.Text))
             {
                 byte[] data = SendPacket();
                 sendingClient.Send(data, data.Length);
-                txtcontent.Text = "";
+                txtsend.Text = "";
             }
-            txtcontent.Focus();
+            txtsend.Focus();
         }
 
         byte[] SendPacket()
         {
             Packet mypacket = new Packet();
             mypacket.MyName = userName;
-            mypacket.MyMessage = txtcontent.Text;
-            mypacket.MyFont = txtcontent.Font;
-            mypacket.MyColor = txtcontent.ForeColor;
+            mypacket.MyMessage = txtsend.Text;
+            mypacket.MyFont = txtsend.Font;
+            mypacket.MyColor = txtsend.ForeColor;
             mypacket.MyType = TypePacket.MESSAGE;
             MemoryStream str = new MemoryStream();
             BinaryFormatter bformat = new BinaryFormatter();
@@ -256,21 +271,6 @@ namespace PeerToPeerChat
             }
         }
 
-        private void lkbFont_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            if(fontDialog1.ShowDialog()==DialogResult.OK)
-            {
-                txtcontent.Font = fontDialog1.Font;
-            }
-        }
-
-        private void lkbColor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            if (colorDialog1.ShowDialog() == DialogResult.OK)
-            {
-                txtcontent.ForeColor = colorDialog1.Color;
-            }
-        }
         void InitializePrivateChat(string Name,string IP, string Port)
         {
             try
@@ -386,5 +386,105 @@ namespace PeerToPeerChat
             }
         }
 
+        private void ptbExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+        // move form
+        protected override void OnLoad(EventArgs e)
+        {
+            if (this.FormBorderStyle == System.Windows.Forms.FormBorderStyle.None)
+            {
+                this.MouseDown += new MouseEventHandler(LoginForm_MouseDown);
+                this.MouseMove += new MouseEventHandler(LoginForm_MouseMove);
+                this.MouseUp += new MouseEventHandler(LoginForm_MouseUp);
+            }
+
+            base.OnLoad(e);
+        }
+        public Point downPoint = Point.Empty;
+        void LoginForm_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
+            downPoint = new Point(e.X, e.Y);
+        }
+
+        void LoginForm_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (downPoint == Point.Empty)
+            {
+                return;
+            }
+            Point location = new Point(
+                this.Left + e.X - downPoint.X,
+                this.Top + e.Y - downPoint.Y);
+            this.Location = location;
+        }
+
+        void LoginForm_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
+            downPoint = Point.Empty;
+        }
+
+        void RefreshWeb()
+        {
+            string start = @"<!DOCTYPE html><html><head><title>Client</title><style type='text/css'>
+	                         body{font-family:  'Segoe UI', tahoma, sans-serif;background-color:rgb(217,215,206);}
+	                        .message{padding: 3px;margin: 3px;text-align: left;cursor:default;word-wrap:break-word;}
+	                        .mine{margin-left: 100px;background: rgb(218,233,255);text-align:right;}
+	                        .remote{margin-right: 100px;background: rgb(255,255,255);}
+                            </style>
+                            <script language='javascript'>
+                                window.onload=toBottom;
+                                function toBottom(){ window.scrollTo(0, document.body.scrollHeight);}
+                            </script></head><body>";
+            string end = @"</body></html>";
+            string body = "";
+            foreach (Message x in ChatLog)
+            {
+                if (x.who == Type.SENDER)
+                {
+                    body += "<div class='message mine' title='" + "Test1" + ":" + "Test2" + " " + "Test3" + "'>"  + "<span><strong>" + x.pack.MyName + "</strong></span>" + "<br>"   + x.pack.MyMessage + "</div>\n";
+                }
+                else
+                {
+                    body += "<div class='message remote' title='" + "Test1" + ":" + "Test2" + " " + "Test3" + "'>" + "<h6>" + x.pack.MyName + "</h6>"  + x.pack.MyMessage + "</div>\n";
+
+                }
+            }
+            wbContent.Document.Write(start + body + end);
+            wbContent.Refresh();
+            txtsend.Text = "";
+            txtsend.Focus();
+        }
+
+        private void ptbMinimize_Click(object sender, EventArgs e)
+        {
+            if (this.WindowState != FormWindowState.Minimized)
+                this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnFont_Click(object sender, EventArgs e)
+        {
+            if (fontDialog1.ShowDialog() == DialogResult.OK)
+            {
+                txtsend.Font = fontDialog1.Font;
+            }
+        }
+
+        private void btnColor_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                txtsend.ForeColor = colorDialog1.Color;
+            }
+        }
     }
 }
