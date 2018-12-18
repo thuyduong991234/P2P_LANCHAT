@@ -32,9 +32,9 @@ namespace PeerToPeerChat
         Thread receivingThread;
         List<string> lstOnline;
         string myPort;
-        Packet RequirePacket;
         List<string> lstPrivChat;
         List<PrivateChat> lstFormPrivChat;
+        List<Object> ChatLog;
         public bool isClose;
         public ChatForm()
         {
@@ -42,7 +42,7 @@ namespace PeerToPeerChat
             InitializeComponent();
             lstPrivChat = new List<string>();
             lstFormPrivChat = new List<PrivateChat>();
-
+            ChatLog = new List<object>();
         }
 
         private void ChatForm_Load(object sender, EventArgs e)
@@ -53,17 +53,40 @@ namespace PeerToPeerChat
             {
                 loginForm.ShowDialog();
                 if (loginForm.UserName == "")
+                {
                     this.Close();
+                    return;
+                }
                 else
                 {
                     userName = loginForm.UserName;
+                    lblusername.Text = userName;
+                    InitializeSender();
+                    InitializeReceiver();
                     this.Show();
+                    txtsend.Focus();
+                    wbContent.DocumentText = "<html><body style=\"background-color:rgb(217,215,206)\"> </body></html>";
                 }
             }
-            InitializeSender();
-            InitializeReceiver();
-            SendName(TypePacket.SEND_INFO_USER_1);
-            txtcontent.Focus();
+            //LoginForm lgform = new LoginForm();
+            //if (lgform.ShowDialog() == DialogResult.OK)
+            //{
+            //    if (lgform.UserName == "")
+            //    {
+            //        this.Close();
+            //        return;
+            //    }
+            //    else
+            //    {
+            //        userName = lgform.UserName;
+            //        lblusername.Text = userName;
+            //        this.Show();
+            //    }
+            //}
+            this.Invoke((MethodInvoker)(() =>
+            {
+                SendName(TypePacket.SEND_INFO_USER_1);
+            }));
         }
         private void InitializeRequirer(string ip, byte[] buffer)
         {
@@ -90,19 +113,35 @@ namespace PeerToPeerChat
                 Packet receivePacket = DeSerialize(data);
                 if (receivePacket.MyType==TypePacket.SEND_INFO_USER_1 && receivePacket.MyName != userName)
                 {
-                    messageDelegate = MessageName;
-                    Invoke(messageDelegate, receivePacket);
+                    this.Invoke((MethodInvoker)(() =>
+                    {
+                        messageDelegate = MessageName;
+                        Invoke(messageDelegate, receivePacket);
+                    }));
+
                 }
                 else if(receivePacket.MyType == TypePacket.SEND_INFO_USER_2 && receivePacket.MyName != userName)
                 {
                     this.Invoke((MethodInvoker)(() =>
                     {
-                        lstFriends.Items.Add(receivePacket.MyName);
-                        lstOnline.Add(receivePacket.MyName + " " + receivePacket.MyIP + " " + receivePacket.MyPort);
+                        bool ck = true;
+                        for (int i = 0; i < lstOnline.Count; i++)
+                        {
+                            string[] ck_lstOnline = lstOnline[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            if (ck_lstOnline[1] == receivePacket.MyIP)
+                                ck = false;
+
+                        }
+                        if (ck)
+                        {
+                            lstFriends.Items.Add(receivePacket.MyName);
+                            lstOnline.Add(receivePacket.MyName + " " + receivePacket.MyIP);
+                        }
                     }));
                 }
                 else if(receivePacket.MyType == TypePacket.MESSAGE)
                 {
+
                     messageDelegate = MessageReceived;
                     Invoke(messageDelegate, receivePacket);
                 }
@@ -111,7 +150,7 @@ namespace PeerToPeerChat
                     messageDelegate = AcceptRequireChat;
                     Invoke(messageDelegate, receivePacket);
                 }
-                else if(receivePacket.MyType == TypePacket.CLOSING)
+                else if(receivePacket.MyType == TypePacket.OUT_CHAT)
                 {
                     messageDelegate = ClosingMethod;
                     Invoke(messageDelegate, receivePacket);
@@ -120,59 +159,96 @@ namespace PeerToPeerChat
         }
         private void ClosingMethod(Packet packet)
         {
-            for(int i=0; i< lstFormPrivChat.Count;i++)
+            for(int i=0; i< lstOnline.Count;i++)
             {
-                string name = lstFormPrivChat[i].Text;
-                if(packet.MyName == name)
+                string[] IP = lstOnline[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (packet.MyIP == IP[1])
                 {
-                    lstFormPrivChat[i].firstsend = true;
+                    lstFriends.Items.RemoveAt(i);
+                    lstOnline.RemoveAt(i);
+                    Message clsmess = new Message(packet, Type.CLOSER);
+                    ChatLog.Add(clsmess);
+                    RefreshWeb();
                 }
             }
         }
         private void AcceptRequireChat(Packet packet)
         {
-            PrivateChat priv = new PrivateChat();
             bool isExist = false;
             foreach(PrivateChat name in lstFormPrivChat)
             {
                 if(name.Text == packet.MyName)
                 {
                     isExist = true;
-                    priv = name;
                     break;
                 }
             }
             if (!isExist)
             {
-                for (int i = 0; i < lstFriends.Items.Count; i++)
-                {
-                    if (lstFriends.Items[i].ToString() == packet.MyName)
-                    {
-                        lstFriends.Items[i] = lstFriends.Items[i] + " " + "(Bạn có tin nhắn mới...)";
-                    }
-                }
-                RequirePacket = new Packet();
-                RequirePacket.MyMessage = packet.MyMessage;
-                RequirePacket.MyColor = packet.MyColor;
-                RequirePacket.MyFont = packet.MyFont;
+                //for (int i = 0; i < lstFriends.Items.Count; i++)
+                //{
+                //    if (lstFriends.Items[i].ToString() == packet.MyName)
+                //    {
+                //        lstFriends.Items[i] = lstFriends.Items[i] + " " + "(Bạn có tin nhắn mới...)";
+                //    }
+                //}
+                Random rd = new Random();
+                PrivateChat priv = new PrivateChat(packet, 2, packet.MyPort, GetLocalIP(), rd.Next(10000, 60000) + "");
+                priv.friendName = packet.MyName;
+                priv.friendIP = packet.MyIP;
+                lstFormPrivChat.Add(priv);
+                priv.Show();
             }
             else
                 return;
         }
         private void MessageName(Packet packet)
         {
-            lstFriends.Items.Add(packet.MyName);
-            lstOnline.Add(packet.MyName + " " + packet.MyIP + " " + packet.MyPort);
-            SendName(TypePacket.SEND_INFO_USER_2);
+            bool ck = true;
+            for(int i=0; i < lstOnline.Count;i++)
+            {
+                string[] ck_lstOnline = lstOnline[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (ck_lstOnline[1] == packet.MyIP)
+                    ck = false;
+
+            }
+            if(ck)
+            {
+                lstFriends.Items.Add(packet.MyName);
+                lstOnline.Add(packet.MyName + " " + packet.MyIP);
+            }
+            Packet rspck = new Packet();
+            rspck.MyIP = GetLocalIP();
+            rspck.MyType = TypePacket.SEND_INFO_USER_2;
+            rspck.MyName = userName;
+            MemoryStream str = new MemoryStream();
+            BinaryFormatter bformat = new BinaryFormatter();
+            bformat.Serialize(str, rspck);
+            byte[] data = new byte[1024];
+            data = str.ToArray();
+            InitializeRequirer(packet.MyIP,data);
+            //SendName(TypePacket.SEND_INFO_USER_2);
         }
         private void MessageReceived(Packet packet)
         {
-            rtxtdisplay.SelectionFont = new Font("Arial", 12, FontStyle.Bold | FontStyle.Italic);
-            rtxtdisplay.AppendText(packet.MyName + ": ");
-            rtxtdisplay.SelectionFont = packet.MyFont;
-            rtxtdisplay.SelectionColor = packet.MyColor;
-            rtxtdisplay.AppendText(packet.MyMessage + "\n");
-            rtxtdisplay.ScrollToCaret();
+            //rtxtdisplay.SelectionFont = new Font("Arial", 12, FontStyle.Bold | FontStyle.Italic);
+            //rtxtdisplay.AppendText(packet.MyName + ": ");
+            //rtxtdisplay.SelectionFont = packet.MyFont;
+            //rtxtdisplay.SelectionColor = packet.MyColor;
+            //rtxtdisplay.AppendText(packet.MyMessage + "\n");
+            //rtxtdisplay.ScrollToCaret();
+            if (packet.MyName == userName)
+
+            {
+                Message rmess = new Message(packet, Type.SENDER);
+                ChatLog.Add(rmess);
+            }
+            else
+            {
+                Message rmess = new Message(packet, Type.RECEIVER);
+                ChatLog.Add(rmess);
+            }
+            RefreshWeb();
         }
 
         private void InitializeSender()
@@ -184,22 +260,22 @@ namespace PeerToPeerChat
 
         private void btnsend_Click(object sender, EventArgs e)
         {
-            if(!string.IsNullOrEmpty(txtcontent.Text))
+            if (!string.IsNullOrEmpty(txtsend.Text))
             {
                 byte[] data = SendPacket();
                 sendingClient.Send(data, data.Length);
-                txtcontent.Text = "";
+                txtsend.Text = "";
             }
-            txtcontent.Focus();
+            txtsend.Focus();
         }
 
         byte[] SendPacket()
         {
             Packet mypacket = new Packet();
             mypacket.MyName = userName;
-            mypacket.MyMessage = txtcontent.Text;
-            mypacket.MyFont = txtcontent.Font;
-            mypacket.MyColor = txtcontent.ForeColor;
+            mypacket.MyMessage = txtsend.Text;
+            mypacket.MyFont = txtsend.Font;
+            mypacket.MyColor = txtsend.ForeColor;
             mypacket.MyType = TypePacket.MESSAGE;
             MemoryStream str = new MemoryStream();
             BinaryFormatter bformat = new BinaryFormatter();
@@ -235,7 +311,7 @@ namespace PeerToPeerChat
         public void SendName(TypePacket type)
         {
             Packet mypacket = new Packet();
-            this.myPort = mypacket.MyPort;
+            //this.myPort = mypacket.MyPort;
             mypacket.MyIP = GetLocalIP();
             mypacket.MyName = userName;
             mypacket.MyType = type;
@@ -256,35 +332,17 @@ namespace PeerToPeerChat
             }
         }
 
-        private void lkbFont_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            if(fontDialog1.ShowDialog()==DialogResult.OK)
-            {
-                txtcontent.Font = fontDialog1.Font;
-            }
-        }
-
-        private void lkbColor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            if (colorDialog1.ShowDialog() == DialogResult.OK)
-            {
-                txtcontent.ForeColor = colorDialog1.Color;
-            }
-        }
-        void InitializePrivateChat(string Name,string IP, string Port)
+        void InitializePrivateChat(string Name,string IP, string Port, Packet hipck)
         {
             try
             {
-                PrivateChat PrivCchat = new PrivateChat();
-                PrivCchat.RequireChat += new_requireChat;
-                PrivCchat.CloseChat += new_closeChat;
+                PrivateChat PrivCchat = new PrivateChat(hipck,1);
                 PrivCchat.friendName = Name;
                 PrivCchat.meIP = GetLocalIP();
                 PrivCchat.friendIP = IP;
                 PrivCchat.mePort = this.myPort;
                 PrivCchat.friendPort = Port;
                 //
-                lstPrivChat.Add(Name);
                 lstFormPrivChat.Add(PrivCchat);
                 PrivCchat.Show();
             }
@@ -294,38 +352,37 @@ namespace PeerToPeerChat
             }
         }
 
-        private void new_closeChat(object sender, CloseEvent e)
-        {
-            // GỬI THÔNG BÁO ĐÓNG CHO BÊN BẠN
+        //private void new_closeChat(object sender, CloseEvent e)
+        //{
+        //    // GỬI THÔNG BÁO ĐÓNG CHO BÊN BẠN
 
-            Packet closingpck = new Packet();
-            closingpck.MyType = TypePacket.CLOSING;
-            closingpck.MyName = userName;
-            MemoryStream str = new MemoryStream();
-            BinaryFormatter bformat = new BinaryFormatter();
-            bformat.Serialize(str, closingpck);
-            byte[] data = new byte[1024];
-            data = str.ToArray();
-            InitializeRequirer(e.FirstIP, data);
-            lstPrivChat.Remove(e.friendName);
-            for(int i=0; i < lstFormPrivChat.Count;i++)
-            {
-                if (lstFormPrivChat[i].Text == e.friendName)
-                    lstFormPrivChat.Remove(lstFormPrivChat[i]);
-            }
-        }
+        //    Packet closingpck = new Packet();
+        //    closingpck.MyType = TypePacket.CLOSING;
+        //    closingpck.MyName = userName;
+        //    MemoryStream str = new MemoryStream();
+        //    BinaryFormatter bformat = new BinaryFormatter();
+        //    bformat.Serialize(str, closingpck);
+        //    byte[] data = new byte[1024];
+        //    data = str.ToArray();
+        //    InitializeRequirer(e.FirstIP, data);
+        //    for(int i=0; i < lstFormPrivChat.Count;i++)
+        //    {
+        //        if (lstFormPrivChat[i].Text == e.friendName)
+        //            lstFormPrivChat.Remove(lstFormPrivChat[i]);
+        //    }
+        //}
 
         void InitializeRequirePrivateChat(string Name, string IP, string Port, Packet pck, int num)
         {
             try
             {
-                PrivateChat PrivCchat = new PrivateChat(pck);
+                PrivateChat PrivCchat = new PrivateChat();
                 PrivCchat.RequireChat += new_requireChat;
-                PrivCchat.CloseChat += new_closeChat;
+                //PrivCchat.CloseChat += new_closeChat;
                 PrivCchat.friendName = Name;
                 PrivCchat.meIP = GetLocalIP();
                 PrivCchat.friendIP = IP;
-                PrivCchat.mePort = this.myPort;
+                PrivCchat.mePort = pck.MyPort;
                 PrivCchat.friendPort = Port;
                 PrivCchat.Show();
                 lstFormPrivChat.Add(PrivCchat);
@@ -357,27 +414,50 @@ namespace PeerToPeerChat
         {
             try
             {
+                //int num = 0;
+                //string[] Name_IP;
+                //string IP;
+                //string[] require = null;
+                //if (lstFriends.SelectedItem != null)
+                //{
+                //    num = lstFriends.IndexFromPoint(e.Location);
+                //    string ckrequire = lstFriends.SelectedItem as string;
+                //    require = ckrequire.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                //}
+                //Name_IP = lstOnline[num].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                //IP = Name_IP[1];
+                //string Port = Name_IP[2];
+
+                //if (require.Length > 1)
+                //{
+                //    InitializeRequirePrivateChat(Name_IP[0], IP, Port, RequirePacket, num);
+                //}
+                //else
+                //{
+                //    InitializePrivateChat(Name_IP[0], IP, Port);
+                //}
                 int num = 0;
-                string[] Name_IP;
-                string IP;
-                string[] require = null;
-                if (lstFriends.SelectedItem != null)
+                string[] Details;
+                if(lstFriends.SelectedItem != null)
                 {
                     num = lstFriends.IndexFromPoint(e.Location);
-                    string ckrequire = lstFriends.SelectedItem as string;
-                    require = ckrequire.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                }
-                Name_IP = lstOnline[num].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                IP = Name_IP[1];
-                string Port = Name_IP[2];
+                    Details = lstOnline[num].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    // Gửi "Hi" đến cho ChatForm bên kia
+                    Random rd = new Random();
+                    Packet hipck = new Packet();
+                    hipck.MyMessage = "Xin chào!";
+                    hipck.MyType = TypePacket.REQUIRE_CHAT;
+                    hipck.MyName = userName;
+                    this.myPort = hipck.MyPort = rd.Next(10000, 60000) + "";
+                    hipck.MyIP = GetLocalIP();
+                    MemoryStream str = new MemoryStream();
+                    BinaryFormatter bformat = new BinaryFormatter();
+                    bformat.Serialize(str, hipck);
+                    byte[] data = new byte[1024];
+                    data = str.ToArray();
+                    InitializePrivateChat(Details[0], Details[1],"0",hipck);
+                    InitializeRequirer(Details[1], data);
 
-                if (require.Length > 1)
-                {
-                    InitializeRequirePrivateChat(Name_IP[0], IP, Port, RequirePacket, num);
-                }
-                else
-                {
-                    InitializePrivateChat(Name_IP[0], IP, Port);
                 }
             }
             catch (Exception ex)
@@ -386,5 +466,150 @@ namespace PeerToPeerChat
             }
         }
 
+        private void ptbExit_Click(object sender, EventArgs e)
+        {
+            Packet clpck = new Packet();
+            clpck.MyType = TypePacket.OUT_CHAT;
+            clpck.MyName = userName;
+            clpck.MyIP = GetLocalIP();
+            MemoryStream str = new MemoryStream();
+            BinaryFormatter bformat = new BinaryFormatter();
+            bformat.Serialize(str, clpck);
+            byte[] data = new byte[1024];
+            data = str.ToArray();
+            sendingClient.Send(data, data.Length);
+            Application.Exit();
+        }
+        // move form
+        protected override void OnLoad(EventArgs e)
+        {
+            if (this.FormBorderStyle == System.Windows.Forms.FormBorderStyle.None)
+            {
+                this.MouseDown += new MouseEventHandler(LoginForm_MouseDown);
+                this.MouseMove += new MouseEventHandler(LoginForm_MouseMove);
+                this.MouseUp += new MouseEventHandler(LoginForm_MouseUp);
+            }
+
+            base.OnLoad(e);
+        }
+        public Point downPoint = Point.Empty;
+        void LoginForm_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
+            downPoint = new Point(e.X, e.Y);
+        }
+
+        void LoginForm_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (downPoint == Point.Empty)
+            {
+                return;
+            }
+            Point location = new Point(
+                this.Left + e.X - downPoint.X,
+                this.Top + e.Y - downPoint.Y);
+            this.Location = location;
+        }
+
+        void LoginForm_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
+            downPoint = Point.Empty;
+        }
+
+        void RefreshWeb()
+        {
+            string start = @"<!DOCTYPE html><html><head><title>Client</title><style type='text/css'>
+	                         body{font-family:  'Segoe UI', tahoma, sans-serif;background-color:rgb(217,215,206);}
+	                        .message{padding: 3px;margin: 3px;text-align: left;cursor:default;word-wrap:break-word;}
+	                        .mine{margin-left: 100px;background: rgb(218,233,255);text-align:right;}
+	                        .remote{margin-right: 100px;background: rgb(255,255,255);}
+                            </style>
+                            <script language='javascript'>
+                                window.onload=toBottom;
+                                function toBottom(){ window.scrollTo(0, document.body.scrollHeight);}
+                            </script></head><body>";
+            string end = @"</body></html>";
+            string body = "";
+            foreach (Message x in ChatLog)
+            {
+                if (x.who == Type.SENDER)
+                {
+                    string font = "font-family:" + x.pack.MyFont.FontFamily.Name + ";" + "font-size:" + x.pack.MyFont.Size + "px;";
+                    if (x.pack.MyFont.Italic)
+                        font += "font-style: italic;";
+                    if(x.pack.MyFont.Bold)
+                    {
+                        font += "font-weight: bold;";
+                    }
+                    if(x.pack.MyFont.Underline)
+                    {
+                        font += "text-decoration: underline;";
+                        
+                    }
+                    string style = "style=\"color:rgb(" + x.pack.MyColor.R +","+ x.pack.MyColor.G + "," + x.pack.MyColor.B + ");"+ font + "\"";
+                    body += "<div class='message mine' title='" + "Test1" + ":" + "Test2" + " " + "Test3" + "'>"  + "<span><strong>" + x.pack.MyName + "</strong></span>" + "<br>"  + "<span " +style +">" + x.pack.MyMessage + "</span></div>\n";
+                }
+                else if(x.who == Type.RECEIVER)
+                {
+                    string font = "font-family:" + x.pack.MyFont.FontFamily.Name + ";" + "font-size:" + x.pack.MyFont.Size + "px;";
+                    if (x.pack.MyFont.Italic)
+                        font += "font-style: italic;";
+                    if (x.pack.MyFont.Bold)
+                    {
+                        font += "font-weight: bold;";
+                    }
+                    if (x.pack.MyFont.Underline)
+                    {
+                        font += "text-decoration: underline;";
+
+                    }
+
+                    string style = "style=\"color:rgb(" + x.pack.MyColor.R + "," + x.pack.MyColor.G + "," + x.pack.MyColor.B + ");" + font + "\"";
+                    body += "<div class='message remote' title='" + "Test1" + ":" + "Test2" + " " + "Test3" + "'>" + "<span><strong>" + x.pack.MyName + "</strong></span>" + "<br>" + "<span " + style + ">" + x.pack.MyMessage + "</span></div>\n";
+                }
+                else
+                {
+                    body += "<p style=\"text-align: center\">" + x.pack.MyName + " đã offline!" + "</p>";
+
+                }
+            }
+            wbContent.Document.Write(start + body + end);
+            wbContent.Refresh();
+            txtsend.Text = "";
+            txtsend.Focus();
+        }
+
+        private void ptbMinimize_Click(object sender, EventArgs e)
+        {
+            if (this.WindowState != FormWindowState.Minimized)
+                this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnFont_Click(object sender, EventArgs e)
+        {
+            if (fontDialog1.ShowDialog() == DialogResult.OK)
+            {
+                txtsend.Font = fontDialog1.Font;
+            }
+        }
+
+        private void btnColor_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                txtsend.ForeColor = colorDialog1.Color;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+        }
     }
 }
