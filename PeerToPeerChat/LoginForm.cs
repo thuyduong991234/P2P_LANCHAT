@@ -104,9 +104,12 @@ namespace PeerToPeerChat
             Application.Exit();
         }
 
-        private void lblname_Click(object sender, EventArgs e)
+        private void txtname_KeyPress(object sender, KeyPressEventArgs e)
         {
-
+            if (e.KeyChar == (char) Keys.Space)
+            {
+                e.Handled = true;
+            }
         }
     }
 }
