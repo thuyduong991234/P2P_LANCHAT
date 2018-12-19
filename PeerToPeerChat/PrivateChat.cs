@@ -83,11 +83,11 @@ namespace PeerToPeerChat
                     {
                         this.Invoke((MethodInvoker)(() =>
                         {
-                            rtxtDisplay.AppendText("Friend: ");
-                            rtxtDisplay.SelectionFont = ReceivedPacket.MyFont;
-                            rtxtDisplay.SelectionColor = ReceivedPacket.MyColor;
-                            rtxtDisplay.AppendText(ReceivedPacket.MyMessage + "\n");
-                            rtxtDisplay.ScrollToCaret();
+                            //rtxtDisplay.AppendText("Friend: ");
+                            //rtxtDisplay.SelectionFont = ReceivedPacket.MyFont;
+                            //.SelectionColor = ReceivedPacket.MyColor;
+                            //rtxtDisplay.AppendText(ReceivedPacket.MyMessage + "\n");
+                            //rtxtDisplay.ScrollToCaret();
                         }));
                     }
 
@@ -139,13 +139,67 @@ namespace PeerToPeerChat
         {
             this.Text = friendName;
             Start();
-            rtxtDisplay.AppendText("Các bạn đang ở chế độ Private Chat!\n");
+            //rtxtDisplay.AppendText("Các bạn đang ở chế độ Private Chat!\n");
             if (Require)
             {
-                rtxtDisplay.AppendText("Friend: ");
-                rtxtDisplay.SelectionColor = mypck.MyColor;
-                rtxtDisplay.SelectionFont = mypck.MyFont;
-                rtxtDisplay.AppendText(mypck.MyMessage + "\n");
+                //rtxtDisplay.AppendText("Friend: ");
+                //rtxtDisplay.SelectionColor = mypck.MyColor;
+                //rtxtDisplay.SelectionFont = mypck.MyFont;
+                //rtxtDisplay.AppendText(mypck.MyMessage + "\n");
+            }
+        }
+
+        private void ptbSend_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (firstsend == true)
+                {
+                    firstsend = false;
+                    if (requireChat != null)
+                    {
+                        //
+                        secondsend.MyMessage = txtsend.Text;
+                        secondsend.MyFont = txtsend.Font;
+                        secondsend.MyColor = txtsend.ForeColor;
+                        requireChat(this, new RequireEvent(txtsend.Text, txtsend.ForeColor, txtsend.Font, friendIP));
+                    }
+                }
+                byte[] msg = SendPacket();
+                sck.Send(msg);
+                //
+                //rtxtDisplay.AppendText("You: ");
+                //rtxtDisplay.SelectionColor = txtsend.ForeColor;
+                //rtxtDisplay.SelectionFont = txtsend.Font;
+               // rtxtDisplay.AppendText(txtsend.Text + "\n");
+                //rtxtDisplay.ScrollToCaret();
+                txtsend.Clear();
+                txtsend.Focus();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void ptbExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void ptbColor_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                txtsend.ForeColor = colorDialog1.Color;
+            }
+        }
+
+        private void ptbFont_Click(object sender, EventArgs e)
+        {
+            if (fontDialog1.ShowDialog() == DialogResult.OK)
+            {
+                txtsend.Font = fontDialog1.Font;
             }
         }
 
@@ -176,11 +230,11 @@ namespace PeerToPeerChat
                     byte[] msg = SendPacket();
                     sck.Send(msg);
                 //
-                rtxtDisplay.AppendText("You: ");
-                rtxtDisplay.SelectionColor = txtsend.ForeColor;
-                rtxtDisplay.SelectionFont = txtsend.Font;
-                rtxtDisplay.AppendText(txtsend.Text + "\n");
-                rtxtDisplay.ScrollToCaret();
+               // rtxtDisplay.AppendText("You: ");
+               // rtxtDisplay.SelectionColor = txtsend.ForeColor;
+                //rtxtDisplay.SelectionFont = txtsend.Font;
+                //rtxtDisplay.AppendText(txtsend.Text + "\n");
+                ///rtxtDisplay.ScrollToCaret();
                 txtsend.Clear();
                 txtsend.Focus();
             }
@@ -224,6 +278,55 @@ namespace PeerToPeerChat
             byte[] data = new byte[1024];
             data = str.ToArray();
             return data;
+        }
+
+        private void ptbMinimize_Click(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+                this.WindowState = FormWindowState.Minimized;
+        }
+
+        // move form
+        protected override void OnLoad(EventArgs e)
+        {
+            if (this.FormBorderStyle == System.Windows.Forms.FormBorderStyle.None)
+            {
+                this.MouseDown += new MouseEventHandler(LoginForm_MouseDown);
+                this.MouseMove += new MouseEventHandler(LoginForm_MouseMove);
+                this.MouseUp += new MouseEventHandler(LoginForm_MouseUp);
+            }
+
+            base.OnLoad(e);
+        }
+        public Point downPoint = Point.Empty;
+        void LoginForm_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
+            downPoint = new Point(e.X, e.Y);
+        }
+
+        void LoginForm_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (downPoint == Point.Empty)
+            {
+                return;
+            }
+            Point location = new Point(
+                this.Left + e.X - downPoint.X,
+                this.Top + e.Y - downPoint.Y);
+            this.Location = location;
+        }
+
+        void LoginForm_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
+            downPoint = Point.Empty;
         }
     }
 

@@ -14,3 +14,15 @@ C:\Users\akasu\Desktop\ver\ProjectP2PChat\Package\bin\Debug\Package.pdb
 C:\Users\akasu\Desktop\ver\ProjectP2PChat\Package\obj\Debug\Package.csprojResolveAssemblyReference.cache
 C:\Users\akasu\Desktop\ver\ProjectP2PChat\Package\obj\Debug\Package.dll
 C:\Users\akasu\Desktop\ver\ProjectP2PChat\Package\obj\Debug\Package.pdb
+C:\Users\Admin\Documents\GitHub\P2P_LANCHAT\Package\bin\Debug\Package.dll
+C:\Users\Admin\Documents\GitHub\P2P_LANCHAT\Package\bin\Debug\Package.pdb
+C:\Users\Admin\Documents\GitHub\P2P_LANCHAT\Package\obj\Debug\Package.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Documents\GitHub\P2P_LANCHAT\Package\obj\Debug\Package.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Documents\GitHub\P2P_LANCHAT\Package\obj\Debug\Package.dll
+C:\Users\Admin\Documents\GitHub\P2P_LANCHAT\Package\obj\Debug\Package.pdb
+C:\Users\Admin\Downloads\MESSENGER_HEHE\Package\bin\Debug\Package.dll
+C:\Users\Admin\Downloads\MESSENGER_HEHE\Package\bin\Debug\Package.pdb
+C:\Users\Admin\Downloads\MESSENGER_HEHE\Package\obj\Debug\Package.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Downloads\MESSENGER_HEHE\Package\obj\Debug\Package.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Downloads\MESSENGER_HEHE\Package\obj\Debug\Package.dll
+C:\Users\Admin\Downloads\MESSENGER_HEHE\Package\obj\Debug\Package.pdb

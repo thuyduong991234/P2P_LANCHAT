@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeerToPeerChat", "PeerToPeerChat\PeerToPeerChat.csproj", "{5D669614-1CAC-40B6-81ED-C311CC3300F0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P2P", "P2P\P2P.csproj", "{BF87F6DE-9497-4E23-A3D3-352F063396E1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Package", "Package\Package.csproj", "{0915E5EE-50F7-4FB5-98C9-1F1E7A146A46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExRichTextBox", "ExRichTextBox\ExRichTextBox.csproj", "{1A63B1D0-D2F0-4F8C-B242-863E83E1419C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,8 +29,15 @@ Global
 		{0915E5EE-50F7-4FB5-98C9-1F1E7A146A46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0915E5EE-50F7-4FB5-98C9-1F1E7A146A46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0915E5EE-50F7-4FB5-98C9-1F1E7A146A46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A63B1D0-D2F0-4F8C-B242-863E83E1419C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A63B1D0-D2F0-4F8C-B242-863E83E1419C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A63B1D0-D2F0-4F8C-B242-863E83E1419C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A63B1D0-D2F0-4F8C-B242-863E83E1419C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {09F0E289-11CA-42EE-A267-955CD4725F70}
 	EndGlobalSection
 EndGlobal

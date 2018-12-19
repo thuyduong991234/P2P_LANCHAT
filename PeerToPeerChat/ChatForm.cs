@@ -167,12 +167,12 @@ namespace PeerToPeerChat
         }
         private void MessageReceived(Packet packet)
         {
-            rtxtdisplay.SelectionFont = new Font("Arial", 12, FontStyle.Bold | FontStyle.Italic);
-            rtxtdisplay.AppendText(packet.MyName + ": ");
-            rtxtdisplay.SelectionFont = packet.MyFont;
-            rtxtdisplay.SelectionColor = packet.MyColor;
-            rtxtdisplay.AppendText(packet.MyMessage + "\n");
-            rtxtdisplay.ScrollToCaret();
+            //rtxtdisplay.SelectionFont = new Font("Arial", 12, FontStyle.Bold | FontStyle.Italic);
+            //rtxtdisplay.AppendText(packet.MyName + ": ");
+            //rtxtdisplay.SelectionFont = packet.MyFont;
+            //rtxtdisplay.SelectionColor = packet.MyColor;
+            //rtxtdisplay.AppendText(packet.MyMessage + "\n");
+            //rtxtdisplay.ScrollToCaret();
         }
 
         private void InitializeSender()
@@ -184,13 +184,7 @@ namespace PeerToPeerChat
 
         private void btnsend_Click(object sender, EventArgs e)
         {
-            if(!string.IsNullOrEmpty(txtcontent.Text))
-            {
-                byte[] data = SendPacket();
-                sendingClient.Send(data, data.Length);
-                txtcontent.Text = "";
-            }
-            txtcontent.Focus();
+
         }
 
         byte[] SendPacket()
@@ -250,10 +244,7 @@ namespace PeerToPeerChat
 
         private void txtcontent_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Enter)
-            {
-                btnsend_Click(sender, new EventArgs());
-            }
+
         }
 
         private void lkbFont_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -386,5 +377,177 @@ namespace PeerToPeerChat
             }
         }
 
+        private void ptbExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+        // move form
+        protected override void OnLoad(EventArgs e)
+        {
+            if (this.FormBorderStyle == System.Windows.Forms.FormBorderStyle.None)
+            {
+                this.MouseDown += new MouseEventHandler(LoginForm_MouseDown);
+                this.MouseMove += new MouseEventHandler(LoginForm_MouseMove);
+                this.MouseUp += new MouseEventHandler(LoginForm_MouseUp);
+            }
+
+            base.OnLoad(e);
+        }
+        public Point downPoint = Point.Empty;
+        void LoginForm_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
+            downPoint = new Point(e.X, e.Y);
+        }
+
+        void LoginForm_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (downPoint == Point.Empty)
+            {
+                return;
+            }
+            Point location = new Point(
+                this.Left + e.X - downPoint.X,
+                this.Top + e.Y - downPoint.Y);
+            this.Location = location;
+        }
+
+        void LoginForm_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
+            downPoint = Point.Empty;
+        }
+
+        private void pictureSend_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtcontent.Text))
+            {
+                byte[] data = SendPacket();
+                sendingClient.Send(data, data.Length);
+                txtcontent.Text = "";
+            }
+            txtcontent.Focus();
+        }
+
+        private void ptbMinimize_Click(object sender, EventArgs e)
+        {
+            if (this.WindowState != FormWindowState.Minimized)
+                this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void ptbColor_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                txtcontent.ForeColor = colorDialog1.Color;
+            }
+        }
+
+        private void ptbFont_Click(object sender, EventArgs e)
+        {
+            if (fontDialog1.ShowDialog() == DialogResult.OK)
+            {
+                txtcontent.Font = fontDialog1.Font;
+            }
+        }
+
+        private void ptbSendFile_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtcontent_KeyDown_1(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnsend_Click(sender, new EventArgs());
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (tlpMenuIcon.Visible == true)
+                tlpMenuIcon.Visible = false;
+            else
+                tlpMenuIcon.Visible = true;
+        }
+
+        private void ptbAngel_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                txtcontent.InsertImage(new Bitmap("Emoticons.AngelSmile.png"));
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show("Rtf Image Insert Error\n\n" + _e.ToString());
+            }
+        }
+
+        private void ptbBeer_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                txtcontent.InsertImage(new Bitmap("..\\..\\Emoticons\\Beer.png"));
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show("Rtf Image Insert Error\n\n" + _e.ToString());
+            }
+        }
+
+        private void ptbAngry_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                txtcontent.InsertImage(new Bitmap("Emoticons.AngrySmile.png"));
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show("Rtf Image Insert Error\n\n" + _e.ToString());
+            }
+        }
+
+        private void ptbBroken_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                txtcontent.InsertImage(new Bitmap(typeof(ChatForm), "EmoticonsEmoticons.AngrySmile.png"));
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show("Rtf Image Insert Error\n\n" + _e.ToString());
+            }
+        }
+
+        private void ptbConfused_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                txtcontent.InsertImage(new Bitmap("Emoticons.ConfusedSmile.png"));
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show("Rtf Image Insert Error\n\n" + _e.ToString());
+            }
+        }
+
+        private void ptbCry_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                txtcontent.InsertImage(new Bitmap("Emoticons.CrySmile.png"));
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show("Rtf Image Insert Error\n\n" + _e.ToString());
+            }
+        }
     }
 }

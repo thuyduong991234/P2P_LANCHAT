@@ -98,6 +98,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ExRichTextBox\ExRichTextBox.csproj">
+      <Project>{1a63b1d0-d2f0-4f8c-b242-863e83e1419c}</Project>
+      <Name>ExRichTextBox</Name>
+    </ProjectReference>
     <ProjectReference Include="..\P2P\P2P.csproj">
       <Project>{bf87f6de-9497-4e23-a3d3-352f063396e1}</Project>
       <Name>P2P</Name>
@@ -106,6 +110,17 @@
       <Project>{0915e5ee-50f7-4fb5-98c9-1f1e7a146a46}</Project>
       <Name>Package</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Emoticons\AngelSmile.png" />
+    <Content Include="Emoticons\AngrySmile.png" />
+    <Content Include="Emoticons\Beer.png" />
+    <Content Include="Emoticons\BrokenHeart.png" />
+    <Content Include="Emoticons\ConfusedSmile.png" />
+    <Content Include="Emoticons\CrySmile.png" />
+    <Content Include="Emoticons\DevilSmile.png" />
+    <Content Include="Emoticons\EmbarassedSmile.png" />
+    <Content Include="Emoticons\ThumbsUp.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

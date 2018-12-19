@@ -1,0 +1,11 @@
+C:\Users\Admin\Downloads\ExRichTextBox\bin\Debug\Khendys.Controls.ExRichTextBox.dll
+C:\Users\Admin\Downloads\ExRichTextBox\bin\Debug\Khendys.Controls.ExRichTextBox.pdb
+C:\Users\Admin\Downloads\ExRichTextBox\obj\Debug\ExRichTextBox.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Downloads\ExRichTextBox\obj\Debug\ExRichTextBox.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Downloads\ExRichTextBox\obj\Debug\Khendys.Controls.ExRichTextBox.dll
+C:\Users\Admin\Downloads\ExRichTextBox\obj\Debug\Khendys.Controls.ExRichTextBox.pdb
+C:\Users\akasu\Desktop\MESSENGER\MESSENGER\ExRichTextBox\bin\Debug\Khendys.Controls.ExRichTextBox.dll
+C:\Users\akasu\Desktop\MESSENGER\MESSENGER\ExRichTextBox\bin\Debug\Khendys.Controls.ExRichTextBox.pdb
+C:\Users\akasu\Desktop\MESSENGER\MESSENGER\ExRichTextBox\obj\Debug\ExRichTextBox.csprojResolveAssemblyReference.cache
+C:\Users\akasu\Desktop\MESSENGER\MESSENGER\ExRichTextBox\obj\Debug\Khendys.Controls.ExRichTextBox.dll
+C:\Users\akasu\Desktop\MESSENGER\MESSENGER\ExRichTextBox\obj\Debug\Khendys.Controls.ExRichTextBox.pdb
