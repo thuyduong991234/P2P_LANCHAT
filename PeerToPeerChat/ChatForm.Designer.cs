@@ -36,6 +36,7 @@
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
             this.lblusername = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lstFriends = new System.Windows.Forms.ListBox();
@@ -45,6 +46,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.ptbAva = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnImage = new System.Windows.Forms.Button();
+            this.btnAttach = new System.Windows.Forms.Button();
             this.txtsend = new System.Windows.Forms.RichTextBox();
             this.btnFont = new System.Windows.Forms.Button();
             this.btnColor = new System.Windows.Forms.Button();
@@ -87,6 +90,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.lblusername);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.panel4);
@@ -97,14 +101,25 @@
             this.panel1.Size = new System.Drawing.Size(197, 514);
             this.panel1.TabIndex = 8;
             // 
+            // label2
+            // 
+            this.label2.BackColor = System.Drawing.Color.White;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(191)))), ((int)(((byte)(236)))));
+            this.label2.Location = new System.Drawing.Point(52, 59);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(136, 14);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "Chào mừng!";
+            // 
             // lblusername
             // 
             this.lblusername.BackColor = System.Drawing.Color.White;
             this.lblusername.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblusername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(191)))), ((int)(((byte)(236)))));
-            this.lblusername.Location = new System.Drawing.Point(55, 59);
+            this.lblusername.Location = new System.Drawing.Point(55, 80);
             this.lblusername.Name = "lblusername";
-            this.lblusername.Size = new System.Drawing.Size(136, 40);
+            this.lblusername.Size = new System.Drawing.Size(136, 26);
             this.lblusername.TabIndex = 16;
             // 
             // groupBox1
@@ -118,7 +133,7 @@
             this.groupBox1.Size = new System.Drawing.Size(184, 375);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Friends";
+            this.groupBox1.Text = "Bạn bè";
             // 
             // lstFriends
             // 
@@ -171,16 +186,16 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(50, 8);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(143, 29);
+            this.label1.Size = new System.Drawing.Size(108, 29);
             this.label1.TabIndex = 12;
-            this.label1.Text = "Messenger";
+            this.label1.Text = "SkyChat";
             // 
             // ptbAva
             // 
             this.ptbAva.Image = ((System.Drawing.Image)(resources.GetObject("ptbAva.Image")));
             this.ptbAva.Location = new System.Drawing.Point(3, 59);
             this.ptbAva.Name = "ptbAva";
-            this.ptbAva.Size = new System.Drawing.Size(46, 40);
+            this.ptbAva.Size = new System.Drawing.Size(46, 49);
             this.ptbAva.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ptbAva.TabIndex = 14;
             this.ptbAva.TabStop = false;
@@ -189,6 +204,8 @@
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.btnImage);
+            this.panel2.Controls.Add(this.btnAttach);
             this.panel2.Controls.Add(this.txtsend);
             this.panel2.Controls.Add(this.btnFont);
             this.panel2.Controls.Add(this.btnColor);
@@ -199,9 +216,38 @@
             this.panel2.Size = new System.Drawing.Size(542, 476);
             this.panel2.TabIndex = 9;
             // 
+            // btnImage
+            // 
+            this.btnImage.BackColor = System.Drawing.Color.White;
+            this.btnImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnImage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnImage.ForeColor = System.Drawing.Color.Transparent;
+            this.btnImage.Image = ((System.Drawing.Image)(resources.GetObject("btnImage.Image")));
+            this.btnImage.Location = new System.Drawing.Point(131, 382);
+            this.btnImage.Name = "btnImage";
+            this.btnImage.Size = new System.Drawing.Size(35, 36);
+            this.btnImage.TabIndex = 35;
+            this.btnImage.UseVisualStyleBackColor = false;
+            this.btnImage.Click += new System.EventHandler(this.btnImage_Click);
+            // 
+            // btnAttach
+            // 
+            this.btnAttach.BackColor = System.Drawing.Color.White;
+            this.btnAttach.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnAttach.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAttach.ForeColor = System.Drawing.Color.Transparent;
+            this.btnAttach.Image = ((System.Drawing.Image)(resources.GetObject("btnAttach.Image")));
+            this.btnAttach.Location = new System.Drawing.Point(90, 382);
+            this.btnAttach.Name = "btnAttach";
+            this.btnAttach.Size = new System.Drawing.Size(35, 36);
+            this.btnAttach.TabIndex = 34;
+            this.btnAttach.UseVisualStyleBackColor = false;
+            this.btnAttach.Click += new System.EventHandler(this.btnAttach_Click);
+            // 
             // txtsend
             // 
             this.txtsend.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtsend.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtsend.Location = new System.Drawing.Point(14, 425);
             this.txtsend.Name = "txtsend";
             this.txtsend.Size = new System.Drawing.Size(450, 36);
@@ -336,6 +382,9 @@
         private System.Windows.Forms.Button btnColor;
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.Label lblusername;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnAttach;
+        private System.Windows.Forms.Button btnImage;
     }
 }
 

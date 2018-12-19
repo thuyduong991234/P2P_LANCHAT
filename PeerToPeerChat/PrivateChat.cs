@@ -39,6 +39,7 @@ namespace PeerToPeerChat
         SendType Status;
         String saveFileName = "";
         bool isSendFile = false;
+        bool isSendImage = false;
         bool firstSend = true;
         Socket listenSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         Socket socket;
@@ -246,7 +247,7 @@ namespace PeerToPeerChat
 
                         socket1.Connect(new IPEndPoint(IPAddress.Parse(friendIP), int.Parse(friendPort)));
                         byte[] buf2 = new byte[1024];
-                        buf2 = SendPacket4(fi.Name);
+                        buf2 = SendPacket4(fi.Name, TypePacket.SEND_FILE);
                         socket1.Send(buf2);
                         socket1.Close();
                         //Send size cua file
@@ -271,7 +272,82 @@ namespace PeerToPeerChat
                     catch (Exception exx)
                     {
                         bSendOk = false;
-                        MessageBox.Show(exx.Message, "File Sending Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(exx.Message, "Gửi file lỗi!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                    if (fs != null)
+                    {
+                        try { fs.Close(); }
+                        catch (Exception) { }
+                    }
+
+                    socket.Close();
+
+                    if (bSendOk)
+                    {
+                        MessageBox.Show("Gửi Thành công !", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Packet fpck = new Packet();
+                        fpck.MyMessage = "<a href='" + txtsend.Text.Replace(":", "(~*)") + "'>" + ((extension == ".jpg" || extension == ".png" || extension == ".PNG") ? "<img src='" + txtsend.Text + "' style='max-width:300px'/><br/>" : "") + "<b>" + Path.GetFileName(txtsend.Text) + "</b></a>";
+                        Message fmess = new Message(fpck, Type.SENDER);
+                        ChatLog.Add(fmess);
+                    }
+                    Status = SendType.MESSAGE;
+                }
+                #endregion
+
+                #region Gui Anh
+                else if (Status == SendType.IMAGE)
+                {
+                    FileStream fs = null;
+
+                    Socket socket1 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    socket.NoDelay = true;
+
+                    bool bSendOk = true;
+                    string extension = "";
+                    try
+                    {
+                        FileInfo fi = new FileInfo(txtsend.Text);
+                        ulong fileSize = (ulong)fi.Length;
+                        extension = fi.Extension;
+                        byte[] buf = new byte[32 * 1024];
+                        MemoryStream ms = new MemoryStream(buf);
+                        BinaryWriter bw = new BinaryWriter(ms);
+                        bw.Write(fileSize);
+                        bw.Close();
+                        ms.Close();
+
+                        fs = File.OpenRead(txtsend.Text);
+
+                        socket1.Connect(new IPEndPoint(IPAddress.Parse(friendIP), int.Parse(friendPort)));
+                        byte[] buf2 = new byte[1024];
+                        buf2 = SendPacket4(fi.Name, TypePacket.SEND_IMAGE);
+                        socket1.Send(buf2);
+                        socket1.Close();
+                        //Send size cua file
+                        socket.Connect(new IPEndPoint(IPAddress.Parse(friendIP), int.Parse(friendPort)));
+                        int ns = socket.Send(buf, sizeof(ulong), SocketFlags.None);
+                        ulong pos = 0;
+
+                        while (pos < fileSize)
+                        {
+                            int nr = fs.Read(buf, 0, buf.Length);
+                            if (nr <= 0)
+                            {
+                                break;
+                            }
+
+                            pos += (ulong)nr;
+                            ns = socket.Send(buf, nr, SocketFlags.None);
+
+                        }
+
+                    }
+                    catch (Exception exx)
+                    {
+                        bSendOk = false;
+                        MessageBox.Show(exx.Message, "Gửi ảnh bị lỗi!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
                     if (fs != null)
@@ -365,10 +441,10 @@ namespace PeerToPeerChat
             data = str.ToArray();
             return data;
         }
-        byte[] SendPacket4(string FileName)
+        byte[] SendPacket4(string FileName, TypePacket type)
         {
             Packet mypacket = new Packet();
-            mypacket.MyType = TypePacket.SEND_FILE;
+            mypacket.MyType = type;
             mypacket.MyMessage = FileName;
             MemoryStream str = new MemoryStream();
             BinaryFormatter bformat = new BinaryFormatter();
@@ -377,6 +453,8 @@ namespace PeerToPeerChat
             data = str.ToArray();
             return data;
         }
+
+
 
         byte[] SendPort()
         {
@@ -402,6 +480,18 @@ namespace PeerToPeerChat
             data = str.ToArray();
             return data;
         }
+
+        private void btnImage_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog OpImageDlog = new OpenFileDialog();
+            OpImageDlog.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyPictures); 
+            if (OpImageDlog.ShowDialog() == DialogResult.OK)
+            {
+                txtsend.Text = OpImageDlog.FileName;
+                Status = SendType.IMAGE;
+            }
+        }
+
         void RefreshWeb()
         {
             string start = @"<!DOCTYPE html><html><head><title>Client</title><style type='text/css'>
@@ -451,7 +541,7 @@ namespace PeerToPeerChat
                     }
 
                     string style = "style=\"color:rgb(" + x.pack.MyColor.R + "," + x.pack.MyColor.G + "," + x.pack.MyColor.B + ");" + font + "\"";
-                    body += "<div class='message mine' title='" + "Test1" + ":" + "Test2" + " " + "Test3" + "'>" + "<span " + style + ">" + x.pack.MyMessage + "</span></div>\n";
+                    body += "<div class='message remote' title='" + "Test1" + ":" + "Test2" + " " + "Test3" + "'>" + "<span " + style + ">" + x.pack.MyMessage + "</span></div>\n";
                 }
                 else
                 {
@@ -503,7 +593,7 @@ namespace PeerToPeerChat
                     #region Nhan File
                     if (isSendFile)
                     {
-                        if (MessageBox.Show("Peer is sending a file to you. Do you want to receive it ?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                        if (MessageBox.Show(this.Text + " đang gửi một File cho bạn. Bạn có muốn nhận nó không ?", "Nhận File", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                         {   ///
                             ///
                             socket.Close();
@@ -540,7 +630,7 @@ namespace PeerToPeerChat
                                 nr = socket.Receive(buf);
                                 if (nr <= 0)
                                 {
-                                    throw new Exception("Receive 0 byte");
+                                    throw new Exception("File bị rỗng!");
                                 }
 
                                 pos += (ulong)nr;
@@ -552,7 +642,7 @@ namespace PeerToPeerChat
                         catch (Exception e)
                         {
                             bTranferOk = false;
-                            MessageBox.Show(e.Message, "File Receiving Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(e.Message, "Nhận file bị lỗi!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
 
 
@@ -582,6 +672,79 @@ namespace PeerToPeerChat
                         isSendFile = false;
                     }
                     #endregion
+                    #region Nhan Image
+                    else if (isSendImage)
+                    {
+
+                        this.Invoke((MethodInvoker)(() =>
+                        {
+                            SaveFileDialog saveFileDlog1 = new SaveFileDialog();
+                            saveFileDlog1.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+                            saveFileDlog1.FileName = saveFileName;
+                            saveFileName = System.Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\"+saveFileDlog1.FileName;
+                        }));
+                        bool bTranferOk = true;
+                        FileStream fs = null;
+                        try
+                        {
+                            fs = File.Create(saveFileName);
+                            byte[] buf = new byte[32 * 1024];
+                            int nr = socket.Receive(buf, sizeof(ulong), SocketFlags.None);
+
+                            MemoryStream ms = new MemoryStream(buf);
+                            BinaryReader br = new BinaryReader(ms);
+                            ulong fileSize = br.ReadUInt64();
+                            br.Close();
+                            ms.Close();
+
+
+                            ulong pos = 0;
+                            while (pos < fileSize)
+                            {
+                                nr = socket.Receive(buf);
+                                if (nr <= 0)
+                                {
+                                    throw new Exception("Không nhận được ảnh!");
+                                }
+
+                                pos += (ulong)nr;
+                                fs.Write(buf, 0, nr);
+
+                            }
+
+                        }
+                        catch (Exception e)
+                        {
+                            bTranferOk = false;
+                            MessageBox.Show(e.Message, "Nhận Image bị lỗi!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+
+
+                        if (fs != null)
+                        {
+                            try { fs.Close(); }
+                            catch (Exception) { }
+                        }
+
+                        socket.Close();
+
+                        if (!bTranferOk)
+                        {
+                            try { File.Delete(saveFileName); }
+                            catch (Exception) { }
+                        }
+                        else
+                        {
+                            string[] extension;
+                            extension = saveFileName.Split('.');
+                            Packet rpck = new Packet();
+                            rpck.MyMessage = "<a href='" + saveFileName.Replace(":", "(~*)") + "'>" + (('.' + extension[1] == ".jpg" || '.' + extension[1] == ".png" || extension[1] == ".PNG") ? "<img src='" + saveFileName + "' style='max-width:300px'/><br/>" : "") + "<b>" + Path.GetFileName(saveFileName) + "</b></a>";
+                            Message fmess = new Message(rpck, Type.RECEIVER);
+                            ChatLog.Add(fmess);
+                        }
+                        isSendImage = false;
+                    }
+                    #endregion
                     #region Nhan Message
                     else // Nhan message binh thuong
                     {
@@ -590,15 +753,21 @@ namespace PeerToPeerChat
                         socket.Receive(buf);
 
                         Packet recievePack = DeSerialize(buf);
-                        // Gan co bat dau gui file
+                       
                         if(recievePack.MyType == TypePacket.SEND_PORT)
                         {
                             friendPort = recievePack.MyPort;
                             textBox2.Text = friendPort;
                         }
+                        // Gan co bat dau gui file
                         else if (recievePack.MyType == TypePacket.SEND_FILE)
                         {
                             isSendFile = true;
+                            saveFileName = recievePack.MyMessage;
+                        }
+                        else if (recievePack.MyType == TypePacket.SEND_IMAGE)
+                        {
+                            isSendImage = true;
                             saveFileName = recievePack.MyMessage;
                         }
                         // Nhan tin hieu de dong Form
@@ -641,6 +810,7 @@ namespace PeerToPeerChat
                         }
                     }
                     #endregion
+                  
                 }
                 catch (Exception et)
                 {

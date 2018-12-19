@@ -32,6 +32,8 @@
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.wbContent = new System.Windows.Forms.WebBrowser();
             this.txtsend = new System.Windows.Forms.RichTextBox();
             this.btnFont = new System.Windows.Forms.Button();
@@ -42,8 +44,7 @@
             this.ptbMinimize = new System.Windows.Forms.PictureBox();
             this.ptbExit = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.btnImage = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbMinimize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbExit)).BeginInit();
@@ -53,6 +54,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.btnImage);
             this.panel1.Controls.Add(this.textBox2);
             this.panel1.Controls.Add(this.textBox1);
             this.panel1.Controls.Add(this.wbContent);
@@ -66,6 +68,20 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(467, 447);
             this.panel1.TabIndex = 15;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(332, 22);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(100, 20);
+            this.textBox2.TabIndex = 30;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(20, 22);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 29;
             // 
             // wbContent
             // 
@@ -185,19 +201,19 @@
             this.pictureBox1.TabIndex = 19;
             this.pictureBox1.TabStop = false;
             // 
-            // textBox1
+            // btnImage
             // 
-            this.textBox1.Location = new System.Drawing.Point(20, 22);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 29;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(332, 22);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 30;
+            this.btnImage.BackColor = System.Drawing.Color.White;
+            this.btnImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnImage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnImage.ForeColor = System.Drawing.Color.Transparent;
+            this.btnImage.Image = ((System.Drawing.Image)(resources.GetObject("btnImage.Image")));
+            this.btnImage.Location = new System.Drawing.Point(126, 325);
+            this.btnImage.Name = "btnImage";
+            this.btnImage.Size = new System.Drawing.Size(35, 36);
+            this.btnImage.TabIndex = 32;
+            this.btnImage.UseVisualStyleBackColor = false;
+            this.btnImage.Click += new System.EventHandler(this.btnImage_Click);
             // 
             // PrivateChat
             // 
@@ -242,5 +258,6 @@
         private System.Windows.Forms.WebBrowser wbContent;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btnImage;
     }
 }
