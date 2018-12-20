@@ -36,6 +36,8 @@
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lblusername = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lstFriends = new System.Windows.Forms.ListBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -44,23 +46,28 @@
             this.label1 = new System.Windows.Forms.Label();
             this.ptbAva = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.tlpMenuIcon = new System.Windows.Forms.TableLayoutPanel();
-            this.ptbConfused = new System.Windows.Forms.PictureBox();
-            this.ptbBroken = new System.Windows.Forms.PictureBox();
-            this.ptbAngel = new System.Windows.Forms.PictureBox();
-            this.ptbBeer = new System.Windows.Forms.PictureBox();
-            this.ptbAngry = new System.Windows.Forms.PictureBox();
-            this.ptbCry = new System.Windows.Forms.PictureBox();
-            this.txtcontent = new Khendys.Controls.ExRichTextBox();
+            this.grpEmoji = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
+            this.pictureBox8 = new System.Windows.Forms.PictureBox();
+            this.pictureBox9 = new System.Windows.Forms.PictureBox();
+            this.pictureBox10 = new System.Windows.Forms.PictureBox();
+            this.pictureBox11 = new System.Windows.Forms.PictureBox();
+            this.btnEmoji = new System.Windows.Forms.Button();
+            this.btnImage = new System.Windows.Forms.Button();
+            this.btnAttach = new System.Windows.Forms.Button();
+            this.txtsend = new System.Windows.Forms.RichTextBox();
+            this.btnFont = new System.Windows.Forms.Button();
+            this.btnColor = new System.Windows.Forms.Button();
+            this.btnSend = new System.Windows.Forms.Button();
             this.wbContent = new System.Windows.Forms.WebBrowser();
-            this.ptbImage = new System.Windows.Forms.PictureBox();
-            this.ptbColor = new System.Windows.Forms.PictureBox();
-            this.ptbSend = new System.Windows.Forms.PictureBox();
-            this.ptbSendFile = new System.Windows.Forms.PictureBox();
-            this.ptbFont = new System.Windows.Forms.PictureBox();
-            this.ptbExit = new System.Windows.Forms.PictureBox();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.ptbMinimize = new System.Windows.Forms.PictureBox();
+            this.ptbExit = new System.Windows.Forms.PictureBox();
             this.contextMenuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -69,20 +76,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbAva)).BeginInit();
             this.panel2.SuspendLayout();
-            this.tlpMenuIcon.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbConfused)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbBroken)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbAngel)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbBeer)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbAngry)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbCry)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbImage)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbColor)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbSend)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbSendFile)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbFont)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbExit)).BeginInit();
+            this.grpEmoji.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbMinimize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ptbExit)).BeginInit();
             this.SuspendLayout();
             // 
             // contextMenuStrip1
@@ -108,6 +114,8 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.lblusername);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.panel4);
             this.panel1.Controls.Add(this.ptbAva);
@@ -116,6 +124,27 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(197, 514);
             this.panel1.TabIndex = 8;
+            // 
+            // label2
+            // 
+            this.label2.BackColor = System.Drawing.Color.White;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(191)))), ((int)(((byte)(236)))));
+            this.label2.Location = new System.Drawing.Point(52, 59);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(136, 14);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "Chào mừng!";
+            // 
+            // lblusername
+            // 
+            this.lblusername.BackColor = System.Drawing.Color.White;
+            this.lblusername.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblusername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(191)))), ((int)(((byte)(236)))));
+            this.lblusername.Location = new System.Drawing.Point(55, 80);
+            this.lblusername.Name = "lblusername";
+            this.lblusername.Size = new System.Drawing.Size(136, 26);
+            this.lblusername.TabIndex = 16;
             // 
             // groupBox1
             // 
@@ -128,7 +157,7 @@
             this.groupBox1.Size = new System.Drawing.Size(184, 375);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Friends";
+            this.groupBox1.Text = "Bạn bè";
             // 
             // lstFriends
             // 
@@ -142,6 +171,7 @@
             this.lstFriends.Name = "lstFriends";
             this.lstFriends.Size = new System.Drawing.Size(178, 350);
             this.lstFriends.TabIndex = 0;
+            this.lstFriends.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstFriends_MouseDoubleClick);
             // 
             // pictureBox2
             // 
@@ -178,18 +208,18 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(43, 5);
+            this.label1.Location = new System.Drawing.Point(50, 8);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(143, 29);
+            this.label1.Size = new System.Drawing.Size(108, 29);
             this.label1.TabIndex = 12;
-            this.label1.Text = "Messenger";
+            this.label1.Text = "SkyChat";
             // 
             // ptbAva
             // 
             this.ptbAva.Image = ((System.Drawing.Image)(resources.GetObject("ptbAva.Image")));
             this.ptbAva.Location = new System.Drawing.Point(3, 59);
             this.ptbAva.Name = "ptbAva";
-            this.ptbAva.Size = new System.Drawing.Size(46, 40);
+            this.ptbAva.Size = new System.Drawing.Size(46, 49);
             this.ptbAva.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ptbAva.TabIndex = 14;
             this.ptbAva.TabStop = false;
@@ -198,210 +228,258 @@
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel2.Controls.Add(this.button1);
-            this.panel2.Controls.Add(this.tlpMenuIcon);
-            this.panel2.Controls.Add(this.txtcontent);
+            this.panel2.Controls.Add(this.grpEmoji);
+            this.panel2.Controls.Add(this.btnEmoji);
+            this.panel2.Controls.Add(this.btnImage);
+            this.panel2.Controls.Add(this.btnAttach);
+            this.panel2.Controls.Add(this.txtsend);
+            this.panel2.Controls.Add(this.btnFont);
+            this.panel2.Controls.Add(this.btnColor);
+            this.panel2.Controls.Add(this.btnSend);
             this.panel2.Controls.Add(this.wbContent);
-            this.panel2.Controls.Add(this.ptbImage);
-            this.panel2.Controls.Add(this.ptbColor);
-            this.panel2.Controls.Add(this.ptbSend);
-            this.panel2.Controls.Add(this.ptbSendFile);
-            this.panel2.Controls.Add(this.ptbFont);
             this.panel2.Location = new System.Drawing.Point(197, 38);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(542, 476);
             this.panel2.TabIndex = 9;
             // 
-            // button1
+            // grpEmoji
             // 
-            this.button1.Location = new System.Drawing.Point(156, 400);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(50, 27);
-            this.button1.TabIndex = 22;
-            this.button1.Text = "Emoji";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.grpEmoji.Controls.Add(this.tableLayoutPanel1);
+            this.grpEmoji.Location = new System.Drawing.Point(213, 309);
+            this.grpEmoji.Name = "grpEmoji";
+            this.grpEmoji.Size = new System.Drawing.Size(97, 104);
+            this.grpEmoji.TabIndex = 38;
+            this.grpEmoji.TabStop = false;
+            this.grpEmoji.Text = "Chọn emoji";
+            this.grpEmoji.Visible = false;
             // 
-            // tlpMenuIcon
+            // tableLayoutPanel1
             // 
-            this.tlpMenuIcon.AllowDrop = true;
-            this.tlpMenuIcon.AutoSize = true;
-            this.tlpMenuIcon.BackColor = System.Drawing.Color.Silver;
-            this.tlpMenuIcon.ColumnCount = 3;
-            this.tlpMenuIcon.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tlpMenuIcon.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tlpMenuIcon.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tlpMenuIcon.Controls.Add(this.ptbConfused, 0, 1);
-            this.tlpMenuIcon.Controls.Add(this.ptbBroken, 0, 1);
-            this.tlpMenuIcon.Controls.Add(this.ptbAngel, 0, 0);
-            this.tlpMenuIcon.Controls.Add(this.ptbBeer, 1, 0);
-            this.tlpMenuIcon.Controls.Add(this.ptbAngry, 2, 0);
-            this.tlpMenuIcon.Controls.Add(this.ptbCry, 2, 1);
-            this.tlpMenuIcon.Location = new System.Drawing.Point(212, 349);
-            this.tlpMenuIcon.Name = "tlpMenuIcon";
-            this.tlpMenuIcon.RowCount = 2;
-            this.tlpMenuIcon.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpMenuIcon.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpMenuIcon.Size = new System.Drawing.Size(108, 78);
-            this.tlpMenuIcon.TabIndex = 21;
-            this.tlpMenuIcon.Visible = false;
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel1.Controls.Add(this.pictureBox3, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.pictureBox4, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.pictureBox5, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.pictureBox6, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.pictureBox7, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.pictureBox8, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.pictureBox9, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.pictureBox10, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.pictureBox11, 2, 2);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 19);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(91, 82);
+            this.tableLayoutPanel1.TabIndex = 37;
             // 
-            // ptbConfused
+            // pictureBox3
             // 
-            this.ptbConfused.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ptbConfused.Image = ((System.Drawing.Image)(resources.GetObject("ptbConfused.Image")));
-            this.ptbConfused.Location = new System.Drawing.Point(39, 42);
-            this.ptbConfused.Name = "ptbConfused";
-            this.ptbConfused.Size = new System.Drawing.Size(30, 33);
-            this.ptbConfused.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.ptbConfused.TabIndex = 27;
-            this.ptbConfused.TabStop = false;
-            this.ptbConfused.Click += new System.EventHandler(this.ptbConfused_Click);
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+            this.pictureBox3.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(24, 21);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox3.TabIndex = 0;
+            this.pictureBox3.TabStop = false;
+            this.pictureBox3.Click += new System.EventHandler(this.pictureBox3_Click);
             // 
-            // ptbBroken
+            // pictureBox4
             // 
-            this.ptbBroken.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ptbBroken.Image = ((System.Drawing.Image)(resources.GetObject("ptbBroken.Image")));
-            this.ptbBroken.Location = new System.Drawing.Point(3, 42);
-            this.ptbBroken.Name = "ptbBroken";
-            this.ptbBroken.Size = new System.Drawing.Size(30, 33);
-            this.ptbBroken.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.ptbBroken.TabIndex = 26;
-            this.ptbBroken.TabStop = false;
-            this.ptbBroken.Click += new System.EventHandler(this.ptbBroken_Click);
+            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
+            this.pictureBox4.Location = new System.Drawing.Point(33, 3);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(24, 21);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox4.TabIndex = 1;
+            this.pictureBox4.TabStop = false;
+            this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click);
             // 
-            // ptbAngel
+            // pictureBox5
             // 
-            this.ptbAngel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ptbAngel.Image = ((System.Drawing.Image)(resources.GetObject("ptbAngel.Image")));
-            this.ptbAngel.Location = new System.Drawing.Point(3, 3);
-            this.ptbAngel.Name = "ptbAngel";
-            this.ptbAngel.Size = new System.Drawing.Size(30, 33);
-            this.ptbAngel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.ptbAngel.TabIndex = 22;
-            this.ptbAngel.TabStop = false;
-            this.ptbAngel.Click += new System.EventHandler(this.ptbAngel_Click);
+            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
+            this.pictureBox5.Location = new System.Drawing.Point(63, 3);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(25, 21);
+            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox5.TabIndex = 2;
+            this.pictureBox5.TabStop = false;
+            this.pictureBox5.Click += new System.EventHandler(this.pictureBox5_Click);
             // 
-            // ptbBeer
+            // pictureBox6
             // 
-            this.ptbBeer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ptbBeer.Image = ((System.Drawing.Image)(resources.GetObject("ptbBeer.Image")));
-            this.ptbBeer.Location = new System.Drawing.Point(39, 3);
-            this.ptbBeer.Name = "ptbBeer";
-            this.ptbBeer.Size = new System.Drawing.Size(30, 33);
-            this.ptbBeer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.ptbBeer.TabIndex = 23;
-            this.ptbBeer.TabStop = false;
-            this.ptbBeer.Click += new System.EventHandler(this.ptbBeer_Click);
+            this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
+            this.pictureBox6.Location = new System.Drawing.Point(3, 30);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(24, 21);
+            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox6.TabIndex = 3;
+            this.pictureBox6.TabStop = false;
+            this.pictureBox6.Click += new System.EventHandler(this.pictureBox6_Click);
             // 
-            // ptbAngry
+            // pictureBox7
             // 
-            this.ptbAngry.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ptbAngry.Image = ((System.Drawing.Image)(resources.GetObject("ptbAngry.Image")));
-            this.ptbAngry.Location = new System.Drawing.Point(75, 3);
-            this.ptbAngry.Name = "ptbAngry";
-            this.ptbAngry.Size = new System.Drawing.Size(30, 33);
-            this.ptbAngry.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.ptbAngry.TabIndex = 24;
-            this.ptbAngry.TabStop = false;
-            this.ptbAngry.Click += new System.EventHandler(this.ptbAngry_Click);
+            this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
+            this.pictureBox7.Location = new System.Drawing.Point(33, 30);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(24, 21);
+            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox7.TabIndex = 4;
+            this.pictureBox7.TabStop = false;
+            this.pictureBox7.Click += new System.EventHandler(this.pictureBox7_Click);
             // 
-            // ptbCry
+            // pictureBox8
             // 
-            this.ptbCry.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ptbCry.Image = ((System.Drawing.Image)(resources.GetObject("ptbCry.Image")));
-            this.ptbCry.Location = new System.Drawing.Point(75, 42);
-            this.ptbCry.Name = "ptbCry";
-            this.ptbCry.Size = new System.Drawing.Size(30, 33);
-            this.ptbCry.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.ptbCry.TabIndex = 25;
-            this.ptbCry.TabStop = false;
-            this.ptbCry.Click += new System.EventHandler(this.ptbCry_Click);
+            this.pictureBox8.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox8.Image")));
+            this.pictureBox8.Location = new System.Drawing.Point(63, 30);
+            this.pictureBox8.Name = "pictureBox8";
+            this.pictureBox8.Size = new System.Drawing.Size(25, 21);
+            this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox8.TabIndex = 5;
+            this.pictureBox8.TabStop = false;
+            this.pictureBox8.Click += new System.EventHandler(this.pictureBox8_Click);
             // 
-            // txtcontent
+            // pictureBox9
             // 
-            this.txtcontent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtcontent.HiglightColor = Khendys.Controls.RtfColor.White;
-            this.txtcontent.Location = new System.Drawing.Point(4, 433);
-            this.txtcontent.Name = "txtcontent";
-            this.txtcontent.Size = new System.Drawing.Size(460, 29);
-            this.txtcontent.TabIndex = 20;
-            this.txtcontent.Text = "";
-            this.txtcontent.TextColor = Khendys.Controls.RtfColor.Black;
-            this.txtcontent.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtcontent_KeyDown_1);
+            this.pictureBox9.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox9.Image")));
+            this.pictureBox9.Location = new System.Drawing.Point(3, 57);
+            this.pictureBox9.Name = "pictureBox9";
+            this.pictureBox9.Size = new System.Drawing.Size(24, 22);
+            this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox9.TabIndex = 6;
+            this.pictureBox9.TabStop = false;
+            this.pictureBox9.Click += new System.EventHandler(this.pictureBox9_Click);
+            // 
+            // pictureBox10
+            // 
+            this.pictureBox10.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox10.Image")));
+            this.pictureBox10.Location = new System.Drawing.Point(33, 57);
+            this.pictureBox10.Name = "pictureBox10";
+            this.pictureBox10.Size = new System.Drawing.Size(24, 22);
+            this.pictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox10.TabIndex = 7;
+            this.pictureBox10.TabStop = false;
+            this.pictureBox10.Click += new System.EventHandler(this.pictureBox10_Click);
+            // 
+            // pictureBox11
+            // 
+            this.pictureBox11.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox11.Image")));
+            this.pictureBox11.Location = new System.Drawing.Point(63, 57);
+            this.pictureBox11.Name = "pictureBox11";
+            this.pictureBox11.Size = new System.Drawing.Size(25, 22);
+            this.pictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox11.TabIndex = 0;
+            this.pictureBox11.TabStop = false;
+            this.pictureBox11.Click += new System.EventHandler(this.pictureBox11_Click);
+            // 
+            // btnEmoji
+            // 
+            this.btnEmoji.BackColor = System.Drawing.Color.White;
+            this.btnEmoji.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnEmoji.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEmoji.ForeColor = System.Drawing.Color.Transparent;
+            this.btnEmoji.Image = global::PeerToPeerChat.Properties.Resources.emoji;
+            this.btnEmoji.Location = new System.Drawing.Point(172, 382);
+            this.btnEmoji.Name = "btnEmoji";
+            this.btnEmoji.Size = new System.Drawing.Size(35, 36);
+            this.btnEmoji.TabIndex = 36;
+            this.btnEmoji.UseVisualStyleBackColor = false;
+            this.btnEmoji.Click += new System.EventHandler(this.btnEmoji_Click);
+            // 
+            // btnImage
+            // 
+            this.btnImage.BackColor = System.Drawing.Color.White;
+            this.btnImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnImage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnImage.ForeColor = System.Drawing.Color.Transparent;
+            this.btnImage.Image = global::PeerToPeerChat.Properties.Resources.img64k;
+            this.btnImage.Location = new System.Drawing.Point(131, 382);
+            this.btnImage.Name = "btnImage";
+            this.btnImage.Size = new System.Drawing.Size(35, 36);
+            this.btnImage.TabIndex = 35;
+            this.btnImage.UseVisualStyleBackColor = false;
+            this.btnImage.Click += new System.EventHandler(this.btnImage_Click);
+            // 
+            // btnAttach
+            // 
+            this.btnAttach.BackColor = System.Drawing.Color.White;
+            this.btnAttach.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnAttach.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAttach.ForeColor = System.Drawing.Color.Transparent;
+            this.btnAttach.Image = global::PeerToPeerChat.Properties.Resources.attach64k;
+            this.btnAttach.Location = new System.Drawing.Point(90, 382);
+            this.btnAttach.Name = "btnAttach";
+            this.btnAttach.Size = new System.Drawing.Size(35, 36);
+            this.btnAttach.TabIndex = 34;
+            this.btnAttach.UseVisualStyleBackColor = false;
+            this.btnAttach.Click += new System.EventHandler(this.btnAttach_Click);
+            // 
+            // txtsend
+            // 
+            this.txtsend.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtsend.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtsend.Location = new System.Drawing.Point(14, 425);
+            this.txtsend.Name = "txtsend";
+            this.txtsend.Size = new System.Drawing.Size(450, 36);
+            this.txtsend.TabIndex = 33;
+            this.txtsend.Text = "";
+            this.txtsend.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtcontent_KeyDown);
+            // 
+            // btnFont
+            // 
+            this.btnFont.BackColor = System.Drawing.Color.White;
+            this.btnFont.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnFont.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFont.ForeColor = System.Drawing.Color.Transparent;
+            this.btnFont.Image = ((System.Drawing.Image)(resources.GetObject("btnFont.Image")));
+            this.btnFont.Location = new System.Drawing.Point(14, 382);
+            this.btnFont.Name = "btnFont";
+            this.btnFont.Size = new System.Drawing.Size(35, 36);
+            this.btnFont.TabIndex = 32;
+            this.btnFont.UseVisualStyleBackColor = false;
+            this.btnFont.Click += new System.EventHandler(this.btnFont_Click);
+            // 
+            // btnColor
+            // 
+            this.btnColor.BackColor = System.Drawing.Color.White;
+            this.btnColor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnColor.ForeColor = System.Drawing.Color.Transparent;
+            this.btnColor.Image = ((System.Drawing.Image)(resources.GetObject("btnColor.Image")));
+            this.btnColor.Location = new System.Drawing.Point(49, 383);
+            this.btnColor.Name = "btnColor";
+            this.btnColor.Size = new System.Drawing.Size(35, 36);
+            this.btnColor.TabIndex = 31;
+            this.btnColor.UseVisualStyleBackColor = false;
+            this.btnColor.Click += new System.EventHandler(this.btnColor_Click);
+            // 
+            // btnSend
+            // 
+            this.btnSend.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(191)))), ((int)(((byte)(236)))));
+            this.btnSend.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnSend.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSend.ForeColor = System.Drawing.Color.Transparent;
+            this.btnSend.Image = ((System.Drawing.Image)(resources.GetObject("btnSend.Image")));
+            this.btnSend.Location = new System.Drawing.Point(470, 424);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(59, 37);
+            this.btnSend.TabIndex = 28;
+            this.btnSend.UseVisualStyleBackColor = false;
+            this.btnSend.Click += new System.EventHandler(this.btnsend_Click);
             // 
             // wbContent
             // 
             this.wbContent.Location = new System.Drawing.Point(0, 0);
             this.wbContent.MinimumSize = new System.Drawing.Size(20, 20);
             this.wbContent.Name = "wbContent";
-            this.wbContent.Size = new System.Drawing.Size(540, 394);
+            this.wbContent.Size = new System.Drawing.Size(540, 371);
             this.wbContent.TabIndex = 19;
-            // 
-            // ptbImage
-            // 
-            this.ptbImage.Image = ((System.Drawing.Image)(resources.GetObject("ptbImage.Image")));
-            this.ptbImage.Location = new System.Drawing.Point(115, 398);
-            this.ptbImage.Name = "ptbImage";
-            this.ptbImage.Size = new System.Drawing.Size(35, 34);
-            this.ptbImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.ptbImage.TabIndex = 18;
-            this.ptbImage.TabStop = false;
-            // 
-            // ptbColor
-            // 
-            this.ptbColor.Image = ((System.Drawing.Image)(resources.GetObject("ptbColor.Image")));
-            this.ptbColor.Location = new System.Drawing.Point(4, 400);
-            this.ptbColor.Name = "ptbColor";
-            this.ptbColor.Size = new System.Drawing.Size(32, 27);
-            this.ptbColor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.ptbColor.TabIndex = 17;
-            this.ptbColor.TabStop = false;
-            this.ptbColor.Click += new System.EventHandler(this.ptbColor_Click);
-            // 
-            // ptbSend
-            // 
-            this.ptbSend.Image = ((System.Drawing.Image)(resources.GetObject("ptbSend.Image")));
-            this.ptbSend.Location = new System.Drawing.Point(470, 416);
-            this.ptbSend.Name = "ptbSend";
-            this.ptbSend.Size = new System.Drawing.Size(59, 53);
-            this.ptbSend.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.ptbSend.TabIndex = 16;
-            this.ptbSend.TabStop = false;
-            this.ptbSend.Click += new System.EventHandler(this.pictureSend_Click);
-            // 
-            // ptbSendFile
-            // 
-            this.ptbSendFile.Image = ((System.Drawing.Image)(resources.GetObject("ptbSendFile.Image")));
-            this.ptbSendFile.Location = new System.Drawing.Point(76, 400);
-            this.ptbSendFile.Name = "ptbSendFile";
-            this.ptbSendFile.Size = new System.Drawing.Size(35, 27);
-            this.ptbSendFile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.ptbSendFile.TabIndex = 13;
-            this.ptbSendFile.TabStop = false;
-            this.ptbSendFile.Click += new System.EventHandler(this.ptbSendFile_Click);
-            // 
-            // ptbFont
-            // 
-            this.ptbFont.Image = ((System.Drawing.Image)(resources.GetObject("ptbFont.Image")));
-            this.ptbFont.Location = new System.Drawing.Point(42, 400);
-            this.ptbFont.Name = "ptbFont";
-            this.ptbFont.Size = new System.Drawing.Size(32, 27);
-            this.ptbFont.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.ptbFont.TabIndex = 12;
-            this.ptbFont.TabStop = false;
-            this.ptbFont.Click += new System.EventHandler(this.ptbFont_Click);
-            // 
-            // ptbExit
-            // 
-            this.ptbExit.Image = ((System.Drawing.Image)(resources.GetObject("ptbExit.Image")));
-            this.ptbExit.Location = new System.Drawing.Point(707, 4);
-            this.ptbExit.Name = "ptbExit";
-            this.ptbExit.Size = new System.Drawing.Size(32, 32);
-            this.ptbExit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.ptbExit.TabIndex = 8;
-            this.ptbExit.TabStop = false;
-            this.ptbExit.Click += new System.EventHandler(this.ptbExit_Click);
+            this.wbContent.Url = new System.Uri("about:blank", System.UriKind.Absolute);
             // 
             // ptbMinimize
             // 
@@ -413,6 +491,17 @@
             this.ptbMinimize.TabIndex = 10;
             this.ptbMinimize.TabStop = false;
             this.ptbMinimize.Click += new System.EventHandler(this.ptbMinimize_Click);
+            // 
+            // ptbExit
+            // 
+            this.ptbExit.Image = ((System.Drawing.Image)(resources.GetObject("ptbExit.Image")));
+            this.ptbExit.Location = new System.Drawing.Point(707, 4);
+            this.ptbExit.Name = "ptbExit";
+            this.ptbExit.Size = new System.Drawing.Size(32, 32);
+            this.ptbExit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.ptbExit.TabIndex = 8;
+            this.ptbExit.TabStop = false;
+            this.ptbExit.Click += new System.EventHandler(this.ptbExit_Click);
             // 
             // ChatForm
             // 
@@ -440,21 +529,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbAva)).EndInit();
             this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            this.tlpMenuIcon.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.ptbConfused)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbBroken)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbAngel)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbBeer)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbAngry)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbCry)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbImage)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbColor)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbSend)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbSendFile)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbFont)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbExit)).EndInit();
+            this.grpEmoji.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbMinimize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ptbExit)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -471,26 +558,33 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox ptbMinimize;
-        private System.Windows.Forms.PictureBox ptbFont;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.PictureBox ptbAva;
-        private System.Windows.Forms.PictureBox ptbSendFile;
-        private System.Windows.Forms.PictureBox ptbSend;
-        private System.Windows.Forms.PictureBox ptbColor;
-        private System.Windows.Forms.PictureBox ptbImage;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ListBox lstFriends;
         private System.Windows.Forms.WebBrowser wbContent;
-        private Khendys.Controls.ExRichTextBox txtcontent;
-        private System.Windows.Forms.PictureBox ptbAngel;
-        private System.Windows.Forms.TableLayoutPanel tlpMenuIcon;
-        private System.Windows.Forms.PictureBox ptbConfused;
-        private System.Windows.Forms.PictureBox ptbBroken;
-        private System.Windows.Forms.PictureBox ptbBeer;
-        private System.Windows.Forms.PictureBox ptbAngry;
-        private System.Windows.Forms.PictureBox ptbCry;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.RichTextBox txtsend;
+        private System.Windows.Forms.Button btnFont;
+        private System.Windows.Forms.Button btnColor;
+        private System.Windows.Forms.Button btnSend;
+        private System.Windows.Forms.Label lblusername;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnAttach;
+        private System.Windows.Forms.Button btnImage;
+        private System.Windows.Forms.GroupBox grpEmoji;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.PictureBox pictureBox6;
+        private System.Windows.Forms.PictureBox pictureBox7;
+        private System.Windows.Forms.PictureBox pictureBox8;
+        private System.Windows.Forms.PictureBox pictureBox9;
+        private System.Windows.Forms.PictureBox pictureBox10;
+        private System.Windows.Forms.PictureBox pictureBox11;
+        private System.Windows.Forms.Button btnEmoji;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.PictureBox pictureBox3;
     }
 }
 

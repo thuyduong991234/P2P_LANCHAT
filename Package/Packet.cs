@@ -169,12 +169,16 @@ namespace Package
     public enum TypePacket
     {
         NONE,
+        REPLY,
         SEND_INFO_USER_1,
         SEND_INFO_USER_2,
         MESSAGE,
         REQUIRE_CHAT,
         CLOSING,
-        LAST_SEND
+        SEND_FILE,
+        SEND_IMAGE,
+        OUT_CHAT,
+        SEND_PORT
     }
 }
 

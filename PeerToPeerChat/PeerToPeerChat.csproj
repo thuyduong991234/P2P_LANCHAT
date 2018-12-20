@@ -58,6 +58,7 @@
     <Compile Include="LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Message.cs" />
     <Compile Include="PrivateChat.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,6 +67,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SendType.cs" />
     <EmbeddedResource Include="ChatForm.resx">
       <DependentUpon>ChatForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -83,6 +85,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -98,10 +101,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ExRichTextBox\ExRichTextBox.csproj">
-      <Project>{1a63b1d0-d2f0-4f8c-b242-863e83e1419c}</Project>
-      <Name>ExRichTextBox</Name>
-    </ProjectReference>
     <ProjectReference Include="..\P2P\P2P.csproj">
       <Project>{bf87f6de-9497-4e23-a3d3-352f063396e1}</Project>
       <Name>P2P</Name>
@@ -112,15 +111,70 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Emoticons\AngelSmile.png" />
-    <Content Include="Emoticons\AngrySmile.png" />
-    <Content Include="Emoticons\Beer.png" />
-    <Content Include="Emoticons\BrokenHeart.png" />
-    <Content Include="Emoticons\ConfusedSmile.png" />
-    <Content Include="Emoticons\CrySmile.png" />
-    <Content Include="Emoticons\DevilSmile.png" />
-    <Content Include="Emoticons\EmbarassedSmile.png" />
-    <Content Include="Emoticons\ThumbsUp.png" />
+    <None Include="Emoji\buon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Emoji\cuoi.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Emoji\gian.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Emoji\hun.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Emoji\khoc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Emoji\like.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Emoji\ngacnhien.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Emoji\so.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Emoji\yeu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Emoji\buon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Emoji\cuoi.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Emoji\gian.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Emoji\hun.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Emoji\khoc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Emoji\like.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Emoji\ngacnhien.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Emoji\nhaymat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Emoji\so.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Emoji\yeu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Emoji\attach64k.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Emoji\img64k.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Emoji\emoji.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
