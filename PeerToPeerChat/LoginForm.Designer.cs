@@ -76,12 +76,12 @@
             this.lblname.AutoSize = true;
             this.lblname.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblname.ForeColor = System.Drawing.Color.White;
-            this.lblname.Location = new System.Drawing.Point(65, 14);
+            this.lblname.Location = new System.Drawing.Point(76, 14);
             this.lblname.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblname.Name = "lblname";
-            this.lblname.Size = new System.Drawing.Size(182, 37);
+            this.lblname.Size = new System.Drawing.Size(144, 37);
             this.lblname.TabIndex = 0;
-            this.lblname.Text = "Messenger";
+            this.lblname.Text = "SkyChat";
             // 
             // pictureBox1
             // 
@@ -145,7 +145,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(287, 310);
+            this.ClientSize = new System.Drawing.Size(288, 331);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.panel1);
@@ -158,6 +158,7 @@
             this.Name = "LoginForm";
             this.Text = "LoginForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LoginForm_FormClosing);
+            this.Load += new System.EventHandler(this.LoginForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

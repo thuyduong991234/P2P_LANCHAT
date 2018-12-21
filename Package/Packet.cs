@@ -176,6 +176,7 @@ namespace Package
         REQUIRE_CHAT,
         CLOSING,
         SEND_FILE,
+        SEND_IMAGE,
         OUT_CHAT,
         SEND_PORT
     }

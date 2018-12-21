@@ -111,5 +111,9 @@ namespace PeerToPeerChat
                 e.Handled = true;
             }
         }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+        }
     }
 }

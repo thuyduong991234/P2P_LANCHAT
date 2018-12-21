@@ -5,9 +5,9 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeerToPeerChat", "PeerToPeerChat\PeerToPeerChat.csproj", "{5D669614-1CAC-40B6-81ED-C311CC3300F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P2P", "P2P\P2P.csproj", "{BF87F6DE-9497-4E23-A3D3-352F063396E1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Package", "Package\Package.csproj", "{0915E5EE-50F7-4FB5-98C9-1F1E7A146A46}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupSkyChat", "SetupSkyChat\SetupSkyChat.vdproj", "{E8FE99DB-16D5-4CA6-8B33-C2AC65787866}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,12 @@ Global
 		{5D669614-1CAC-40B6-81ED-C311CC3300F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D669614-1CAC-40B6-81ED-C311CC3300F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D669614-1CAC-40B6-81ED-C311CC3300F0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BF87F6DE-9497-4E23-A3D3-352F063396E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BF87F6DE-9497-4E23-A3D3-352F063396E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BF87F6DE-9497-4E23-A3D3-352F063396E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BF87F6DE-9497-4E23-A3D3-352F063396E1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0915E5EE-50F7-4FB5-98C9-1F1E7A146A46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0915E5EE-50F7-4FB5-98C9-1F1E7A146A46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0915E5EE-50F7-4FB5-98C9-1F1E7A146A46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0915E5EE-50F7-4FB5-98C9-1F1E7A146A46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8FE99DB-16D5-4CA6-8B33-C2AC65787866}.Debug|Any CPU.ActiveCfg = Debug
+		{E8FE99DB-16D5-4CA6-8B33-C2AC65787866}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

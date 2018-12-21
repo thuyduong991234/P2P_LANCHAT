@@ -69,3 +69,14 @@ C:\Users\akasu\Desktop\MESSENGER_HEHE\MESSENGER_HEHE\MESSENGER_HEHE\P2P\obj\Debu
 C:\Users\akasu\Desktop\MESSENGER_HEHE\MESSENGER_HEHE\MESSENGER_HEHE\P2P\obj\Debug\P2P.csproj.GenerateResource.Cache
 C:\Users\akasu\Desktop\MESSENGER_HEHE\MESSENGER_HEHE\MESSENGER_HEHE\P2P\obj\Debug\P2P.exe
 C:\Users\akasu\Desktop\MESSENGER_HEHE\MESSENGER_HEHE\MESSENGER_HEHE\P2P\obj\Debug\P2P.pdb
+C:\Users\ThinkPad\Desktop\P2P_LANCHAT\P2P\bin\Debug\P2P.exe.config
+C:\Users\ThinkPad\Desktop\P2P_LANCHAT\P2P\bin\Debug\P2P.exe
+C:\Users\ThinkPad\Desktop\P2P_LANCHAT\P2P\bin\Debug\P2P.pdb
+C:\Users\ThinkPad\Desktop\P2P_LANCHAT\P2P\bin\Debug\Package.dll
+C:\Users\ThinkPad\Desktop\P2P_LANCHAT\P2P\bin\Debug\Package.pdb
+C:\Users\ThinkPad\Desktop\P2P_LANCHAT\P2P\obj\Debug\P2P.csprojResolveAssemblyReference.cache
+C:\Users\ThinkPad\Desktop\P2P_LANCHAT\P2P\obj\Debug\P2P.Form1.resources
+C:\Users\ThinkPad\Desktop\P2P_LANCHAT\P2P\obj\Debug\P2P.Properties.Resources.resources
+C:\Users\ThinkPad\Desktop\P2P_LANCHAT\P2P\obj\Debug\P2P.csproj.GenerateResource.Cache
+C:\Users\ThinkPad\Desktop\P2P_LANCHAT\P2P\obj\Debug\P2P.exe
+C:\Users\ThinkPad\Desktop\P2P_LANCHAT\P2P\obj\Debug\P2P.pdb
