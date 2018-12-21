@@ -1,6 +1,4 @@
-﻿/*
- * Lỗi ở requiredchat không hứng dc new_requirechat
-*/
+﻿
 
 using System;
 using System.Collections.Generic;
@@ -17,14 +15,15 @@ using System.Threading;
 using Package;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using P2P;
 namespace PeerToPeerChat
 {
     public partial class ChatForm : Form
     {
         delegate void AddMessage(Packet packet);
+        SendType Status = SendType.MESSAGE;
         string userName;
         const int port = 54545;
+        string meIP = "";
         string broadcastAddress = "255.255.255.255";
         UdpClient receivingClient;
         UdpClient sendingClient;
@@ -35,7 +34,12 @@ namespace PeerToPeerChat
         List<string> lstPrivChat;
         List<PrivateChat> lstFormPrivChat;
         List<Object> ChatLog;
+        Dictionary<string, string> EmojiList;
         public bool isClose;
+        string saveFileName = "";
+        TypePacket curType = TypePacket.NONE;
+        string curSender = "";
+        string curIP = "";
         public ChatForm()
         {
             CheckForIllegalCrossThreadCalls = false;
@@ -43,6 +47,26 @@ namespace PeerToPeerChat
             lstPrivChat = new List<string>();
             lstFormPrivChat = new List<PrivateChat>();
             ChatLog = new List<object>();
+            EmojiList = new Dictionary<string, string>();
+            string path = "";
+            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "cuoi.png");
+            EmojiList.Add(":)", "<img src=\"" + path + "\" style='width:20px;height:20px'>");
+            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "buon.png");
+            EmojiList.Add(":(", "<img src=\"" + path + "\"style='width:20px;height:20px'>");
+            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "so.png");
+            EmojiList.Add(":-s", "<img src=\"" + path + "\"style='width:20px;height:20px'>");
+            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "yeu.png");
+            EmojiList.Add("x-)", "<img src=\"" + path + "\"style='width:20px;height:20px'>");
+            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "like.png");
+            EmojiList.Add("(y)", "<img src=\"" + path + "\"style='width:20px;height:20px'>");
+            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "ngacnhien.png");
+            EmojiList.Add(":o", "<img src=\"" + path + "\"style='width:20px;height:20px'>");
+            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "khoc.png");
+            EmojiList.Add(";-(", "<img src=\"" + path + "\"style='width:20px;height:20px'>");
+            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "hun.png");        
+            EmojiList.Add("(p)", "<img src=\"" + path + "\"style='width:20px;height:20px'>");
+            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "gian.png");
+            EmojiList.Add(":-t", "<img src=\"" + path + "\"style='width:20px;height:20px'>");
         }
 
         private void ChatForm_Load(object sender, EventArgs e)
@@ -65,24 +89,15 @@ namespace PeerToPeerChat
                     InitializeReceiver();
                     this.Show();
                     txtsend.Focus();
-                    wbContent.DocumentText = "<html><body style=\"background-color:rgb(217,215,206)\"> </body></html>";
+                    //pictureBox12.Image = Image.FromFile("yeu.png");
+                    //webBrowser1.DocumentText = "<html><body style=\"background-color:rgb(217,215,206)\"><img src='..\\..\\Emoji\\buon.png'></body></html>";
+                    string path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "snowstorm.js");
+
+                    wbContent.DocumentText = "<html><head><script type=\"text/javascript\" src='" + path + "'></script></head><body style=\"background-color:rgb(217,215,206)\"><span></span></body></html>";
                 }
             }
-            //LoginForm lgform = new LoginForm();
-            //if (lgform.ShowDialog() == DialogResult.OK)
-            //{
-            //    if (lgform.UserName == "")
-            //    {
-            //        this.Close();
-            //        return;
-            //    }
-            //    else
-            //    {
-            //        userName = lgform.UserName;
-            //        lblusername.Text = userName;
-            //        this.Show();
-            //    }
-            //}
+            meIP = GetLocalIP();
+           
             this.Invoke((MethodInvoker)(() =>
             {
                 SendName(TypePacket.SEND_INFO_USER_1);
@@ -105,58 +120,202 @@ namespace PeerToPeerChat
 
         private void Receiver()
         {
+            
             IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, port);
             AddMessage messageDelegate = MessageReceived;
-            while(true)
+            while (true)
             {
                 byte[] data = receivingClient.Receive(ref endPoint);
-                Packet receivePacket = DeSerialize(data);
-                if (receivePacket.MyType==TypePacket.SEND_INFO_USER_1 && receivePacket.MyName != userName)
+                #region Nhan File
+                if (curType == TypePacket.SEND_FILE)
                 {
-                    this.Invoke((MethodInvoker)(() =>
+                    if (curIP == GetLocalIP())
                     {
-                        messageDelegate = MessageName;
+                        curType = TypePacket.NONE;
+                    }
+                    else
+                    {
+                        this.Invoke((MethodInvoker)(() =>
+                        {
+                            SaveFileDialog saveFileDlog1 = new SaveFileDialog();
+                            saveFileDlog1.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+                            saveFileDlog1.FileName = saveFileName;
+                            saveFileName = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\" + saveFileDlog1.FileName;
+                        }));
+                        bool bTranferOk = true;
+                        FileStream fs = null;
+                        try
+                        {
+                            fs = File.Create(saveFileName);
+                            fs.Write(data, 0, data.Length);
+
+                        }
+                        catch (Exception e)
+                        {
+                            bTranferOk = false;
+                            MessageBox.Show(e.Message, "Nhận file bị lỗi!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        if (fs != null)
+                        {
+                            try { fs.Close(); }
+                            catch (Exception) { }
+                        }
+                        if (!bTranferOk)
+                        {
+                            try { File.Delete(saveFileName); }
+                            catch (Exception) { }
+                        }
+                        else
+                        {
+                            string[] extension;
+                            extension = saveFileName.Split('.');
+                            this.Invoke((MethodInvoker)(() =>
+                            {
+                                Packet rpck = new Packet();
+                                rpck.MyName = curSender;
+                                rpck.MyMessage = "<a href='" + saveFileName.Replace(":", "(~*)") + "'>" + (('.' + extension[1] == ".jpg" || '.' + extension[1] == ".png" || extension[1] == ".PNG") ? "<img src='" + saveFileName + "' style='max-width:300px'/><br/>" : "") + "<b>" + Path.GetFileName(saveFileName) + "</b></a>";
+                                Message fmess = new Message(rpck, Type.RECEIVER);
+                                ChatLog.Add(fmess);
+                                RefreshWeb();
+                            }));
+                        }
+                        curType = TypePacket.MESSAGE;
+                        curIP = "";
+                        curSender = "";
+                    }
+                }
+                #endregion
+                else if (curType == TypePacket.NONE)
+                {
+                    curType = TypePacket.MESSAGE;
+                }
+                #region Nhan Image
+
+                else if(curType == TypePacket.SEND_IMAGE)
+                {
+                    if (curIP == GetLocalIP())
+                    {
+                        curType = TypePacket.NONE;
+                    }
+                    else
+                    {
+                        this.Invoke((MethodInvoker)(() =>
+                        {
+                            SaveFileDialog saveFileDlog1 = new SaveFileDialog();
+                            saveFileDlog1.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+                            saveFileDlog1.FileName = saveFileName;
+                            saveFileName = System.Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\" + saveFileDlog1.FileName;
+                        }));
+                        bool bTranferOk = true;
+                        FileStream fs = null;
+                        try
+                        {
+                            fs = File.Create(saveFileName);
+                            fs.Write(data, 0, data.Length);
+                        }
+                        catch (Exception e)
+                        {
+                            bTranferOk = false;
+                            MessageBox.Show(e.Message, "Nhận Image bị lỗi!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        if (fs != null)
+                        {
+                            try { fs.Close(); }
+                            catch (Exception) { }
+                        }
+                        if (!bTranferOk)
+                        {
+                            try { File.Delete(saveFileName); }
+                            catch (Exception) { }
+                        }
+                        else
+                        {
+                            this.Invoke((MethodInvoker)(() =>
+                            {
+                                Packet rpck = new Packet();
+                                rpck.MyName = curSender;
+                                rpck.MyMessage = "<a href='" + saveFileName.Replace(":", "(~*)") + "'>" + "<img src='" + saveFileName + "' style='max-width:300px'/><br/>" + "<b>" + Path.GetFileName(saveFileName) + "</b></a>";
+                                Message fmess = new Message(rpck, Type.RECEIVER);
+                                ChatLog.Add(fmess);
+                                RefreshWeb();
+                            }));
+
+                        }
+                        curType = TypePacket.NONE;
+                        curIP = "";
+                        curSender = "";
+                    }
+                }
+                #endregion
+                #region Nhan Message binh thuong
+                else
+                {
+                    Packet receivePacket = DeSerialize(data);
+                    if (receivePacket.MyType == TypePacket.SEND_INFO_USER_1 && receivePacket.MyIP != meIP)
+                    {
+                        this.Invoke((MethodInvoker)(() =>
+                        {
+                            messageDelegate = MessageName;
+                            Invoke(messageDelegate, receivePacket);
+                        }));
+
+                    }
+                    else if (receivePacket.MyType == TypePacket.SEND_INFO_USER_2 && receivePacket.MyIP != meIP)
+                    {
+                        this.Invoke((MethodInvoker)(() =>
+                        {
+                            bool ck = true;
+                            for (int i = 0; i < lstOnline.Count; i++)
+                            {
+                                string[] ck_lstOnline = lstOnline[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                if (ck_lstOnline[1] == receivePacket.MyIP)
+                                    ck = false;
+
+                            }
+                            if (ck)
+                            {
+                                lstFriends.Items.Add(receivePacket.MyName);
+                                lstOnline.Add(receivePacket.MyName + " " + receivePacket.MyIP);
+                            }
+                        }));
+                    }
+                    else if (receivePacket.MyType == TypePacket.MESSAGE)
+                    {
+                        if (receivePacket.MyMessage == "file#")
+                        {
+                            curType = TypePacket.SEND_FILE;
+                            curSender = receivePacket.MyName;
+                            curIP = receivePacket.MyIP;
+                            saveFileName = receivePacket.MyPort;
+                        }
+                        else if(receivePacket.MyMessage == "image#")
+                        {
+                            curType = TypePacket.SEND_IMAGE;
+                            curSender = receivePacket.MyName;
+                            curIP = receivePacket.MyIP;
+                            saveFileName = receivePacket.MyPort;
+                        }
+                        else if(receivePacket.MyMessage != "file#" && receivePacket.MyMessage != "image#" )
+                        {
+                            messageDelegate = MessageReceived;
+                            Invoke(messageDelegate, receivePacket);
+                        }
+                    }
+                    else if (receivePacket.MyType == TypePacket.REQUIRE_CHAT)
+                    {
+                        messageDelegate = AcceptRequireChat;
                         Invoke(messageDelegate, receivePacket);
-                    }));
-
-                }
-                else if(receivePacket.MyType == TypePacket.SEND_INFO_USER_2 && receivePacket.MyName != userName)
-                {
-                    this.Invoke((MethodInvoker)(() =>
+                    }
+                    else if (receivePacket.MyType == TypePacket.OUT_CHAT)
                     {
-                        bool ck = true;
-                        for (int i = 0; i < lstOnline.Count; i++)
-                        {
-                            string[] ck_lstOnline = lstOnline[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                            if (ck_lstOnline[1] == receivePacket.MyIP)
-                                ck = false;
-
-                        }
-                        if (ck)
-                        {
-                            lstFriends.Items.Add(receivePacket.MyName);
-                            lstOnline.Add(receivePacket.MyName + " " + receivePacket.MyIP);
-                        }
-                    }));
+                        messageDelegate = ClosingMethod;
+                        Invoke(messageDelegate, receivePacket);
+                    }
                 }
-                else if(receivePacket.MyType == TypePacket.MESSAGE)
-                {
-
-                    messageDelegate = MessageReceived;
-                    Invoke(messageDelegate, receivePacket);
-                }
-                else if (receivePacket.MyType == TypePacket.REQUIRE_CHAT)
-                {
-                    messageDelegate = AcceptRequireChat;
-                    Invoke(messageDelegate, receivePacket);
-                }
-                else if(receivePacket.MyType == TypePacket.OUT_CHAT)
-                {
-                    messageDelegate = ClosingMethod;
-                    Invoke(messageDelegate, receivePacket);
-                }
+                #endregion
             }
         }
+        
         private void ClosingMethod(Packet packet)
         {
             for(int i=0; i< lstOnline.Count;i++)
@@ -177,27 +336,20 @@ namespace PeerToPeerChat
             bool isExist = false;
             foreach(PrivateChat name in lstFormPrivChat)
             {
-                if(name.Text == packet.MyName)
+                if(name.Text == packet.MyName) // Ton tai Priv thi khong mo len
                 {
                     isExist = true;
                     break;
                 }
             }
-            if (!isExist)
+            if (!isExist) // Chua mo Priv
             {
-                //for (int i = 0; i < lstFriends.Items.Count; i++)
-                //{
-                //    if (lstFriends.Items[i].ToString() == packet.MyName)
-                //    {
-                //        lstFriends.Items[i] = lstFriends.Items[i] + " " + "(Bạn có tin nhắn mới...)";
-                //    }
-                //}
                 Random rd = new Random();
                 PrivateChat priv = new PrivateChat(packet, 2, packet.MyPort, GetLocalIP(), rd.Next(10000, 60000) + "");
                 priv.friendName = packet.MyName;
                 priv.friendIP = packet.MyIP;
                 lstFormPrivChat.Add(priv);
-                priv.Show();
+                priv.Show(); // Mo Priv => 
             }
             else
                 return;
@@ -210,7 +362,6 @@ namespace PeerToPeerChat
                 string[] ck_lstOnline = lstOnline[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 if (ck_lstOnline[1] == packet.MyIP)
                     ck = false;
-
             }
             if(ck)
             {
@@ -231,16 +382,23 @@ namespace PeerToPeerChat
         }
         private void MessageReceived(Packet packet)
         {
-            //rtxtdisplay.SelectionFont = new Font("Arial", 12, FontStyle.Bold | FontStyle.Italic);
-            //rtxtdisplay.AppendText(packet.MyName + ": ");
-            //rtxtdisplay.SelectionFont = packet.MyFont;
-            //rtxtdisplay.SelectionColor = packet.MyColor;
-            //rtxtdisplay.AppendText(packet.MyMessage + "\n");
-            //rtxtdisplay.ScrollToCaret();
-            if (packet.MyName == userName)
+            ////
+            string AddEmoji = packet.MyMessage;
+            AddEmoji = AddEmoji.Replace(":)",EmojiList[":)"]);
+            AddEmoji = AddEmoji.Replace(":(",EmojiList[":("]);
+            AddEmoji = AddEmoji.Replace(":-s", EmojiList[":-s"]);
+            AddEmoji = AddEmoji.Replace("x-)", EmojiList["x-)"]);
+            AddEmoji = AddEmoji.Replace("(y)", EmojiList["(y)"]);
+            AddEmoji = AddEmoji.Replace(":o", EmojiList[":o"]);
+            AddEmoji = AddEmoji.Replace(";-(", EmojiList[";-("]);
+            AddEmoji = AddEmoji.Replace("(p)", EmojiList["(p)"]);
+            AddEmoji = AddEmoji.Replace(":-t", EmojiList[":-t"]);
+            packet.MyMessage = AddEmoji;
+            if (packet.MyIP == meIP)
 
             {
                 Message rmess = new Message(packet, Type.SENDER);
+
                 ChatLog.Add(rmess);
             }
             else
@@ -262,13 +420,98 @@ namespace PeerToPeerChat
         {
             if (!string.IsNullOrEmpty(txtsend.Text))
             {
-                byte[] data = SendPacket();
-                sendingClient.Send(data, data.Length);
-                txtsend.Text = "";
-            }
-            txtsend.Focus();
-        }
+                if (Status == SendType.MESSAGE)
+                {
+                    byte[] data = SendPacket();
+                    sendingClient.Send(data, data.Length);
+                    txtsend.Text = "";
+                }
+                else if (Status == SendType.FILE)
+                {
+                    FileStream fs = null;
+                    bool bSendOk = true;
+                    try
+                    {
+                        FileInfo fi = new FileInfo(txtsend.Text);  
+                        byte[] buf = new byte[64*1024];                    
+                        fs = File.OpenRead(txtsend.Text);
+                        long filesize = fi.Length;
+                        byte[] buf1 = SendTypeFile(fi.Name);
+                        sendingClient.Send(buf1, buf1.Length);
 
+                        //Send size cua file
+                        int nr = fs.Read(buf, 0, (int)filesize);
+                        sendingClient.Send(buf, nr);
+                    }
+                    catch (Exception exx)
+                    {
+                        bSendOk = false;
+                        MessageBox.Show(exx.Message, "File Sending Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                    if (fs != null)
+                    {
+                        try { fs.Close(); }
+                        catch (Exception) { }
+                    }
+                    if (bSendOk)
+                    {
+                        MessageBox.Show("Gửi Thành công !", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Packet fpck = new Packet();
+                        fpck.MyName = userName;
+                        fpck.MyMessage = "<a href='" + txtsend.Text.Replace(":", "(~*)") + "'>" + "<b>" + Path.GetFileName(txtsend.Text) + "</b></a>";
+                        Message fmess = new Message(fpck, Type.SENDER);
+                        ChatLog.Add(fmess);
+                        RefreshWeb();
+                    }
+                    Status = SendType.MESSAGE;
+                }
+                else if(Status == SendType.IMAGE)
+                {
+                    FileStream fs = null;
+                    bool bSendOk = true;
+                    try
+                    {
+                        FileInfo fi = new FileInfo(txtsend.Text);
+                        byte[] buf = new byte[64 * 1024];
+                        fs = File.OpenRead(txtsend.Text);
+                        long filesize = fi.Length;
+                        byte[] buf1 = SendTypeImage(fi.Name);
+                        sendingClient.Send(buf1, buf1.Length);
+
+                        //Send size cua file
+                        int nr = fs.Read(buf, 0, (int)filesize);
+                        sendingClient.Send(buf, nr);
+                    }
+                    catch (Exception exx)
+                    {
+                        bSendOk = false;
+                        MessageBox.Show(exx.Message, "Gửi ảnh lỗi!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                    if (fs != null)
+                    {
+                        try { fs.Close(); }
+                        catch (Exception) { }
+                    }
+                    if (bSendOk)
+                    {
+                        MessageBox.Show("Gửi Thành công !", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Packet fpck = new Packet();
+                        fpck.MyName = userName;
+                        fpck.MyMessage = "<a href='" + txtsend.Text.Replace(":", "(~*)") + "'>" + "<img src='" + txtsend.Text + "' style='max-width:300px'/><br/>" + "<b>" + Path.GetFileName(txtsend.Text) + "</b></a>";
+                        Message fmess = new Message(fpck, Type.SENDER);
+                        ChatLog.Add(fmess);
+                        RefreshWeb();
+                    }
+                    Status = SendType.MESSAGE;
+                }
+                txtsend.Focus();
+                txtsend.Text = "";
+
+            }
+        }
+    
         byte[] SendPacket()
         {
             Packet mypacket = new Packet();
@@ -277,6 +520,39 @@ namespace PeerToPeerChat
             mypacket.MyFont = txtsend.Font;
             mypacket.MyColor = txtsend.ForeColor;
             mypacket.MyType = TypePacket.MESSAGE;
+            mypacket.MyIP = meIP;
+            MemoryStream str = new MemoryStream();
+            BinaryFormatter bformat = new BinaryFormatter();
+            bformat.Serialize(str, mypacket);
+            byte[] data = new byte[1024];
+            data = str.ToArray();
+            return data;
+        }
+
+        byte[] SendTypeFile(string name)
+        {
+            Packet mypacket = new Packet();
+            mypacket.MyType = TypePacket.MESSAGE;
+            mypacket.MyMessage = "file#";
+            mypacket.MyName = userName;
+            mypacket.MyIP = GetLocalIP();
+            mypacket.MyPort = name;
+            MemoryStream str = new MemoryStream();
+            BinaryFormatter bformat = new BinaryFormatter();
+            bformat.Serialize(str, mypacket);
+            byte[] data = new byte[1024];
+            data = str.ToArray();
+            return data;
+        }
+
+        byte[] SendTypeImage(string name)
+        {
+            Packet mypacket = new Packet();
+            mypacket.MyType = TypePacket.MESSAGE;
+            mypacket.MyMessage = "image#";
+            mypacket.MyName = userName;
+            mypacket.MyIP = GetLocalIP();
+            mypacket.MyPort = name;
             MemoryStream str = new MemoryStream();
             BinaryFormatter bformat = new BinaryFormatter();
             bformat.Serialize(str, mypacket);
@@ -340,7 +616,7 @@ namespace PeerToPeerChat
                 PrivCchat.friendName = Name;
                 PrivCchat.meIP = GetLocalIP();
                 PrivCchat.friendIP = IP;
-                PrivCchat.mePort = this.myPort;
+                PrivCchat.mePort = hipck.MyPort;
                 PrivCchat.friendPort = Port;
                 //
                 lstFormPrivChat.Add(PrivCchat);
@@ -352,90 +628,11 @@ namespace PeerToPeerChat
             }
         }
 
-        //private void new_closeChat(object sender, CloseEvent e)
-        //{
-        //    // GỬI THÔNG BÁO ĐÓNG CHO BÊN BẠN
-
-        //    Packet closingpck = new Packet();
-        //    closingpck.MyType = TypePacket.CLOSING;
-        //    closingpck.MyName = userName;
-        //    MemoryStream str = new MemoryStream();
-        //    BinaryFormatter bformat = new BinaryFormatter();
-        //    bformat.Serialize(str, closingpck);
-        //    byte[] data = new byte[1024];
-        //    data = str.ToArray();
-        //    InitializeRequirer(e.FirstIP, data);
-        //    for(int i=0; i < lstFormPrivChat.Count;i++)
-        //    {
-        //        if (lstFormPrivChat[i].Text == e.friendName)
-        //            lstFormPrivChat.Remove(lstFormPrivChat[i]);
-        //    }
-        //}
-
-        void InitializeRequirePrivateChat(string Name, string IP, string Port, Packet pck, int num)
-        {
-            try
-            {
-                PrivateChat PrivCchat = new PrivateChat();
-                PrivCchat.RequireChat += new_requireChat;
-                //PrivCchat.CloseChat += new_closeChat;
-                PrivCchat.friendName = Name;
-                PrivCchat.meIP = GetLocalIP();
-                PrivCchat.friendIP = IP;
-                PrivCchat.mePort = pck.MyPort;
-                PrivCchat.friendPort = Port;
-                PrivCchat.Show();
-                lstFormPrivChat.Add(PrivCchat);
-                // xoa dong status
-                lstFriends.Items[num] = Name;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
-        private void new_requireChat(object sender, RequireEvent e)
-        { 
-            Packet mypacket = new Packet();
-            mypacket.MyName = userName;
-            mypacket.MyType = TypePacket.REQUIRE_CHAT;
-            mypacket.MyMessage = e.FirstMess;
-            mypacket.MyFont = e.FirstFont;
-            mypacket.MyColor = e.FirstColor;
-            MemoryStream str = new MemoryStream();
-            BinaryFormatter bformat = new BinaryFormatter();
-            bformat.Serialize(str, mypacket);
-            byte[] data = new byte[1024];
-            data = str.ToArray();
-            InitializeRequirer(e.FirstIP, data);
-        }
-
+       
         private void lstFriends_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             try
             {
-                //int num = 0;
-                //string[] Name_IP;
-                //string IP;
-                //string[] require = null;
-                //if (lstFriends.SelectedItem != null)
-                //{
-                //    num = lstFriends.IndexFromPoint(e.Location);
-                //    string ckrequire = lstFriends.SelectedItem as string;
-                //    require = ckrequire.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                //}
-                //Name_IP = lstOnline[num].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                //IP = Name_IP[1];
-                //string Port = Name_IP[2];
-
-                //if (require.Length > 1)
-                //{
-                //    InitializeRequirePrivateChat(Name_IP[0], IP, Port, RequirePacket, num);
-                //}
-                //else
-                //{
-                //    InitializePrivateChat(Name_IP[0], IP, Port);
-                //}
                 int num = 0;
                 string[] Details;
                 if(lstFriends.SelectedItem != null)
@@ -457,7 +654,6 @@ namespace PeerToPeerChat
                     data = str.ToArray();
                     InitializePrivateChat(Details[0], Details[1],"0",hipck);
                     InitializeRequirer(Details[1], data);
-
                 }
             }
             catch (Exception ex)
@@ -478,9 +674,17 @@ namespace PeerToPeerChat
             byte[] data = new byte[1024];
             data = str.ToArray();
             sendingClient.Send(data, data.Length);
-            Application.Exit();
+            //Application.Exit();
+            // Tat het Priv hien tai
+            foreach(PrivateChat cur in lstFormPrivChat)
+            {
+                if(cur.Text != "")
+                    cur.ptbExit_Click(cur, new EventArgs());
+            }
+            Environment.Exit(0);
         }
         // move form
+        #region Move Form
         protected override void OnLoad(EventArgs e)
         {
             if (this.FormBorderStyle == System.Windows.Forms.FormBorderStyle.None)
@@ -522,7 +726,7 @@ namespace PeerToPeerChat
             }
             downPoint = Point.Empty;
         }
-
+        #endregion
         void RefreshWeb()
         {
             string start = @"<!DOCTYPE html><html><head><title>Client</title><style type='text/css'>
@@ -582,7 +786,6 @@ namespace PeerToPeerChat
             }
             wbContent.Document.Write(start + body + end);
             wbContent.Refresh();
-            txtsend.Text = "";
             txtsend.Focus();
         }
 
@@ -608,8 +811,80 @@ namespace PeerToPeerChat
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+
+        private void btnAttach_Click(object sender, EventArgs e)
         {
+            OpenFileDialog OpFileDlog = new OpenFileDialog();
+            if (OpFileDlog.ShowDialog() == DialogResult.OK)
+            {
+                txtsend.Text = OpFileDlog.FileName;
+                Status = SendType.FILE;
+            }
+        }
+
+        private void btnImage_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog OpImageDlog = new OpenFileDialog();
+            OpImageDlog.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            if (OpImageDlog.ShowDialog() == DialogResult.OK)
+            {
+                txtsend.Text = OpImageDlog.FileName;
+                Status = SendType.IMAGE;
+            }
+        }
+        #region EMOJI
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            txtsend.AppendText(" :) ");
+        }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+            txtsend.AppendText(" :( ");
+        }
+
+        private void pictureBox5_Click(object sender, EventArgs e)
+        {
+            txtsend.AppendText(" :-t ");
+        }
+
+        private void pictureBox6_Click(object sender, EventArgs e)
+        {
+            txtsend.AppendText(" (p) ");
+        }
+
+        private void pictureBox7_Click(object sender, EventArgs e)
+        {
+            txtsend.AppendText(" ;-( ");
+        }
+
+        private void pictureBox8_Click(object sender, EventArgs e)
+        {
+            txtsend.AppendText(" :o ");
+        }
+
+        private void pictureBox9_Click(object sender, EventArgs e)
+        {
+            txtsend.AppendText(" :-s ");
+        }
+
+        private void pictureBox10_Click(object sender, EventArgs e)
+        {
+            txtsend.AppendText(" x-) ");
+        }
+
+        private void pictureBox11_Click(object sender, EventArgs e)
+        {
+            txtsend.AppendText(" (y) ");
+        }
+        #endregion
+
+        private void btnEmoji_Click(object sender, EventArgs e)
+        {
+            if (!grpEmoji.Visible)
+                grpEmoji.Visible = true;
+            else
+                grpEmoji.Visible = false;
         }
     }
 }
