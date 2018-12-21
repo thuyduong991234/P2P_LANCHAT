@@ -50,7 +50,7 @@
             this.txtname.Margin = new System.Windows.Forms.Padding(4);
             this.txtname.Name = "txtname";
             this.txtname.Size = new System.Drawing.Size(262, 31);
-            this.txtname.TabIndex = 1;
+            this.txtname.TabIndex = 0;
             this.txtname.Text = "Enter username ...";
             this.txtname.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtname_KeyPress);
             this.txtname.MouseEnter += new System.EventHandler(this.txtname_MouseEnter);
@@ -66,7 +66,7 @@
             this.btnlogin.Margin = new System.Windows.Forms.Padding(4);
             this.btnlogin.Name = "btnlogin";
             this.btnlogin.Size = new System.Drawing.Size(110, 37);
-            this.btnlogin.TabIndex = 2;
+            this.btnlogin.TabIndex = 1;
             this.btnlogin.Text = "Đăng nhập";
             this.btnlogin.UseVisualStyleBackColor = false;
             this.btnlogin.Click += new System.EventHandler(this.btnlogin_Click);
@@ -105,7 +105,7 @@
             this.btncancel.Margin = new System.Windows.Forms.Padding(4);
             this.btncancel.Name = "btncancel";
             this.btncancel.Size = new System.Drawing.Size(109, 37);
-            this.btncancel.TabIndex = 4;
+            this.btncancel.TabIndex = 2;
             this.btncancel.Text = "Hủy bỏ";
             this.btncancel.UseVisualStyleBackColor = false;
             this.btncancel.Click += new System.EventHandler(this.btncancel_Click);

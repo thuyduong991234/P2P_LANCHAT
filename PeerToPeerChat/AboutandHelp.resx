@@ -117,4 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="richTextBox3.Text" xml:space="preserve">
+    <value>B1: Nhấn đúp chuột vào tên bạn bè bạn muốn chat riêng trong danh sách Bạn bè.
+B2: Cửa sổ chat riêng tư sẽ hiện lên.
+B3: Nhập tin nhắn để bắt đầu cuộc trò chuyện.
+(*) Chú ý: Khi đối phương thoát khỏi cuộc trò chuyện bạn sẽ không thể nhắn tin vì đối phương đã ngắt kết nối.</value>
+  </data>
+  <data name="richTextBox4.Text" xml:space="preserve">
+    <value>+ Đôi khi trong chat chung mọi người có thể sẽ không nhận được tin nhắn của bạn vì sự cố mất gói do giao thức của chương trình gây nên. 
++ Nickname của bạn có thể sẽ không hiện trong danh sách bạn bè của mọi người, đừng lo, bạn hãy đóng chương trình và khởi động lại.</value>
+  </data>
+  <data name="richTextBox5.Text" xml:space="preserve">
+    <value>Tính năng:
+	+ Chương trình Chat bằng mô hình P2P đơn giản, tốc độ nhanh, cài 
+đặt trên mạng Lan.
+	+ Hỗ trợ gửi tin nhắn, file, hình ảnh, emotion trực tiếp giữa các Users.
+	+ Lưu danh sách bạn bè.
+	+ Cho phép nhiều người chat công khai với nhau.
+	+ Chat riêng giữa hai người…</value>
+  </data>
 </root>

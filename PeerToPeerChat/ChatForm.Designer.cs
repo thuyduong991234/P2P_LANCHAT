@@ -40,14 +40,17 @@
             this.lblusername = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lstFriends = new System.Windows.Forms.ListBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.ptbAva = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.grpEmoji = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.txtsend = new System.Windows.Forms.RichTextBox();
+            this.wbContent = new System.Windows.Forms.WebBrowser();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.ptbHelp = new System.Windows.Forms.PictureBox();
+            this.ptbMinimize = new System.Windows.Forms.PictureBox();
+            this.ptbExit = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
@@ -60,24 +63,22 @@
             this.btnEmoji = new System.Windows.Forms.Button();
             this.btnImage = new System.Windows.Forms.Button();
             this.btnAttach = new System.Windows.Forms.Button();
-            this.txtsend = new System.Windows.Forms.RichTextBox();
             this.btnFont = new System.Windows.Forms.Button();
             this.btnColor = new System.Windows.Forms.Button();
             this.btnSend = new System.Windows.Forms.Button();
-            this.wbContent = new System.Windows.Forms.WebBrowser();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.ptbMinimize = new System.Windows.Forms.PictureBox();
-            this.ptbExit = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.ptbAva = new System.Windows.Forms.PictureBox();
             this.contextMenuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbAva)).BeginInit();
             this.panel2.SuspendLayout();
             this.grpEmoji.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ptbHelp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ptbMinimize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ptbExit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
@@ -87,8 +88,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbMinimize)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbExit)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ptbAva)).BeginInit();
             this.SuspendLayout();
             // 
             // contextMenuStrip1
@@ -130,7 +132,7 @@
             this.label2.BackColor = System.Drawing.Color.White;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(191)))), ((int)(((byte)(236)))));
-            this.label2.Location = new System.Drawing.Point(52, 59);
+            this.label2.Location = new System.Drawing.Point(57, 59);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(136, 14);
             this.label2.TabIndex = 17;
@@ -141,7 +143,7 @@
             this.lblusername.BackColor = System.Drawing.Color.White;
             this.lblusername.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblusername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(191)))), ((int)(((byte)(236)))));
-            this.lblusername.Location = new System.Drawing.Point(55, 80);
+            this.lblusername.Location = new System.Drawing.Point(60, 80);
             this.lblusername.Name = "lblusername";
             this.lblusername.Size = new System.Drawing.Size(136, 26);
             this.lblusername.TabIndex = 16;
@@ -173,16 +175,6 @@
             this.lstFriends.TabIndex = 0;
             this.lstFriends.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstFriends_MouseDoubleClick);
             // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(72, 0);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(25, 20);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 17;
-            this.pictureBox2.TabStop = false;
-            // 
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(191)))), ((int)(((byte)(236)))));
@@ -192,16 +184,6 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(229, 42);
             this.panel4.TabIndex = 15;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(41, 35);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 11;
-            this.pictureBox1.TabStop = false;
             // 
             // label1
             // 
@@ -213,16 +195,6 @@
             this.label1.Size = new System.Drawing.Size(108, 29);
             this.label1.TabIndex = 12;
             this.label1.Text = "SkyChat";
-            // 
-            // ptbAva
-            // 
-            this.ptbAva.Image = ((System.Drawing.Image)(resources.GetObject("ptbAva.Image")));
-            this.ptbAva.Location = new System.Drawing.Point(3, 59);
-            this.ptbAva.Name = "ptbAva";
-            this.ptbAva.Size = new System.Drawing.Size(46, 49);
-            this.ptbAva.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.ptbAva.TabIndex = 14;
-            this.ptbAva.TabStop = false;
             // 
             // panel2
             // 
@@ -277,6 +249,61 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(91, 82);
             this.tableLayoutPanel1.TabIndex = 37;
+            // 
+            // txtsend
+            // 
+            this.txtsend.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtsend.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtsend.Location = new System.Drawing.Point(14, 425);
+            this.txtsend.Name = "txtsend";
+            this.txtsend.Size = new System.Drawing.Size(450, 36);
+            this.txtsend.TabIndex = 33;
+            this.txtsend.Text = "";
+            this.txtsend.TextChanged += new System.EventHandler(this.txtsend_TextChanged);
+            this.txtsend.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtcontent_KeyDown);
+            // 
+            // wbContent
+            // 
+            this.wbContent.Location = new System.Drawing.Point(0, 0);
+            this.wbContent.MinimumSize = new System.Drawing.Size(20, 20);
+            this.wbContent.Name = "wbContent";
+            this.wbContent.Size = new System.Drawing.Size(540, 371);
+            this.wbContent.TabIndex = 19;
+            this.wbContent.Url = new System.Uri("about:blank", System.UriKind.Absolute);
+            this.wbContent.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.wbContent_Navigating);
+            // 
+            // ptbHelp
+            // 
+            this.ptbHelp.Image = global::PeerToPeerChat.Properties.Resources.iconHelp;
+            this.ptbHelp.Location = new System.Drawing.Point(633, 4);
+            this.ptbHelp.Name = "ptbHelp";
+            this.ptbHelp.Size = new System.Drawing.Size(30, 30);
+            this.ptbHelp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.ptbHelp.TabIndex = 11;
+            this.ptbHelp.TabStop = false;
+            this.ptbHelp.Click += new System.EventHandler(this.ptbHelp_Click);
+            // 
+            // ptbMinimize
+            // 
+            this.ptbMinimize.Image = ((System.Drawing.Image)(resources.GetObject("ptbMinimize.Image")));
+            this.ptbMinimize.Location = new System.Drawing.Point(669, 4);
+            this.ptbMinimize.Name = "ptbMinimize";
+            this.ptbMinimize.Size = new System.Drawing.Size(32, 32);
+            this.ptbMinimize.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.ptbMinimize.TabIndex = 10;
+            this.ptbMinimize.TabStop = false;
+            this.ptbMinimize.Click += new System.EventHandler(this.ptbMinimize_Click);
+            // 
+            // ptbExit
+            // 
+            this.ptbExit.Image = ((System.Drawing.Image)(resources.GetObject("ptbExit.Image")));
+            this.ptbExit.Location = new System.Drawing.Point(707, 4);
+            this.ptbExit.Name = "ptbExit";
+            this.ptbExit.Size = new System.Drawing.Size(32, 32);
+            this.ptbExit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.ptbExit.TabIndex = 8;
+            this.ptbExit.TabStop = false;
+            this.ptbExit.Click += new System.EventHandler(this.ptbExit_Click);
             // 
             // pictureBox3
             // 
@@ -419,17 +446,6 @@
             this.btnAttach.UseVisualStyleBackColor = false;
             this.btnAttach.Click += new System.EventHandler(this.btnAttach_Click);
             // 
-            // txtsend
-            // 
-            this.txtsend.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtsend.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtsend.Location = new System.Drawing.Point(14, 425);
-            this.txtsend.Name = "txtsend";
-            this.txtsend.Size = new System.Drawing.Size(450, 36);
-            this.txtsend.TabIndex = 33;
-            this.txtsend.Text = "";
-            this.txtsend.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtcontent_KeyDown);
-            // 
             // btnFont
             // 
             this.btnFont.BackColor = System.Drawing.Color.White;
@@ -472,36 +488,35 @@
             this.btnSend.UseVisualStyleBackColor = false;
             this.btnSend.Click += new System.EventHandler(this.btnsend_Click);
             // 
-            // wbContent
+            // pictureBox2
             // 
-            this.wbContent.Location = new System.Drawing.Point(0, 0);
-            this.wbContent.MinimumSize = new System.Drawing.Size(20, 20);
-            this.wbContent.Name = "wbContent";
-            this.wbContent.Size = new System.Drawing.Size(540, 371);
-            this.wbContent.TabIndex = 19;
-            this.wbContent.Url = new System.Uri("about:blank", System.UriKind.Absolute);
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(72, 0);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(25, 20);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 17;
+            this.pictureBox2.TabStop = false;
             // 
-            // ptbMinimize
+            // pictureBox1
             // 
-            this.ptbMinimize.Image = ((System.Drawing.Image)(resources.GetObject("ptbMinimize.Image")));
-            this.ptbMinimize.Location = new System.Drawing.Point(669, 3);
-            this.ptbMinimize.Name = "ptbMinimize";
-            this.ptbMinimize.Size = new System.Drawing.Size(32, 32);
-            this.ptbMinimize.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.ptbMinimize.TabIndex = 10;
-            this.ptbMinimize.TabStop = false;
-            this.ptbMinimize.Click += new System.EventHandler(this.ptbMinimize_Click);
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(41, 35);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 11;
+            this.pictureBox1.TabStop = false;
             // 
-            // ptbExit
+            // ptbAva
             // 
-            this.ptbExit.Image = ((System.Drawing.Image)(resources.GetObject("ptbExit.Image")));
-            this.ptbExit.Location = new System.Drawing.Point(707, 4);
-            this.ptbExit.Name = "ptbExit";
-            this.ptbExit.Size = new System.Drawing.Size(32, 32);
-            this.ptbExit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.ptbExit.TabIndex = 8;
-            this.ptbExit.TabStop = false;
-            this.ptbExit.Click += new System.EventHandler(this.ptbExit_Click);
+            this.ptbAva.Image = ((System.Drawing.Image)(resources.GetObject("ptbAva.Image")));
+            this.ptbAva.Location = new System.Drawing.Point(8, 59);
+            this.ptbAva.Name = "ptbAva";
+            this.ptbAva.Size = new System.Drawing.Size(46, 49);
+            this.ptbAva.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.ptbAva.TabIndex = 14;
+            this.ptbAva.TabStop = false;
             // 
             // ChatForm
             // 
@@ -509,12 +524,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(191)))), ((int)(((byte)(236)))));
             this.ClientSize = new System.Drawing.Size(740, 514);
+            this.Controls.Add(this.ptbHelp);
             this.Controls.Add(this.ptbMinimize);
             this.Controls.Add(this.ptbExit);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ChatForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -523,14 +540,14 @@
             this.contextMenuStrip1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbAva)).EndInit();
             this.panel2.ResumeLayout(false);
             this.grpEmoji.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ptbHelp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ptbMinimize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ptbExit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
@@ -540,8 +557,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbMinimize)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbExit)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ptbAva)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -585,6 +603,7 @@
         private System.Windows.Forms.Button btnEmoji;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox ptbHelp;
     }
 }
 

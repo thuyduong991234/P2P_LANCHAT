@@ -15,10 +15,13 @@ using System.Threading;
 using Package;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Diagnostics;
+
 namespace PeerToPeerChat
 {
     public partial class ChatForm : Form
     {
+        #region PROPERTIES
         delegate void AddMessage(Packet packet);
         SendType Status = SendType.MESSAGE;
         string userName;
@@ -31,22 +34,26 @@ namespace PeerToPeerChat
         Thread receivingThread;
         List<string> lstOnline;
         string myPort;
-        List<string> lstPrivChat;
         List<PrivateChat> lstFormPrivChat;
         List<Object> ChatLog;
         Dictionary<string, string> EmojiList;
-        public bool isClose;
         string saveFileName = "";
         TypePacket curType = TypePacket.NONE;
         string curSender = "";
         string curIP = "";
+        string Spath = "";
+        string bkgrd = "";
+        #endregion
+
+        #region CÁC HÀM KHỞI TẠO
         public ChatForm()
         {
             CheckForIllegalCrossThreadCalls = false;
             InitializeComponent();
-            lstPrivChat = new List<string>();
-            lstFormPrivChat = new List<PrivateChat>();
-            ChatLog = new List<object>();
+            lstFormPrivChat = new List<PrivateChat>(); // Lưu form priv hiện tại
+            ChatLog = new List<object>(); // Lưu chatlog
+            meIP = GetLocalIP();
+            #region Khởi tạo Emoji
             EmojiList = new Dictionary<string, string>();
             string path = "";
             path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "cuoi.png");
@@ -63,10 +70,11 @@ namespace PeerToPeerChat
             EmojiList.Add(":o", "<img src=\"" + path + "\"style='width:20px;height:20px'>");
             path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "khoc.png");
             EmojiList.Add(";-(", "<img src=\"" + path + "\"style='width:20px;height:20px'>");
-            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "hun.png");        
+            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "hun.png");
             EmojiList.Add("(p)", "<img src=\"" + path + "\"style='width:20px;height:20px'>");
             path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "gian.png");
             EmojiList.Add(":-t", "<img src=\"" + path + "\"style='width:20px;height:20px'>");
+            #endregion
         }
 
         private void ChatForm_Load(object sender, EventArgs e)
@@ -89,26 +97,29 @@ namespace PeerToPeerChat
                     InitializeReceiver();
                     this.Show();
                     txtsend.Focus();
-                    //pictureBox12.Image = Image.FromFile("yeu.png");
-                    //webBrowser1.DocumentText = "<html><body style=\"background-color:rgb(217,215,206)\"><img src='..\\..\\Emoji\\buon.png'></body></html>";
-                    string path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "snowstorm.js");
 
-                    wbContent.DocumentText = "<html><head><script type=\"text/javascript\" src='" + path + "'></script></head><body style=\"background-color:rgb(217,215,206)\"><span></span></body></html>";
+                    // CSS cho hiệu ứng snow
+                    Spath = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "snowstorm.js");
+                    bkgrd = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "background.png");
+                    wbContent.DocumentText = "<html><head><script type=\"text/javascript\" src='" + Spath + "'></script></head><body style=\"background-image:url('"+bkgrd+ "')\"></body></html>";
+                    RefreshWeb();
                 }
             }
-            meIP = GetLocalIP();
-           
+
+            //Gửi thông tin của mình cho remote           
             this.Invoke((MethodInvoker)(() =>
             {
                 SendName(TypePacket.SEND_INFO_USER_1);
             }));
         }
+
         private void InitializeRequirer(string ip, byte[] buffer)
         {
             requirePrivChat = new UdpClient(ip, 54545);
             requirePrivChat.EnableBroadcast = true;
             requirePrivChat.Send(buffer,buffer.Length);
         }
+
         private void InitializeReceiver()
         {
             receivingClient = new UdpClient(port);
@@ -118,6 +129,37 @@ namespace PeerToPeerChat
             receivingThread.Start();
         }
 
+        private void InitializeSender()
+        {
+            // Broadcast này là địa chỉ của thằng mình send tới
+            sendingClient = new UdpClient(broadcastAddress, 54545);
+            sendingClient.EnableBroadcast = true;
+        }
+
+        void InitializePrivateChat(string Name, string IP, string Port, Packet hipck)
+        {
+            try
+            {
+                PrivateChat PrivCchat = new PrivateChat(hipck, 1);
+                PrivCchat.friendName = Name;
+                PrivCchat.meIP = GetLocalIP();
+                PrivCchat.friendIP = IP;
+                PrivCchat.mePort = hipck.MyPort;
+                PrivCchat.friendPort = Port;
+                //
+                lstFormPrivChat.Add(PrivCchat);
+                PrivCchat.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        #endregion
+
+        #region TIẾN TRÌNH NHẬN TIN
+        // XỬ LÝ NHẬN TIN 
         private void Receiver()
         {
             
@@ -126,9 +168,11 @@ namespace PeerToPeerChat
             while (true)
             {
                 byte[] data = receivingClient.Receive(ref endPoint);
-                #region Nhan File
+                #region NHẬN FILE
                 if (curType == TypePacket.SEND_FILE)
                 {
+
+                    //Loại việc nhận tin của chính mình
                     if (curIP == GetLocalIP())
                     {
                         curType = TypePacket.NONE;
@@ -169,6 +213,7 @@ namespace PeerToPeerChat
                         {
                             string[] extension;
                             extension = saveFileName.Split('.');
+                            //Hiện lên Web
                             this.Invoke((MethodInvoker)(() =>
                             {
                                 Packet rpck = new Packet();
@@ -185,13 +230,17 @@ namespace PeerToPeerChat
                     }
                 }
                 #endregion
+
+                #region TỪ CHỐI NHẬN FILE & IMAGE
                 else if (curType == TypePacket.NONE)
                 {
                     curType = TypePacket.MESSAGE;
                 }
-                #region Nhan Image
+                #endregion
 
-                else if(curType == TypePacket.SEND_IMAGE)
+                #region NHẬN IMAGE
+
+                else if (curType == TypePacket.SEND_IMAGE)
                 {
                     if (curIP == GetLocalIP())
                     {
@@ -247,7 +296,8 @@ namespace PeerToPeerChat
                     }
                 }
                 #endregion
-                #region Nhan Message binh thuong
+
+                #region NHẬN MESS BÌNH THƯỜNG (XỬ LÝ PACK ĐẦU TIÊN)
                 else
                 {
                     Packet receivePacket = DeSerialize(data);
@@ -316,6 +366,7 @@ namespace PeerToPeerChat
             }
         }
         
+        // DELEGATE XỬ LÝ CLOSING CHATFORM
         private void ClosingMethod(Packet packet)
         {
             for(int i=0; i< lstOnline.Count;i++)
@@ -331,6 +382,8 @@ namespace PeerToPeerChat
                 }
             }
         }
+
+        // DELEGATE CHẤP NHẬN YÊU CẦU HIỆN PRIV TỪ REMOTE
         private void AcceptRequireChat(Packet packet)
         {
             bool isExist = false;
@@ -354,6 +407,8 @@ namespace PeerToPeerChat
             else
                 return;
         }
+
+        // DELEGATE XỬ LÝ PHẦN THÔNG TIN REMOTE
         private void MessageName(Packet packet)
         {
             bool ck = true;
@@ -378,11 +433,11 @@ namespace PeerToPeerChat
             byte[] data = new byte[1024];
             data = str.ToArray();
             InitializeRequirer(packet.MyIP,data);
-            //SendName(TypePacket.SEND_INFO_USER_2);
         }
+
+        //DELEGATE XỬ LÝ TIN NHẮN(EMOJI)
         private void MessageReceived(Packet packet)
         {
-            ////
             string AddEmoji = packet.MyMessage;
             AddEmoji = AddEmoji.Replace(":)",EmojiList[":)"]);
             AddEmoji = AddEmoji.Replace(":(",EmojiList[":("]);
@@ -408,14 +463,10 @@ namespace PeerToPeerChat
             }
             RefreshWeb();
         }
+        #endregion
 
-        private void InitializeSender()
-        {
-            // Broadcast này là địa chỉ của thằng mình send tới
-            sendingClient = new UdpClient(broadcastAddress, 54545);
-            sendingClient.EnableBroadcast = true;
-        }
-
+        #region XỬ LÝ GỬI TIN
+        // NÚT GƯI (MESS + FILE + IMAGE)
         private void btnsend_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(txtsend.Text))
@@ -561,14 +612,23 @@ namespace PeerToPeerChat
             return data;
         }
 
-        private Packet DeSerialize(byte[] data)
+        public void SendName(TypePacket type)
         {
-            Package.Packet myPacket = new Packet();
-            MemoryStream str = new MemoryStream(data);
+            Packet mypacket = new Packet();
+            //this.myPort = mypacket.MyPort;
+            mypacket.MyIP = GetLocalIP();
+            mypacket.MyName = userName;
+            mypacket.MyType = type;
+            MemoryStream str = new MemoryStream();
             BinaryFormatter bformat = new BinaryFormatter();
-            myPacket = (Packet)bformat.Deserialize(str);
-            return myPacket;
+            bformat.Serialize(str, mypacket);
+            byte[] data = new byte[1024];
+            data = str.ToArray();
+            sendingClient.Send(data, data.Length);
         }
+        #endregion
+
+        #region CÁC BUTTON - SỰ KIỆN VÀ XỬ LÝ DỮ LIỆU
 
         string GetLocalIP()
         {
@@ -584,21 +644,15 @@ namespace PeerToPeerChat
             return "127.0.0.1";
         }
 
-        public void SendName(TypePacket type)
+        // GIẢI MÃ PACKET
+        private Packet DeSerialize(byte[] data)
         {
-            Packet mypacket = new Packet();
-            //this.myPort = mypacket.MyPort;
-            mypacket.MyIP = GetLocalIP();
-            mypacket.MyName = userName;
-            mypacket.MyType = type;
-            MemoryStream str = new MemoryStream();
+            Package.Packet myPacket = new Packet();
+            MemoryStream str = new MemoryStream(data);
             BinaryFormatter bformat = new BinaryFormatter();
-            bformat.Serialize(str, mypacket);
-            byte[] data = new byte[1024];
-            data = str.ToArray();
-            sendingClient.Send(data, data.Length);
+            myPacket = (Packet)bformat.Deserialize(str);
+            return myPacket;
         }
-       
 
         private void txtcontent_KeyDown(object sender, KeyEventArgs e)
         {
@@ -607,28 +661,7 @@ namespace PeerToPeerChat
                 btnsend_Click(sender, new EventArgs());
             }
         }
-
-        void InitializePrivateChat(string Name,string IP, string Port, Packet hipck)
-        {
-            try
-            {
-                PrivateChat PrivCchat = new PrivateChat(hipck,1);
-                PrivCchat.friendName = Name;
-                PrivCchat.meIP = GetLocalIP();
-                PrivCchat.friendIP = IP;
-                PrivCchat.mePort = hipck.MyPort;
-                PrivCchat.friendPort = Port;
-                //
-                lstFormPrivChat.Add(PrivCchat);
-                PrivCchat.Show();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
-
-       
+     
         private void lstFriends_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             try
@@ -664,69 +697,29 @@ namespace PeerToPeerChat
 
         private void ptbExit_Click(object sender, EventArgs e)
         {
-            Packet clpck = new Packet();
-            clpck.MyType = TypePacket.OUT_CHAT;
-            clpck.MyName = userName;
-            clpck.MyIP = GetLocalIP();
-            MemoryStream str = new MemoryStream();
-            BinaryFormatter bformat = new BinaryFormatter();
-            bformat.Serialize(str, clpck);
-            byte[] data = new byte[1024];
-            data = str.ToArray();
-            sendingClient.Send(data, data.Length);
-            //Application.Exit();
-            // Tat het Priv hien tai
-            foreach(PrivateChat cur in lstFormPrivChat)
+            if(MessageBox.Show("Bạn có muốn thoát không?","Thoát",MessageBoxButtons.YesNo,MessageBoxIcon.Warning)== DialogResult.Yes)
             {
-                if(cur.Text != "")
-                    cur.ptbExit_Click(cur, new EventArgs());
+                Packet clpck = new Packet();
+                clpck.MyType = TypePacket.OUT_CHAT;
+                clpck.MyName = userName;
+                clpck.MyIP = GetLocalIP();
+                MemoryStream str = new MemoryStream();
+                BinaryFormatter bformat = new BinaryFormatter();
+                bformat.Serialize(str, clpck);
+                byte[] data = new byte[1024];
+                data = str.ToArray();
+                sendingClient.Send(data, data.Length);
+                //Application.Exit();
+                // Tat het Priv hien tai
+                foreach (PrivateChat cur in lstFormPrivChat)
+                {
+                    if (cur.Text != "")
+                        cur.ptbExit_Click(cur, new EventArgs());
+                }
+                Environment.Exit(0);
             }
-            Environment.Exit(0);
-        }
-        // move form
-        #region Move Form
-        protected override void OnLoad(EventArgs e)
-        {
-            if (this.FormBorderStyle == System.Windows.Forms.FormBorderStyle.None)
-            {
-                this.MouseDown += new MouseEventHandler(LoginForm_MouseDown);
-                this.MouseMove += new MouseEventHandler(LoginForm_MouseMove);
-                this.MouseUp += new MouseEventHandler(LoginForm_MouseUp);
-            }
-
-            base.OnLoad(e);
-        }
-        public Point downPoint = Point.Empty;
-        void LoginForm_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button != MouseButtons.Left)
-            {
-                return;
-            }
-            downPoint = new Point(e.X, e.Y);
         }
 
-        void LoginForm_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (downPoint == Point.Empty)
-            {
-                return;
-            }
-            Point location = new Point(
-                this.Left + e.X - downPoint.X,
-                this.Top + e.Y - downPoint.Y);
-            this.Location = location;
-        }
-
-        void LoginForm_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button != MouseButtons.Left)
-            {
-                return;
-            }
-            downPoint = Point.Empty;
-        }
-        #endregion
         void RefreshWeb()
         {
             string start = @"<!DOCTYPE html><html><head><title>Client</title><style type='text/css'>
@@ -734,11 +727,13 @@ namespace PeerToPeerChat
 	                        .message{padding: 3px;margin: 3px;text-align: left;cursor:default;word-wrap:break-word;}
 	                        .mine{margin-left: 100px;background: rgb(218,233,255);text-align:right;}
 	                        .remote{margin-right: 100px;background: rgb(255,255,255);}
-                            </style>
-                            <script language='javascript'>
+                            </style>" + 
+                            "<script type =\"text/javascript\" src='" + Spath + "'></script>"
+                            +
+                            @"<script language='javascript'>
                                 window.onload=toBottom;
                                 function toBottom(){ window.scrollTo(0, document.body.scrollHeight);}
-                            </script></head><body>";
+                            </script></head><body><img style='z-index:-1;left:0;bottom:0;position:fixed' src='"+bkgrd+"'>";
             string end = @"</body></html>";
             string body = "";
             foreach (Message x in ChatLog)
@@ -832,6 +827,66 @@ namespace PeerToPeerChat
                 Status = SendType.IMAGE;
             }
         }
+
+        private void ptbHelp_Click(object sender, EventArgs e)
+        {
+            AboutandHelp frmHelp = new AboutandHelp();
+            frmHelp.Show();
+        }
+
+        private void btnEmoji_Click(object sender, EventArgs e)
+        {
+            if (!grpEmoji.Visible)
+                grpEmoji.Visible = true;
+            else
+                grpEmoji.Visible = false;
+        }
+        #endregion
+
+        #region DI CHUYỂN FORM
+        protected override void OnLoad(EventArgs e)
+        {
+            if (this.FormBorderStyle == System.Windows.Forms.FormBorderStyle.None)
+            {
+                this.MouseDown += new MouseEventHandler(LoginForm_MouseDown);
+                this.MouseMove += new MouseEventHandler(LoginForm_MouseMove);
+                this.MouseUp += new MouseEventHandler(LoginForm_MouseUp);
+            }
+
+            base.OnLoad(e);
+        }
+        public Point downPoint = Point.Empty;
+        void LoginForm_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
+            downPoint = new Point(e.X, e.Y);
+        }
+
+        void LoginForm_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (downPoint == Point.Empty)
+            {
+                return;
+            }
+            Point location = new Point(
+                this.Left + e.X - downPoint.X,
+                this.Top + e.Y - downPoint.Y);
+            this.Location = location;
+        }
+
+        void LoginForm_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
+            downPoint = Point.Empty;
+        }
+        #endregion
+
         #region EMOJI
         private void pictureBox3_Click(object sender, EventArgs e)
         {
@@ -877,14 +932,35 @@ namespace PeerToPeerChat
         {
             txtsend.AppendText(" (y) ");
         }
+
         #endregion
 
-        private void btnEmoji_Click(object sender, EventArgs e)
+        private void wbContent_Navigating(object sender, WebBrowserNavigatingEventArgs e)
         {
-            if (!grpEmoji.Visible)
-                grpEmoji.Visible = true;
-            else
-                grpEmoji.Visible = false;
+            e.Cancel = true;
+            if (e.Url.ToString() != "about:blank")
+            {
+                string url = e.Url.LocalPath;
+                url = url.Replace("(~*)", ":");
+                url = url.Replace("%5C", "\\");
+                if (File.Exists(url))
+                    try
+                    {
+                        Process.Start("explorer.exe", " /select, " + url);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Không thể mở file");
+                    }
+                else
+                    MessageBox.Show("Tập tin không tồn tại");
+            }
+        }
+
+        private void txtsend_TextChanged(object sender, EventArgs e)
+        {
+            if (txtsend.Text == "")
+                Status = SendType.MESSAGE;
         }
     }
 }

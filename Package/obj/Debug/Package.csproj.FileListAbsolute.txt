@@ -32,6 +32,6 @@ C:\Users\ThinkPad\Desktop\P2P_LANCHAT\Package\obj\Debug\Package.dll
 C:\Users\ThinkPad\Desktop\P2P_LANCHAT\Package\obj\Debug\Package.pdb
 C:\Users\akasu\Desktop\Done#\EmojiDone_LaiTest\P2P_LANCHAT_GOOD\P2P_LANCHAT_GOOD\Package\bin\Debug\Package.dll
 C:\Users\akasu\Desktop\Done#\EmojiDone_LaiTest\P2P_LANCHAT_GOOD\P2P_LANCHAT_GOOD\Package\bin\Debug\Package.pdb
-C:\Users\akasu\Desktop\Done#\EmojiDone_LaiTest\P2P_LANCHAT_GOOD\P2P_LANCHAT_GOOD\Package\obj\Debug\Package.csprojResolveAssemblyReference.cache
 C:\Users\akasu\Desktop\Done#\EmojiDone_LaiTest\P2P_LANCHAT_GOOD\P2P_LANCHAT_GOOD\Package\obj\Debug\Package.dll
 C:\Users\akasu\Desktop\Done#\EmojiDone_LaiTest\P2P_LANCHAT_GOOD\P2P_LANCHAT_GOOD\Package\obj\Debug\Package.pdb
+C:\Users\akasu\Desktop\Done#\EmojiDone_LaiTest\P2P_LANCHAT_GOOD\P2P_LANCHAT_GOOD\Package\obj\Debug\Package.csprojResolveAssemblyReference.cache

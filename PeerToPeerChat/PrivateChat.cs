@@ -20,20 +20,7 @@ namespace PeerToPeerChat
 {
     public partial class PrivateChat : Form
     {
-        // Event gửi tin nhắn đầu xuống cho ChatForm
-        private event EventHandler<RequireEvent> requireChat;
-        public event EventHandler<RequireEvent> RequireChat
-        {
-            add { requireChat += value; }
-            remove { requireChat += value; }
-        }
-        private event EventHandler<CloseEvent> closeChat;
-        public event EventHandler<CloseEvent> CloseChat
-        {
-            add { closeChat += value; }
-            remove { closeChat += value; }
-        }
-        // Event gửi thông báo đóng Form cho Bên kia
+        #region PROPERTIES
         public string friendName, meIP, mePort, friendIP, friendPort;
         List<Message> ChatLog;
         Dictionary<string, string> EmojiList;
@@ -41,10 +28,12 @@ namespace PeerToPeerChat
         String saveFileName = "";
         bool isSendFile = false;
         bool isSendImage = false;
-        bool firstSend = true;
         Socket listenSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         Socket socket;
         bool dispose = false;
+        #endregion
+
+        #region CONSTRUCTOR
         public PrivateChat()
         {
             CheckForIllegalCrossThreadCalls = false;
@@ -95,6 +84,8 @@ namespace PeerToPeerChat
             sck.Send(buf);
             sck.Close();
         }
+        #endregion
+
         #region DI CHUYỂN FORM
         protected override void OnLoad(EventArgs e)
         {
@@ -119,14 +110,14 @@ namespace PeerToPeerChat
 
         void LoginForm_MouseMove(object sender, MouseEventArgs e)
         {
-            //if (downPoint == Point.Empty)
-            //{
-            //    return;
-            //}
-            //Point location = new Point(
-            //    this.Left + e.X - downPoint.X,
-            //    this.Top + e.Y - downPoint.Y);
-            //this.Location = location;
+            if (downPoint == Point.Empty)
+            {
+                return;
+            }
+            Point location = new Point(
+                this.Left + e.X - downPoint.X,
+                this.Top + e.Y - downPoint.Y);
+            this.Location = location;
         }
 
         void LoginForm_MouseUp(object sender, MouseEventArgs e)
@@ -140,6 +131,37 @@ namespace PeerToPeerChat
         #endregion
 
         #region EVENT CỦA CONTROL 
+        private void PrivateChat_Load(object sender, EventArgs e)
+        {
+            lbName.Text = friendName;
+            this.Text = friendName;
+            Status = SendType.MESSAGE;
+            wbContent.DocumentText = "<html><body style=\"background-color:rgb(217,215,206)\"></body></html>";
+            EmojiList = new Dictionary<string, string>();
+            string path = "";
+            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "cuoi.png");
+            EmojiList.Add(":)", "<img src=\"" + path + "\" style='width:20px;height:20px'>");
+            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "buon.png");
+            EmojiList.Add(":(", "<img src=\"" + path + "\"style='width:20px;height:20px'>");
+            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "so.png");
+            EmojiList.Add(":-s", "<img src=\"" + path + "\"style='width:20px;height:20px'>");
+            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "yeu.png");
+            EmojiList.Add("x-)", "<img src=\"" + path + "\"style='width:20px;height:20px'>");
+            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "like.png");
+            EmojiList.Add("(y)", "<img src=\"" + path + "\"style='width:20px;height:20px'>");
+            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "ngacnhien.png");
+            EmojiList.Add(":o", "<img src=\"" + path + "\"style='width:20px;height:20px'>");
+            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "khoc.png");
+            EmojiList.Add(";-(", "<img src=\"" + path + "\"style='width:20px;height:20px'>");
+            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "hun.png");
+            EmojiList.Add("(p)", "<img src=\"" + path + "\"style='width:20px;height:20px'>");
+            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "gian.png");
+            EmojiList.Add(":-t", "<img src=\"" + path + "\"style='width:20px;height:20px'>");
+            RefreshWeb();
+            txtsend.Focus();
+            Start();
+        }
+
         private void btnFont_Click(object sender, EventArgs e)
         {
             if (fontDialog1.ShowDialog() == DialogResult.OK)
@@ -177,7 +199,7 @@ namespace PeerToPeerChat
             e.Cancel = true;
             if (e.Url.ToString() != "about:blank")
             {
-                string url = e.Url.PathAndQuery;
+                string url = e.Url.LocalPath;
                 url = url.Replace("(~*)", ":");
                 url = url.Replace("%5C", "\\");
                 if (File.Exists(url))
@@ -419,37 +441,6 @@ namespace PeerToPeerChat
                 this.WindowState = FormWindowState.Minimized;
         }
 
-        private void PrivateChat_Load(object sender, EventArgs e)
-        {
-            lbName.Text = friendName;
-            this.Text = friendName;
-            textBox1.Text = mePort;
-            Status = SendType.MESSAGE;
-            wbContent.DocumentText = "<html><body style=\"background-color:rgb(217,215,206)\"></body></html>";
-            EmojiList = new Dictionary<string, string>();
-            string path = "";
-            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "cuoi.png");
-            EmojiList.Add(":)", "<img src=\"" + path + "\">");
-            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "buon.png");
-            EmojiList.Add(":(", "<img src=\"" + path + "\">");
-            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "so.png");
-            EmojiList.Add(":-s", "<img src=\"" + path + "\">");
-            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "yeu.png");
-            EmojiList.Add("x-)", "<img src=\"" + path + "\">");
-            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "like.png");
-            EmojiList.Add("(y)", "<img src=\"" + path + "\">");
-            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "ngacnhien.png");
-            EmojiList.Add(":o", "<img src=\"" + path + "\">");
-            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "khoc.png");
-            EmojiList.Add(";-(", "<img src=\"" + path + "\">");
-            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "hun.png");
-            EmojiList.Add("(p)", "<img src=\"" + path + "\">");
-            path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Emoji", "gian.png");
-            EmojiList.Add(":-t", "<img src=\"" + path + "\">");
-            RefreshWeb();
-            Start();
-        }
-
         public void ptbExit_Click(object sender, EventArgs e)
         {
             // Gui 1 packet CLOSING den cho doi phuong
@@ -481,9 +472,6 @@ namespace PeerToPeerChat
             //listenSocket.Shutdown(SocketShutdown.Receive);
         }
 
-        private void PrivateChat_FormClosing(object sender, FormClosingEventArgs e)
-        {
-        }
         #endregion
 
         #region CÁC HÀM TỰ TẠO
@@ -605,7 +593,7 @@ namespace PeerToPeerChat
                 }
                 else
                 {
-                    body += "<p style=\"text-align: center\">" + lbName.Text + " đã rời khỏi cuộc trò chuyện!" + "</p>";
+                    body += "<p style=\"text-align: center\">" + lbName.Text + " đã rời khỏi cuộc trò chuyện!" + "<br>Vui lòng tắt Form này để tiếp tục trò chuyện với " +lbName.Text+ " lần sau!</p>";
                 }
             }
             wbContent.Document.Write(start + body + end);
@@ -819,7 +807,6 @@ namespace PeerToPeerChat
                             if (recievePack.MyType == TypePacket.SEND_PORT)
                             {
                                 friendPort = recievePack.MyPort;
-                                textBox2.Text = friendPort;
                             }
                             // Gan co bat dau gui file
                             else if (recievePack.MyType == TypePacket.SEND_FILE)
@@ -944,6 +931,12 @@ namespace PeerToPeerChat
                 grpEmoji.Visible = false;
         }
 
+        private void txtsend_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btnSend_Click(this, new EventArgs());
+        }
+
         private void pictureBox8_Click(object sender, EventArgs e)
         {
             txtsend.AppendText(" :o ");
@@ -965,32 +958,5 @@ namespace PeerToPeerChat
         }
         #endregion
         #endregion
-    }
-
-    public class RequireEvent:EventArgs
-    {
-        public string FirstMess { get; set; }
-        public Color FirstColor { get; set; }
-        public Font FirstFont { get; set; }
-        public string FirstIP { get; set; }
-        public RequireEvent(string mess, Color cl, Font ft, string ip)
-        {
-            this.FirstMess = mess;
-            this.FirstColor = cl;
-            this.FirstFont = ft;
-            this.FirstIP = ip;
-        }
-    }
-    public class CloseEvent:EventArgs
-    {
-        public bool isClose { get; set; }
-        public string FirstIP { get; set; }
-        public string friendName { get; set; }
-        public CloseEvent(string ip, string name)
-        {
-            this.isClose = true;
-            this.FirstIP = ip;
-            this.friendName = name;
-        }
     }
 }

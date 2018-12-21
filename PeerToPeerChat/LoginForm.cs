@@ -110,6 +110,8 @@ namespace PeerToPeerChat
             {
                 e.Handled = true;
             }
+            if (e.KeyChar == (Char)Keys.Enter)
+                btnlogin_Click(this, new EventArgs());
         }
 
         private void LoginForm_Load(object sender, EventArgs e)

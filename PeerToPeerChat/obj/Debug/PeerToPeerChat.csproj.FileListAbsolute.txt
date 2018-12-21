@@ -286,3 +286,4 @@ C:\Users\akasu\Desktop\Done#\EmojiDone_LaiTest\P2P_LANCHAT_GOOD\P2P_LANCHAT_GOOD
 C:\Users\akasu\Desktop\Done#\EmojiDone_LaiTest\P2P_LANCHAT_GOOD\P2P_LANCHAT_GOOD\PeerToPeerChat\obj\Debug\PeerToPeerChat.PrivateChat.resources
 C:\Users\akasu\Desktop\Done#\EmojiDone_LaiTest\P2P_LANCHAT_GOOD\P2P_LANCHAT_GOOD\PeerToPeerChat\obj\Debug\PeerToPeerChat.Properties.Resources.resources
 C:\Users\akasu\Desktop\Done#\EmojiDone_LaiTest\P2P_LANCHAT_GOOD\P2P_LANCHAT_GOOD\PeerToPeerChat\obj\Debug\PeerToPeerChat.csproj.GenerateResource.Cache
+C:\Users\akasu\Desktop\Done#\EmojiDone_LaiTest\P2P_LANCHAT_GOOD\P2P_LANCHAT_GOOD\PeerToPeerChat\obj\Debug\PeerToPeerChat.AboutandHelp.resources

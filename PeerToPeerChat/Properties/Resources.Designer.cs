@@ -103,6 +103,16 @@ namespace PeerToPeerChat.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap fdf {
+            get {
+                object obj = ResourceManager.GetObject("fdf", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap gian {
             get {
                 object obj = ResourceManager.GetObject("gian", resourceCulture);
@@ -116,6 +126,26 @@ namespace PeerToPeerChat.Properties {
         internal static System.Drawing.Bitmap hun {
             get {
                 object obj = ResourceManager.GetObject("hun", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icoHelp {
+            get {
+                object obj = ResourceManager.GetObject("icoHelp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap iconHelp {
+            get {
+                object obj = ResourceManager.GetObject("iconHelp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -166,6 +196,16 @@ namespace PeerToPeerChat.Properties {
         internal static System.Drawing.Bitmap nhaymat {
             get {
                 object obj = ResourceManager.GetObject("nhaymat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap priv {
+            get {
+                object obj = ResourceManager.GetObject("priv", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
