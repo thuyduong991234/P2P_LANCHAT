@@ -8,6 +8,8 @@ SkyChat là phần mềm hỗ trợ chat đa tính năng trong mạng LAN dựa 
 ![alt text](https://4.bp.blogspot.com/-gl7PZdlikzc/XBzYBRyE2qI/AAAAAAAAAMg/9y1Bymi0rvASxlDDLEFbtFbr7QUGyBBCgCLcBGAs/s1600/z1215563877601_6666ce2cd711f423de0ba710b0ff8e13.jpg)
 ### Giao diện `Chat private`
 ![alt text](https://3.bp.blogspot.com/-cxhrAJj4j60/XBzYJbUstmI/AAAAAAAAAMo/kAnyNuzC5nAFkFY5AdjOdFbqi_ro3qmpACLcBGAs/s1600/z1215563439355_f786d05868557674276c5312b500207e.jpg)
+## Video
+[![SkyChat](http://img.youtube.com/vi/llf4mwJ7Qzo/0.jpg)](http://www.youtube.com/watch?v=llf4mwJ7Qzo "Demo SkyChat")
 ## Tính năng
 SkyChat hỗ trợ một số tính năng như:
 - Mỗi máy vừa đóng vai trò vừa là Server vừa là Client.
