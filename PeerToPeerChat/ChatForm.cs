@@ -175,7 +175,7 @@ namespace PeerToPeerChat
                     //Loại việc nhận tin của chính mình
                     if (curIP == GetLocalIP())
                     {
-                        curType = TypePacket.NONE;
+                        curType = TypePacket.MESSAGE;
                     }
                     else
                     {
@@ -244,7 +244,7 @@ namespace PeerToPeerChat
                 {
                     if (curIP == GetLocalIP())
                     {
-                        curType = TypePacket.NONE;
+                        curType = TypePacket.MESSAGE;
                     }
                     else
                     {
